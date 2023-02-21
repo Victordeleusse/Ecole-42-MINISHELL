@@ -12,18 +12,23 @@
 
 #include "minishell.h"
 
-int	main(void)
+int	main(int argc, char **argv, char *envp[])
 {
 	char	*line;
 
+	(void) argc;
+	(void) argv;
+	(void) envp;
 	signal_behavior();
 	while (1)
 	{
 		line = readline("minishell$ ");
-		add_history(line);
+		if (line && *line)
+			add_history(line);
 		if (!line)
 			break ;
+		free(line);
 	}
 	rl_clear_history();
-	ft_putstr_fd("exit\n", 2);
+	ft_putstr_fd("exit\n", 1);
 }
