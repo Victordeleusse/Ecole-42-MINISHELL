@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:26:08 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 17:12:20 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:15:26 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static int	ftbuiltin_export_key(t_env *environnement, char *arg, char *key, size
 	}
 	if (ft_strchrset(key, "-+/*=") != NULL)
 	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
 		free(key);
 		RETURNVAL = 1;
 		return (0);

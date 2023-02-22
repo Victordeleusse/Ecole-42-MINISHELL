@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 16:29:02 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/22 18:15:47 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_env
 /* Built-in Functions */
 void	ftbuiltin_env(t_env *environnement);
 void	ftbuiltin_export(t_env *environnement, char *arg);
+void	ftbuiltin_unset(t_env *environnement, char *arg);
 
 // opening.c
 t_env	*opening(int argc, char **argv, char *envp[]);
