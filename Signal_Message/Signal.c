@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/Signal_Message.h"
+#include "Signal_Message.h"
 #include <unistd.h>
 #include <signal.h>
 #include <readline/readline.h>

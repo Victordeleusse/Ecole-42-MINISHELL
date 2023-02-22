@@ -1,2 +1,1 @@
-objs/Environment/Export.o: Environment/Export.c \
-  Environment/../Includes/Environment.h
+objs/Environment/Export.o: Environment/Export.c Includes/Environment.h
