@@ -1,4 +1,4 @@
-SRCS = Signal.c
+SRCS = Main.c Signal.c Environment/Environment.c Environment/Utils_Environment.c 
  
 OBJS = ${SRCS:.c=.o}
 DEPS = ${SRCS:.c=.d}
