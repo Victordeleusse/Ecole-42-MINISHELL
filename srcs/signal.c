@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:06 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/21 19:35:08 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/22 10:51:02 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_sigint(int sig)
 	rl_redisplay();
 }
 
-void	signal_behavior(void)
+void	change_signal_behavior(void)
 {
 	struct sigaction	sa_int;
 	struct sigaction	sa_quit;

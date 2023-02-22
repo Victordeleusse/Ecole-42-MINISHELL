@@ -8,7 +8,7 @@ LIBS = -L libft -lft -lreadline ${INC}
 
 NAME = minishell
 CC = gcc
-CFLAGS =  -Wall -Wextra -Werror 
+# CFLAGS =  -Wall -Wextra -Werror 
 
 .c.o:
 		${CC} ${CFLAGS} ${INC} -g -MMD -c $< -o ${<:.c=.o}
@@ -20,7 +20,7 @@ ${NAME}:	${OBJS}
 all:	${NAME}
 
 valgrind:	all
-			valgrind --suppressions=ignore_readline_leaks.supp --leak-check=full --show-leak-kinds=all ./minishell
+			valgrind --suppressions=ignore_readline_leaks.supp --track-fds=yes --leak-check=full --show-leak-kinds=all ./minishell
 
 clean:	
 	@	+$(MAKE) -C libft clean
