@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Main.c                                           :+:      :+:    :+:   */
+/*   Signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,28 +10,40 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../Includes/Signal_Message.h"
+#include <unistd.h>
+#include <signal.h>
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "libft.h"
 
-int	RETURNVAL;
-
-int	main(int argc, char **argv, char **envp)
+static void	ft_signal_ctrl_c(int sig)
 {
-	t_env_elem	*my_envp;
-	t_env_elem	*begin;
-	int		i;
+	(void)sig;
+	write(2, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
 
-	(void)argc;
-	(void)argv;
-	my_envp = ft_generate_envp_list(envp);
-	ft_export_variable_in_env("VICTOR=", &my_envp);
-	fprintf(stderr, "OK\n");
-	begin = my_envp;
-	while (begin)
+void	ft_get_data(void)
+{
+	char	*command_buff;
+	
+	signal(SIGINT, ft_signal_ctrl_c);
+	signal(SIGQUIT, (__sighandler_t)1);
+	while (1)
 	{
-		printf("key : %s ->", begin->name);
-		printf("value : %s\n", begin->value);
-		begin = begin->next;
+		command_buff = readline("minishell-TitouVictor$ ");
+		if (!command_buff)
+		{	
+			write(2, "exit\n", 5);
+			break;
+		}
+		if (ft_strlen(command_buff) >= 0)
+		{	
+			add_history(command_buff);
+			free(command_buff);
+		}
 	}
-	// ft_get_data();
-	return (0);
 }

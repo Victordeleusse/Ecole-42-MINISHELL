@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Signal.c                                           :+:      :+:    :+:   */
+/*   Main.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,35 +10,30 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h>
 #include "minishell.h"
+#include "Environment.h"
 
-static void	ft_signal_ctrl_c(int sig)
-{
-	(void)sig;
-	write(2, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+int	RETURNVAL;
 
-void	ft_get_data(void)
+int	main(int argc, char **argv, char **envp)
 {
-	char	*command_buff;
-	
-	signal(SIGINT, ft_signal_ctrl_c);
-	signal(SIGQUIT, (__sighandler_t)1);
-	while (1)
+	t_env_elem	*my_envp;
+	t_env_elem	*begin;
+	// int		i;
+
+	(void)argc;
+	(void)argv;
+	my_envp = ft_generate_envp_list(envp);
+	ft_export_variable_in_env("VICTOR=", &my_envp, 1);
+	begin = my_envp;
+	while (begin)
 	{
-		command_buff = readline("minishell-TitouVictor$ ");
-		if (!command_buff)
-		{	
-			write(2, "exit\n", 5);
-			break;
-		}
-		if (ft_strlen(command_buff) >= 0)
-		{	
-			add_history(command_buff);
-			free(command_buff);
-		}
+		printf("%s ->", begin->name);
+		printf("%s\n", begin->value);
+		begin = begin->next;
 	}
+	printf("\n\n%d\n",ft_check_is_already_present_and_exported(&my_envp, "VICTOR=bonjour"));
+	// ft_get_data();
+	return (0);
 }

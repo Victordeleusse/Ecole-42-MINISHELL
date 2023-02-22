@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "Environment.h"
+#include "libft.h"
+#include "minishell.h"
 
 // -> Genere ma nouvelle variable, d environnement ou non
 
@@ -87,10 +89,7 @@ char	**ft_envp_in_tab(char **envp)
 	char		**envp_tab;
 
 	if (!*envp || !envp[0])
-	{	
-		RETURNVAL = 1;
-		return ;
-	}
+		return (NULL);
 	len = 0;
 	i = 0;
 	env_elem_list = ft_generate_envp_list(envp);

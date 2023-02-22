@@ -1,40 +1,53 @@
-SRCS = Main.c Signal.c Environment/Environment.c Environment/Utils_Environment.c 
- 
-OBJS = ${SRCS:.c=.o}
-DEPS = ${SRCS:.c=.d}
-
-EXEC = minishell
-
-LIBFT_PATH = -I Libft_vde-leus -L Libft_vde-leus -lft -lreadline
+NAME = minishell
 
 CC = cc
-CFLAGS += -Wall
-CFLAGS += -Werror
-CFLAGS += -Wextra
+CFLAGS = -Wall -Werror -Wextra -g -MMD
+LFLAGS = -LLibft_vde-leus -lft -lreadline
 
-%.o: %.c 
-			${CC} -I. ${LIBFT_PATH} -MMD -c $< -o ${<:.c=.o}
+# define SRCS :=
+# 	Environment/Environment.c
+# 	Environment/Export.c
+# 	Environment/Utils_Environment.c
+# 
+# 	Signal_Message/Signal.c
+# 	Signal_Message/Message.c
+# 
+# 	Main/Main.c
+# endef
+SRCS := $(shell find Environment Signal_Message Main -name '*.c' -type f)
 
-all: run
+OBJS_PATH = objs
 
-run: ${OBJS}
+INCLUDES = Includes Libft_vde-leus
+
+#vpath %.c ${SRCS_PATH}
+#vpath %.h ${HEADER_PATH} 
+# *.h -> 
+OBJS = ${patsubst %.c,${OBJS_PATH}/%.o, ${SRCS}}
+DEPS = $(OBJS:.o=.d)
+
+all: ${NAME}
+
+$(OBJS_PATH)/%.o: %.c
+		mkdir -p ${dir $@}
+		${CC} ${CFLAGS} -c $< -o $@ ${addprefix -I ,$(INCLUDES)}
+
+${NAME}: ${OBJS}
 		$(MAKE) -C Libft_vde-leus/ all
-		clear
-		@ $(CC) -o ${EXEC} $(CFLAGS) ${OBJS} ${LIBFT_PATH}
+		$(CC) -o $(NAME) ${OBJS} $(LFLAGS)
 
 clean:	
-		rm -f ${OBJS} ${DEPS}
+		rm -rf $(OBJS_PATH)
 		$(MAKE) -C Libft_vde-leus/ clean
 		clear
 
 fclean:	clean
 		$(MAKE) -C Libft_vde-leus/ fclean
-		rm -f ${EXEC}
+		rm -f ${NAME}
 		clear
-
-
--include $(DEPS) $(DEPS_BONUS)
 
 re:	fclean all
 
-.PHONY: clean fclean re bonus run
+.PHONY: clean fclean re 
+
+-include $(DEPS)

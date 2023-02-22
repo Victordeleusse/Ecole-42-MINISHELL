@@ -10,7 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../Includes/Signal_Message.h"
+#include "libft.h"
 
 void	ft_message_err(char	*str)
 {

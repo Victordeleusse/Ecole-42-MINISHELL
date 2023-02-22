@@ -10,7 +10,10 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../Includes/Environment.h"
+#include <stddef.h>
+#include <stdio.h>
+#include "libft.h"
 
 char	*ft_extract_name(char *envp_index)
 {
@@ -82,15 +85,22 @@ void	ft_lst_envp_add_back(t_env_elem **envp_elem_list, t_env_elem *elem)
 	last->next = elem;
 }
 
-int	ft_check_is_already_present_and_exported(t_env_elem **envp_elem_list, char *key)
+int	ft_check_is_already_present_and_exported(t_env_elem **envp_elem_list, char *str_entry)
 {
 	t_env_elem	*begin;
-	
-	if (!*envp_elem_list || !envp_elem_list)
+	char		*key;
+
+	key = ft_extract_name(str_entry);
+	if (!*envp_elem_list || !envp_elem_list || !key)
 		return (0);
 	begin = *envp_elem_list;
-	while(begin->next)
+	while(begin)
 	{
-		
+		fprintf(stderr, "name : %s\n", begin->name);
+		if (!ft_strcmp(begin->name, key))
+			return (1);
+		begin = begin->next;
 	}
+	return (0);
 }
+
