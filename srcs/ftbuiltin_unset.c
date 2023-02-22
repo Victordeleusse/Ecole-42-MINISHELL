@@ -40,12 +40,9 @@ void	ftbuiltin_unset(t_env *environnement, char *arg)
 	RETURNVAL = 0;
 	if (!arg)
 		return ;
-	else if (ft_strchrset(arg, "-+/*=") != NULL)
-	{
-		ft_printf("minishell: unset: `%s': not a valid identifier\n", arg);
-		RETURNVAL = 1;
+	while (*arg && ft_strchr(SEPARATORS, *arg))
+		arg++;
+	if (*arg == '\0')
 		return ;
-	}
-	else
-		ftbuiltin_unset_element(environnement, arg);
+	ftbuiltin_unset_element(environnement, arg);
 }

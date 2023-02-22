@@ -62,7 +62,7 @@ static int	ftbuiltin_export_key(t_env *environnement, char *arg, char *key, size
 		RETURNVAL = 1;
 		return (0);
 	}
-	if (ft_strchrset(key, "-+/*=") != NULL)
+	if (ft_strchrset(key, "-+/*=") != NULL || ft_strchrset(key, SEPARATORS))
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
 		free(key);
@@ -74,7 +74,7 @@ static int	ftbuiltin_export_key(t_env *environnement, char *arg, char *key, size
 
 static void	ftbuiltin_export_value(t_env *environnement, char *arg, char *key, char *value)
 {
-	if (!arg)
+	if (arg[0] == '\0')
 		ftbuiltin_export_element(environnement, key, NULL);
 	else
 	{
@@ -96,6 +96,10 @@ void	ftbuiltin_export(t_env *environnement, char *arg)
 	size_t	i;
 	
 	if (!arg)
+		ftbuiltin_export_noarg(environnement);
+	while (*arg && ft_strchr(SEPARATORS, *arg))
+		arg++;
+	if (*arg == '\0')
 		ftbuiltin_export_noarg(environnement);
 	else
 	{

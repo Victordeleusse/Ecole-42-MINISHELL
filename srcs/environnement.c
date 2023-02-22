@@ -16,6 +16,10 @@ void	free_environnement(t_env *environnement)
 {
 	t_env	*tmp;
 
+	if (environnement)
+	{
+		free(environnement->pwd);
+	}
 	while (environnement)
 	{
 		tmp = environnement;
@@ -28,57 +32,36 @@ void	free_environnement(t_env *environnement)
 	}
 }
 
-static t_env	*env_initialisation(void)
+char	*get_value_by_key(t_env *environnement, char *key)
 {
-	t_env	*environnement;
+	t_env	*current;
 
-	environnement = malloc(sizeof(t_env));
-	if (!environnement)
-		return (ft_putstr_fd(ERRALLOC, 2), NULL);
-	environnement->key = NULL;
-	environnement->value = NULL;
-	environnement->exported = 1;
-	environnement->next = NULL;
-	return (environnement);
-}
-
-static t_env	*env_nextelement(char *envp[], size_t i, size_t j)
-{
-	t_env	*element;
-
-	element = malloc(sizeof(t_env));
-	if (!element)
-		return (ft_putstr_fd(ERRALLOC, 2), NULL);
-	element->key = ft_substr(envp[i], 0, j);
-	element->value = ft_substr(envp[i], j + 1, ft_strlen(envp[i] + j + 1));
-	element->exported = 1;
-	element->next = NULL;
-	return (element);
-}
-
-t_env	*get_environnement(char *envp[])
-{
-	size_t	i;
-	size_t	j;
-	t_env	*environnement;
-	t_env	*current_line;
-
-	environnement = env_initialisation();
-	current_line = environnement;
-	i = 0;
-	while (envp[i])
+	current = environnement;
+	if (!current)
+		return (NULL);
+	current = current->next;
+	while (current)
 	{
-		j = 0;
-		while (envp[i][j] && envp[i][j] != '=')
-			j++;
-		if (envp[i][j])
-		{
-			current_line->next = env_nextelement(envp, i, j);
-			current_line = current_line->next;
-			if (!current_line)
-				return (free_environnement(environnement), NULL);
-		}
-		i++;
+		if (ft_strcmp(current->key, key) == 0)
+			return (current->value);
+		current = current->next;
 	}
-	return (environnement);
+	return (NULL);
+}
+
+int		env_lstaddback(t_env *env, char *key, char *value, int exported)
+{
+	if (!env)
+		return (0);
+	while (env->next)
+		env = env->next;
+	env->next = malloc(sizeof(t_env));
+	if (!(env->next))
+		return (ft_putstr_fd(ERRALLOC, 2), 0);
+	env = env->next;
+	env->key = key;
+	env->value = value;
+	env->exported = exported;
+	env->next = NULL;
+	return (1);
 }
