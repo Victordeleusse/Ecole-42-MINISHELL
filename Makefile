@@ -15,7 +15,8 @@ define SRCS :=
 	Main/Main.c
 endef
 
-OBJS_PATH = objs
+SRCS_PATH = Srcs
+OBJS_PATH = Objs
 
 INCLUDES = -I Includes -I Libft_vde-leus
 
@@ -24,7 +25,7 @@ DEPS = $(OBJS:.o=.d)
 
 all: ${NAME}
 
-$(OBJS_PATH)/%.o: %.c
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
 		mkdir -p ${dir $@}
 		${CC} ${CFLAGS} -c $< -o $@ $(INCLUDES)
 
