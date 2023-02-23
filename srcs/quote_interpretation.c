@@ -37,15 +37,13 @@ static void	_actions_doublequoteopen(char *line, \
 		(*i)--;
 	}
 	else if (line[(*i)] == '$' && line[(*i) + 1] \
-	&& ft_strinset(line + (*i) + 1, VARNAMESET, 1))
+	&& ft_strinset(line + (*i) + 1, VARNAMESET "?", 1))
 		line[(*i)] = VARKEY;
 }
 
 static void	_actions_default(char *line, \
 	int *single_quote_open, int *double_quote_open, size_t *i)
 {
-	size_t	j;
-
 	if (line[(*i)] == '\\' && line[(*i)] != '\0')
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 	else if (line[(*i)] == '\'')
@@ -63,17 +61,11 @@ static void	_actions_default(char *line, \
 	else if (ft_iswhitespace(line[(*i)]))
 		line[(*i)] = SEPARATOR;
 	else if (line[(*i)] == '$' && line[(*i) + 1] \
-	&& ft_strinset(line + (*i) + 1, VARNAMESET, 1))
-	{
-		(void) j;
+	&& ft_strinset(line + (*i) + 1, VARNAMESET "?", 1))
 		line[(*i)] = VARKEY;
-	}
 	else if (line[(*i)] == '$' && line[(*i) + 1] \
 	&& ft_strinset(line + (*i) + 1, "\"\'", 1))
-	{
-		(void) j;
 		line[(*i)] = SEPARATOR;
-	}
 }
 
 static int	_detect_missing_quote(int single_quote_open, int double_quote_open)

@@ -16,6 +16,7 @@ char	*replace_key_by_value(t_env *environment, char *line)
 {
 	char	*first_part;
 	char	*second_part;
+	int		question_mark;
 	char	*var;
 	char	*tmp;
 	size_t	i;
@@ -29,19 +30,35 @@ char	*replace_key_by_value(t_env *environment, char *line)
 			first_part = ft_strdup(line);
 			if (!first_part)
 				return (free(line), NULL);
-			second_part = line + i + 1;
-			while (*second_part && ft_strinset(second_part, VARNAMESET, 1))
-				second_part++;
+			question_mark = false;
+			if (line[i + 1] == '\?')
+				question_mark = true;
+			if (question_mark)
+				second_part = line + i + 2;
+			else
+			{
+				second_part = line + i + 1;
+				while (*second_part && ft_strinset(second_part, VARNAMESET, 1))
+					second_part++;
+			}
 			var = second_part;
 			second_part = ft_strdup(second_part);
 			if (!second_part)
 				return (free(line), free(first_part), NULL);
 			*var = '\0';
 			var = line + i + 1;
-			var = get_value_by_key(environment, var);
+			if (question_mark)
+			{
+				i--;
+				var = ft_itoa(g_returnval);
+			}
+			else
+				var = get_value_by_key(environment, var);
 			if (!var)
 				var = "";
 			tmp = ft_strrjoin(first_part, var, second_part);
+			if (question_mark)
+				free(var);
 			free(line);
 			free(first_part);
 			free(second_part);

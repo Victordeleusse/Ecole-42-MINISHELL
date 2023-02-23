@@ -29,17 +29,10 @@ static int	parsing_builtin(t_env *environment, char **args, char *line)
 	return (1);
 }
 
-void	command_not_found(char *line, char **args)
+void	command_not_found(char **args)
 {
-	size_t	i;
-
+	ft_printf("minishell: %s: command not found\n", args[0]);
 	free_tabstr(args);
-	i = 0;
-	while (line[i] && ft_strchr(SEPARATORS, line[i]) == NULL)
-		i++;
-	if (line[i])
-		line[i] = '\0';
-	ft_printf("minishell: %s: command not found\n", line);
 	g_returnval = 127;
 }
 
@@ -65,5 +58,5 @@ void	parsing(t_env *environment, char **line)
 	if (parsing_builtin(environment, args, *line))
 		return ;
 	else
-		command_not_found(*line, args);
+		command_not_found(args);
 }
