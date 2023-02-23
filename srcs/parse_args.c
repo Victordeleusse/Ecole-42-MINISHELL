@@ -28,5 +28,7 @@ char	**parse_args(t_env *environment, char **line)
 		free(*line);
 		exit(g_returnval);
 	}
+	if (*args == NULL)
+		return (free_tabstr(args), NULL);
 	return (args);
 }
