@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:26:08 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 18:15:26 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 09:28:19 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ void	ftbuiltin_export(t_env *environnement, char *arg)
 	char	*value;
 	size_t	i;
 	
+	ft_printf("arg: |%s|\n", arg);
+	return ;
 	if (!arg)
 		ftbuiltin_export_noarg(environnement);
 	while (*arg && ft_strchr(SEPARATORS, *arg))

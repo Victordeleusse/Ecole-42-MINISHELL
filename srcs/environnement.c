@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 11:29:12 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 16:47:18 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 09:15:54 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,8 @@ void	free_environnement(t_env *environnement)
 {
 	t_env	*tmp;
 
-	if (environnement)
-	{
+	if (environnement && environnement->pwd)
 		free(environnement->pwd);
-	}
 	while (environnement)
 	{
 		tmp = environnement;

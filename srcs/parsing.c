@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 18:42:19 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 09:53:51 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void	command_not_found(char *line)
 
 void	parsing(t_env *environnement, char *line)
 {
-	while (*line && ft_strchr(SEPARATORS, *line))
-		line++;
+	ft_strip(line);
 	if (*line == '\0')
 		return ;
 	if (parsing_builtin(environnement, line))

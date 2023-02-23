@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:47:36 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 16:47:43 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 09:13:17 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,6 @@ static t_env	*env_nextelement(char *envp[], size_t i, size_t j)
 	return (element);
 }
 
-static void	get_environnement_pwd(t_env *environnement)
-{
-	environnement->pwd = get_value_by_key(environnement, "PWD");
-	if (!(environnement->pwd))
-		environnement->pwd = get_value_by_key(environnement, "OLDPWD");
-	if (!(environnement->pwd))
-		environnement->pwd = "/";
-	environnement->pwd = ft_strdup(environnement->pwd);
-}
-
 t_env	*get_environnement(char *envp[])
 {
 	size_t	i;
@@ -74,6 +64,6 @@ t_env	*get_environnement(char *envp[])
 		}
 		i++;
 	}
-	get_environnement_pwd(environnement);
+	environnement->pwd = getcwd(NULL, 0);
 	return (environnement);
 }
