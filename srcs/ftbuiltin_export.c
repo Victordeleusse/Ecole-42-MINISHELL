@@ -74,13 +74,9 @@ static int	_export_key(char *arg, char *key, size_t i)
 		g_returnval = 1;
 		return (0);
 	}
-	if (!ft_strinset(key, VARNAMESET, ft_strlen(key) - 1))
-	{
-		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
-		g_returnval = 1;
-		return (0);
-	}
-	if (*key == '+' || !ft_strinset(key + (ft_strlen(key) - 1), VARNAMESET "+", 1))
+	if (ft_isdigit(*key) \
+	|| (!ft_strinset(key, VARNAMESET, ft_strlen(key) - 1)) \
+	|| (*key == '+' || !ft_strinset(key + (ft_strlen(key) - 1), VARNAMESET "+", 1)))
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
 		g_returnval = 1;
@@ -131,18 +127,18 @@ void	ftbuiltin_export(t_env *environment, char **args)
 				i++;
 			key = ft_substr(arg, 0, i);
 			if (!_export_key(arg, key, i))
-			{
 				free(key);
-				return ;
-			}
-			arg = arg + i;
-			if (*key && key[ft_strlen(key) - 1] == '+')
-			{
-				key[ft_strlen(key) - 1] = '\0';
-				_export_value(environment, arg, &key, true);
-			}
 			else
-				_export_value(environment, arg, &key, false);
+			{
+				arg = arg + i;
+				if (*key && key[ft_strlen(key) - 1] == '+')
+				{
+					key[ft_strlen(key) - 1] = '\0';
+					_export_value(environment, arg, &key, true);
+				}
+				else
+					_export_value(environment, arg, &key, false);
+			}
 			j++;
 		}
 	}
