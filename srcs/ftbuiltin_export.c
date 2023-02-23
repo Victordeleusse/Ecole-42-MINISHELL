@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static void	ftbuiltin_export_noarg(t_env *environment)
+static void	_export_noarg(t_env *environment)
 {
 	while (environment)
 	{
@@ -28,10 +28,11 @@ static void	ftbuiltin_export_noarg(t_env *environment)
 	}
 }
 
-static void	ftbuiltin_export_element(t_env *environment, \
-	char *key, char *value)
+static void	_export_element(t_env *environment, \
+	char *key, char *value, int append)
 {
 	t_env	*elem;
+	char	*tmp;
 	
 	elem = environment;
 	if (!key || !elem)
@@ -45,8 +46,15 @@ static void	ftbuiltin_export_element(t_env *environment, \
 			elem->exported = 1;
 			if (value)
 			{
-				free(elem->value);
-				elem->value = value;
+				tmp = elem->value;
+				if (append)
+				{
+					elem->value = ft_strjoin(elem->value, value);
+					free(value);
+				}
+				else
+					elem->value = value;
+				free(tmp);
 			}
 			return ;
 		}
@@ -58,7 +66,7 @@ static void	ftbuiltin_export_element(t_env *environment, \
 		free(key);
 }
 
-static int	ftbuiltin_export_key(char *arg, char *key, size_t i)
+static int	_export_key(char *arg, char *key, size_t i)
 {
 	(void) i;
 	if (!key)
@@ -72,16 +80,22 @@ static int	ftbuiltin_export_key(char *arg, char *key, size_t i)
 		g_returnval = 1;
 		return (0);
 	}
+	if (*key == '+' || !ft_strinset(key + (ft_strlen(key) - 1), VARNAMESET "+", 1))
+	{
+		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
+		g_returnval = 1;
+		return (0);
+	}
 	return (1);
 }
 
-static char	*ftbuiltin_export_value(t_env *environment, char *arg, char **key)
+static char	*_export_value(t_env *environment, char *arg, char **key, int append)
 {
 	char	*value;
 
 	value = NULL;
 	if (arg[0] == '\0')
-		ftbuiltin_export_element(environment, *key, NULL);
+		_export_element(environment, *key, NULL, append);
 	else
 	{
 		value = ft_substr(arg, 1, ft_strlen(arg + 1));
@@ -92,7 +106,7 @@ static char	*ftbuiltin_export_value(t_env *environment, char *arg, char **key)
 			g_returnval = 1;
 			return (NULL);
 		}
-		ftbuiltin_export_element(environment, *key, value);
+		_export_element(environment, *key, value, append);
 	}
 	return (value);
 }
@@ -105,7 +119,7 @@ void	ftbuiltin_export(t_env *environment, char **args)
 	char	*arg;
 
 	if (!args[1])
-		ftbuiltin_export_noarg(environment);
+		_export_noarg(environment);
 	else
 	{
 		j = 1;
@@ -116,13 +130,19 @@ void	ftbuiltin_export(t_env *environment, char **args)
 			while (arg[i] && arg[i] != '=')
 				i++;
 			key = ft_substr(arg, 0, i);
-			if (!ftbuiltin_export_key(arg, key, i))
+			if (!_export_key(arg, key, i))
 			{
 				free(key);
 				return ;
 			}
 			arg = arg + i;
-			ftbuiltin_export_value(environment, arg, &key);
+			if (*key && key[ft_strlen(key) - 1] == '+')
+			{
+				key[ft_strlen(key) - 1] = '\0';
+				_export_value(environment, arg, &key, true);
+			}
+			else
+				_export_value(environment, arg, &key, false);
 			j++;
 		}
 	}
