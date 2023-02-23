@@ -35,14 +35,26 @@ static void	ftbuiltin_unset_element(t_env *environment, char *arg)
 	}
 }
 
-void	ftbuiltin_unset(t_env *environment, char *arg)
+void	ftbuiltin_unset(t_env *environment, char **args)
 {
+	size_t	i;
+	char	*arg;
+
 	g_returnval = 0;
-	if (!arg)
-		return ;
-	while (*arg && ft_strchr(SEPARATORS, *arg))
-		arg++;
-	if (*arg == '\0')
-		return ;
-	ftbuiltin_unset_element(environment, arg);
+	i = 1;
+	while (args[i])
+	{
+		arg = args[i];
+		if (*arg == '\0')
+			return ;
+		if (!ft_strinset(arg, VARNAMESET, ft_strlen(arg)))
+		{
+			ft_printf("minishell: unset: `%s': not a valid identifier\n", arg);
+			g_returnval = 1;
+			return ;
+		}
+		else
+			ftbuiltin_unset_element(environment, arg);
+		i++;
+	}
 }

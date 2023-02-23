@@ -22,7 +22,6 @@
 # define PROMPT "minishell →"
 # define ERRALLOC "minishell: Could not allocate memory.\n"
 # define SEPARATOR -84
-# define SEPARATORS " \n\r\t\b\f\v" // PROBLEME C"EST QUOI CE TRUC
 # define VARNAMESET "abcdefghijklmnopqrstuvwxyz\
 ABCDEFGHIJKLMNOPQRSTUVWXYZ\
 0123456789_"
@@ -51,7 +50,7 @@ typedef struct s_env
 
 void	ftbuiltin_pwd(t_env *environment);
 void	ftbuiltin_export(t_env *environment, char **args);
-void	ftbuiltin_unset(t_env *environment, char *arg);
+void	ftbuiltin_unset(t_env *environment, char **args);
 void	ftbuiltin_env(t_env *environment);
 void	ftbuiltin_exit(t_env *environment, char **args, char *line);
 
