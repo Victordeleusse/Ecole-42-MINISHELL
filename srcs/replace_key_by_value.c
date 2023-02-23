@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   line_formatting.c                                  :+:      :+:    :+:   */
+/*   parse_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static char	*_replace_key_by_value(t_env *environment, char *line)
+char	*replace_key_by_value(t_env *environment, char *line)
 {
 	char	*first_part;
 	char	*second_part;
@@ -52,20 +52,4 @@ static char	*_replace_key_by_value(t_env *environment, char *line)
 		i++;
 	}
 	return (line);
-}
-
-int	line_formatting(t_env *environment, char **line)
-{
-	(void) environment;
-	if (!quotes_interpretation(*line))
-		return (0);
-	*line = _replace_key_by_value(environment, *line);
-	if (!line)
-	{
-		ft_putstr_fd(ERRALLOC, 2);
-		g_returnval = 12;
-		closing_the_program(environment);
-		exit(g_returnval);
-	}
-	return (1);
 }

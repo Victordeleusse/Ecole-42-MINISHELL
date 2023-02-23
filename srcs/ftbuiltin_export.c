@@ -41,6 +41,7 @@ static void	ftbuiltin_export_element(t_env *environment, \
 	{
 		if (ft_strcmp(elem->key, key) == 0)
 		{
+			free(key);
 			elem->exported = 1;
 			if (value)
 			{
@@ -53,6 +54,8 @@ static void	ftbuiltin_export_element(t_env *environment, \
 	}
 	if (value)
 		env_lstaddback(environment, key, value, 1);
+	else
+		free(key);
 }
 
 static int	ftbuiltin_export_key(char *arg, char *key, size_t i)
@@ -66,7 +69,6 @@ static int	ftbuiltin_export_key(char *arg, char *key, size_t i)
 	if (!ft_strinset(key, VARNAMESET, ft_strlen(key) - 1))
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
-		free(key);
 		g_returnval = 1;
 		return (0);
 	}
@@ -95,26 +97,35 @@ static char	*ftbuiltin_export_value(t_env *environment, char *arg, char **key)
 	return (value);
 }
 
-void	ftbuiltin_export(t_env *environment, char *arg)
+void	ftbuiltin_export(t_env *environment, char **args)
 {
 	char	*key;
-	char	*value;
+	size_t	j;
 	size_t	i;
-	
-	if (!arg)
-		ftbuiltin_export_noarg(environment);
-	if (*arg == '\0')
+	char	*arg;
+
+	if (!args[1])
 		ftbuiltin_export_noarg(environment);
 	else
 	{
-		i = 0;
-		while (arg[i] && arg[i] != '=')
-			i++;
-		key = ft_substr(arg, 0, i);
-		if (!ftbuiltin_export_key(arg, key, i))
-			return ;
-		arg = arg + i;
-		value = ftbuiltin_export_value(environment, arg, &key);
+		j = 1;
+		while (args[j])
+		{
+			arg = args[j];
+			i = 0;
+			while (arg[i] && arg[i] != '=')
+				i++;
+			key = ft_substr(arg, 0, i);
+			if (!ftbuiltin_export_key(arg, key, i))
+			{
+				free(key);
+				return ;
+			}
+			arg = arg + i;
+			ftbuiltin_export_value(environment, arg, &key);
+			j++;
+		}
 	}
 	g_returnval = 0;
 }
+

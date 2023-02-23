@@ -1,23 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ftbuiltin_exit.c                                   :+:      :+:    :+:   */
+/*   parse_args.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 10:52:40 by tchevrie         ###   ########.fr       */
+/*   Created: 2023/02/23 13:03:48 by tchevrie          #+#    #+#             */
+/*   Updated: 2023/02/23 16:19:30 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ftbuiltin_exit(t_env *environment, char **args, char *line)
+char	**parse_args(t_env *environment, char **line)
 {
-	free_tabstr(args);
-	if (line)
-		free(line);
-	closing_the_program(environment);
-	g_returnval = 0;
-	exit(g_returnval);
+	char	**args;
+	size_t	i;
+
+	(void) environment;
+	if (!quotes_interpretation(environment, line))
+		return (NULL);
+	args = ft_split(*line, SEPARATOR);
+	if (!args)
+	{
+		ft_putstr_fd(ERRALLOC, 2);
+		g_returnval = 12;
+		free(*line);
+		exit(g_returnval);
+	}
+	return (args);
 }

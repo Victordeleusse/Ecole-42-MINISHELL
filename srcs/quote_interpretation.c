@@ -37,7 +37,7 @@ static void	_actions_doublequoteopen(char *line, \
 		(*i)--;
 	}
 	else if (line[(*i)] == '$' && line[(*i) + 1] \
-	&& ft_strinset(line + (*i) + 1, VARNAMESET "\"\'", 1))
+	&& ft_strinset(line + (*i) + 1, VARNAMESET, 1))
 		line[(*i)] = VARKEY;
 }
 
@@ -60,16 +60,19 @@ static void	_actions_default(char *line, \
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 		(*i)--;
 	}
-	else if (strchr(WHITESPACES, line[(*i)]))
-	{
-		while (line[(*i) + 1] && strchr(WHITESPACES, line[(*i) + 1]))
-			ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
-	}
+	else if (ft_iswhitespace(line[(*i)]))
+		line[(*i)] = SEPARATOR;
 	else if (line[(*i)] == '$' && line[(*i) + 1] \
-	&& ft_strinset(line + (*i) + 1, VARNAMESET "\"\'", 1))
+	&& ft_strinset(line + (*i) + 1, VARNAMESET, 1))
 	{
 		(void) j;
 		line[(*i)] = VARKEY;
+	}
+	else if (line[(*i)] == '$' && line[(*i) + 1] \
+	&& ft_strinset(line + (*i) + 1, "\"\'", 1))
+	{
+		(void) j;
+		line[(*i)] = SEPARATOR;
 	}
 }
 
@@ -87,26 +90,30 @@ static int	_detect_missing_quote(int single_quote_open, int double_quote_open)
 		return (1);
 }
 
-int	quotes_interpretation(char *line)
+int	quotes_interpretation(t_env *environment, char **line)
 {
+	char	*ptr;
 	size_t	i;
 	int		single_quote_open;
 	int		double_quote_open;
 
-	ft_strip(line);
+	ft_strip(*line);
 	i = 0;
 	single_quote_open = false;
 	double_quote_open = false;
-	while (line[i])
+	while ((*line)[i])
 	{
 		if (single_quote_open)
-			_actions_singlequoteopen(line, &single_quote_open, &i);
+			_actions_singlequoteopen((*line), &single_quote_open, &i);
 		else if (double_quote_open)
-			_actions_doublequoteopen(line, &double_quote_open, &i);
+			_actions_doublequoteopen((*line), &double_quote_open, &i);
 		else
-			_actions_default(line, \
+			_actions_default((*line), \
 			&single_quote_open, &double_quote_open, &i);
-		i++;
+		ptr = *line;
+		(*line) = replace_key_by_value(environment, (*line));
+		if (ptr == *line)
+			i++;
 	}
 	return \
 	(_detect_missing_quote(single_quote_open, double_quote_open));

@@ -99,5 +99,6 @@ char	*ft_strchrset(const char *s, char *set);
 char	*ft_strip(char *str);
 int		ft_strinset(const char *str, const char *set, size_t len);
 int		ft_iswhitespace(char c);
+char	*ft_strinsert(char *str, char *insertion, int index);
 
 #endif
