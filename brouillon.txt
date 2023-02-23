@@ -1,0 +1,25 @@
+➜  /tmp ./a.out test
+test
+➜  /tmp ./a.out test test
+test
+test
+➜  /tmp ./a.out "1""2"   
+12
+➜  /tmp ./a.out "1" "2"
+1
+2
+➜  /tmp ./a.out "1"'2'   
+12
+➜  /tmp ./a.out "1"'2'3
+123
+➜  /tmp ./a.out "1"'2'34
+1234
+➜  /tmp ./a.out "1"'2'34 5 '67'
+1234
+5
+67
+➜  /tmp ./a.out "1"'2'34.5 '67'
+1234.5
+67
+
+DEDUCTION: On ne change d'arg que lorsque l'on rencontre un whitespace

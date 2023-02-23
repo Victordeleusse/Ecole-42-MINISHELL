@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environnement.c                                    :+:      :+:    :+:   */
+/*   environment.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,16 +12,16 @@
 
 #include "minishell.h"
 
-void	free_environnement(t_env *environnement)
+void	free_environment(t_env *environment)
 {
 	t_env	*tmp;
 
-	if (environnement && environnement->pwd)
-		free(environnement->pwd);
-	while (environnement)
+	if (environment && environment->pwd)
+		free(environment->pwd);
+	while (environment)
 	{
-		tmp = environnement;
-		environnement = environnement->next;
+		tmp = environment;
+		environment = environment->next;
 		if (tmp->key)
 			free(tmp->key);
 		if (tmp->value)
@@ -30,11 +30,11 @@ void	free_environnement(t_env *environnement)
 	}
 }
 
-char	*get_value_by_key(t_env *environnement, char *key)
+char	*get_value_by_key(t_env *environment, char *key)
 {
 	t_env	*current;
 
-	current = environnement;
+	current = environment;
 	if (!current)
 		return (NULL);
 	current = current->next;

@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_environnement.c                                :+:      :+:    :+:   */
+/*   get_environment.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,16 +14,16 @@
 
 static t_env	*env_initialisation(void)
 {
-	t_env	*environnement;
+	t_env	*environment;
 
-	environnement = malloc(sizeof(t_env));
-	if (!environnement)
+	environment = malloc(sizeof(t_env));
+	if (!environment)
 		return (ft_putstr_fd(ERRALLOC, 2), NULL);
-	environnement->key = NULL;
-	environnement->value = NULL;
-	environnement->exported = 1;
-	environnement->next = NULL;
-	return (environnement);
+	environment->key = NULL;
+	environment->value = NULL;
+	environment->exported = 1;
+	environment->next = NULL;
+	return (environment);
 }
 
 static t_env	*env_nextelement(char *envp[], size_t i, size_t j)
@@ -40,15 +40,15 @@ static t_env	*env_nextelement(char *envp[], size_t i, size_t j)
 	return (element);
 }
 
-t_env	*get_environnement(char *envp[])
+t_env	*get_environment(char *envp[])
 {
 	size_t	i;
 	size_t	j;
-	t_env	*environnement;
+	t_env	*environment;
 	t_env	*current_line;
 
-	environnement = env_initialisation();
-	current_line = environnement;
+	environment = env_initialisation();
+	current_line = environment;
 	i = 0;
 	while (envp[i])
 	{
@@ -60,10 +60,10 @@ t_env	*get_environnement(char *envp[])
 			current_line->next = env_nextelement(envp, i, j);
 			current_line = current_line->next;
 			if (!current_line)
-				return (free_environnement(environnement), NULL);
+				return (free_environment(environment), NULL);
 		}
 		i++;
 	}
-	environnement->pwd = getcwd(NULL, 0);
-	return (environnement);
+	environment->pwd = getcwd(NULL, 0);
+	return (environment);
 }

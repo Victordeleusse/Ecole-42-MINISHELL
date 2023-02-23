@@ -6,34 +6,34 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:26:08 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 09:28:19 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 12:10:36 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ftbuiltin_export_noarg(t_env *environnement)
+static void	ftbuiltin_export_noarg(t_env *environment)
 {
-	while (environnement)
+	while (environment)
 	{
-		if (environnement->key)
+		if (environment->key)
 		{
 			write(1, "export ", 7);
-			write(1, environnement->key, ft_strlen(environnement->key));
+			write(1, environment->key, ft_strlen(environment->key));
 			write(1, "=", 1);
-			write(1, environnement->value, ft_strlen(environnement->value));
+			write(1, environment->value, ft_strlen(environment->value));
 			write(1, "\n", 1);
 		}
-		environnement = environnement->next;
+		environment = environment->next;
 	}
 }
 
-static void	ftbuiltin_export_element(t_env *environnement, \
+static void	ftbuiltin_export_element(t_env *environment, \
 	char *key, char *value)
 {
 	t_env	*elem;
 	
-	elem = environnement;
+	elem = environment;
 	if (!key || !elem)
 		return ;
 	elem = elem->next;
@@ -52,67 +52,69 @@ static void	ftbuiltin_export_element(t_env *environnement, \
 		elem = elem->next;
 	}
 	if (value)
-		env_lstaddback(environnement, key, value, 1);
+		env_lstaddback(environment, key, value, 1);
 }
 
-static int	ftbuiltin_export_key(t_env *environnement, char *arg, char *key, size_t i)
+static int	ftbuiltin_export_key(char *arg, char *key, size_t i)
 {
+	(void) i;
 	if (!key)
 	{
-		RETURNVAL = 1;
+		g_returnval = 1;
 		return (0);
 	}
-	if (ft_strchrset(key, "-+/*=") != NULL || ft_strchrset(key, SEPARATORS))
+	if (!ft_strinset(key, VARNAMESET, ft_strlen(key) - 1))
 	{
 		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
 		free(key);
-		RETURNVAL = 1;
+		g_returnval = 1;
 		return (0);
 	}
 	return (1);
 }
 
-static void	ftbuiltin_export_value(t_env *environnement, char *arg, char *key, char *value)
+static char	*ftbuiltin_export_value(t_env *environment, char *arg, char **key)
 {
+	char	*value;
+
+	value = NULL;
 	if (arg[0] == '\0')
-		ftbuiltin_export_element(environnement, key, NULL);
+		ftbuiltin_export_element(environment, *key, NULL);
 	else
 	{
 		value = ft_substr(arg, 1, ft_strlen(arg + 1));
 		if (!value)
 		{
-			free(key);
-			RETURNVAL = 1;
-			return ;
+			free(*key);
+			*key = NULL;
+			g_returnval = 1;
+			return (NULL);
 		}
-		ftbuiltin_export_element(environnement, key, value);
+		ftbuiltin_export_element(environment, *key, value);
 	}
+	return (value);
 }
 
-void	ftbuiltin_export(t_env *environnement, char *arg)
+void	ftbuiltin_export(t_env *environment, char *arg)
 {
 	char	*key;
 	char	*value;
 	size_t	i;
 	
-	ft_printf("arg: |%s|\n", arg);
-	return ;
 	if (!arg)
-		ftbuiltin_export_noarg(environnement);
-	while (*arg && ft_strchr(SEPARATORS, *arg))
-		arg++;
+		ftbuiltin_export_noarg(environment);
 	if (*arg == '\0')
-		ftbuiltin_export_noarg(environnement);
+		ftbuiltin_export_noarg(environment);
 	else
 	{
 		i = 0;
 		while (arg[i] && arg[i] != '=')
 			i++;
 		key = ft_substr(arg, 0, i);
-		if (!ftbuiltin_export_key(environnement, arg, key, i))
+		if (!ftbuiltin_export_key(arg, key, i))
 			return ;
 		arg = arg + i;
-		ftbuiltin_export_value(environnement, arg, key, value);
+		value = ftbuiltin_export_value(environment, arg, &key);
 	}
-	RETURNVAL = 0;
+	g_returnval = 0;
 }

@@ -6,18 +6,18 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:15:33 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 18:20:47 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 10:52:40 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ftbuiltin_unset_element(t_env *environnement, char *arg)
+static void	ftbuiltin_unset_element(t_env *environment, char *arg)
 {
 	t_env	*elem;
 	t_env	*tmp;
 	
-	elem = environnement;
+	elem = environment;
 	if (!arg || !elem)
 		return ;
 	while (elem && elem->next)
@@ -35,14 +35,14 @@ static void	ftbuiltin_unset_element(t_env *environnement, char *arg)
 	}
 }
 
-void	ftbuiltin_unset(t_env *environnement, char *arg)
+void	ftbuiltin_unset(t_env *environment, char *arg)
 {
-	RETURNVAL = 0;
+	g_returnval = 0;
 	if (!arg)
 		return ;
 	while (*arg && ft_strchr(SEPARATORS, *arg))
 		arg++;
 	if (*arg == '\0')
 		return ;
-	ftbuiltin_unset_element(environnement, arg);
+	ftbuiltin_unset_element(environment, arg);
 }

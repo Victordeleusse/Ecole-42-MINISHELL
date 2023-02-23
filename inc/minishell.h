@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/22 18:15:47 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 14:09:12 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,23 @@
 # include <readline/history.h>
 # include <signal.h>
 
+# define PROMPT "minishell →"
 # define ERRALLOC "minishell: Could not allocate memory.\n"
-# define SEPARATORS " \n\r\t\b\f\v"
-extern int RETURNVAL;
+# define SEPARATORS " \n\r\t\b\f\v" // PROBLEME C"EST QUOI CE TRUC
+# define VARNAMESET "abcdefghijklmnopqrstuvwxyz\
+ABCDEFGHIJKLMNOPQRSTUVWXYZ\
+0123456789_"
+# define VARKEY -42
+
+# ifndef true
+#  define true 1
+# endif
+
+# ifndef false
+#  define false 0
+# endif
+
+extern int	g_returnval;
 
 typedef struct s_env
 {
@@ -32,31 +46,39 @@ typedef struct s_env
 	char			*pwd;
 }					t_env;
 
-/* Built-in Functions */
-void	ftbuiltin_pwd(t_env *environnement);
-void	ftbuiltin_export(t_env *environnement, char *arg);
-void	ftbuiltin_unset(t_env *environnement, char *arg);
-void	ftbuiltin_env(t_env *environnement);
-void	ftbuiltin_exit(t_env *environnement, char *line);
+				/* Built-in Functions */
+
+void	ftbuiltin_pwd(t_env *environment);
+void	ftbuiltin_export(t_env *environment, char *arg);
+void	ftbuiltin_unset(t_env *environment, char *arg);
+void	ftbuiltin_env(t_env *environment);
+void	ftbuiltin_exit(t_env *environment, char *line);
+
+					/* Parsing */
+
+// parsing.c
+void	parsing(t_env *environment, char **line);
+// line_formatting.c
+int		line_formatting(t_env *environment, char **line);
+// quotes_interpretation.c
+int		quotes_interpretation(char *line);
+
+				/* One-time actions */
 
 // opening.c
 t_env	*opening(int argc, char **argv, char *envp[]);
-
+// closing.c
+void	closing_the_program(t_env *environment);
 // signal.c
 void	change_signal_behavior(void);
+// get_environment.c
+t_env	*get_environment(char *envp[]);
 
-// environnement.c
-void	free_environnement(t_env *environnement);
-char	*get_value_by_key(t_env *environnement, char *key);
+					/* Utils */
+
+// environment.c
+void	free_environment(t_env *environment);
+char	*get_value_by_key(t_env *environment, char *key);
 int		env_lstaddback(t_env *env, char *key, char *value, int exported);
-
-// get_environnement.c
-t_env	*get_environnement(char *envp[]);
-
-// parsing.c
-void	parsing(t_env *environnement, char *line);
-
-// closing.c
-void	closing_the_program(t_env *environnement);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:13:35 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 09:48:02 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 16:24:52 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 # include <sys/stat.h>
 # include <fcntl.h> 
 # include <stdint.h>
+
+/* Colors */
+# define RED "\033[0;31m"
+# define GREEN "\033[32m"
+# define BLUE "\033[34m"
+# define WHITE "\033[37m"
+# define MAGENTA "\033[35m"
+# define ENDCL "\033[0m"
+
+# define WHITESPACES " \t\n\v\f\r"
 
 /* libc functions */
 void	*ft_memset(void *b, int c, size_t len);
@@ -87,5 +97,7 @@ void	free_tabstr(char **tab);
 size_t	ft_countc(const char *str, char c);
 char	*ft_strchrset(const char *s, char *set);
 char	*ft_strip(char *str);
+int		ft_strinset(const char *str, const char *set, size_t len);
+int		ft_iswhitespace(char c);
 
 #endif

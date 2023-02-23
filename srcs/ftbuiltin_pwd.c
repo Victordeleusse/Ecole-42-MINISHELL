@@ -6,16 +6,16 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 10:49:33 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 09:16:26 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/23 10:08:18 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ftbuiltin_pwd(t_env *environnement)
+void	ftbuiltin_pwd(t_env *environment)
 {
-	if (environnement && environnement->pwd)
-		free(environnement->pwd);
-	environnement->pwd = getcwd(NULL, 0);
-	ft_printf("%s\n", environnement->pwd);
+	if (environment && environment->pwd)
+		free(environment->pwd);
+	environment->pwd = getcwd(NULL, 0);
+	ft_printf("%s\n", environment->pwd);
 }
