@@ -65,6 +65,32 @@ void	_parse_cmd(t_env *environment, char **cmds, char **line)
 	free_tabstr(args);
 }
 
+// char	*change_local_variables(char *line)
+// {
+// 	char	*var;
+// 	size_t	i;
+
+// 	if (!line)
+// 		return (NULL);
+// 	i = 0;
+// 	while (ft_iswhitespace(line[i]))
+// 		i++;
+// 	var = line + i;
+// 	while (ft_inset(line[i], VARNAMESET))
+// 		i++;
+// 	if (var == line + i || line[i] != '=')
+// 		return (line);
+// 	return (line);
+// }
+
+/*
+	On fait une variable avec la clef
+	On donne a une fonction la key et la str a partir du '=' + 1
+	Celle-ci trouve la valeur correspondante, et exporte le tout en var locale et renvoie un pointeur vers le caracter apres la fin de la value
+	ce qui est renvoye est donc la nouvelle line, maintenant videe de key=value
+	Et tant qu'on trouve une variable a export localement, on reproduit le tout a nouveau
+*/
+
 void	parsing(t_env *environment, char **line)
 {
 	char	**cmds;
@@ -76,6 +102,8 @@ void	parsing(t_env *environment, char **line)
 	i = 0;
 	while (cmds[i])
 	{
+		cmds[i] = ft_strip(cmds[i]);
+		// cmds[i] = change_local_variables(cmds[i]);
 		_parse_cmd(environment, cmds, cmds + i);
 		i++;
 	}
