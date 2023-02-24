@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   Export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,17 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#ifndef EXPORT_H
+# define EXPORT_H
 
 # include "Environment.h"
-# include "Signal_Message.h"
-# include "Export.h"
-# include "Unset.h"
-# include "Directory.h"
 
-# define ERR_ALLOC	"Erreur lors d'allocation memoire"
+////////////////////// Export.c /////////////////////
 
-extern int GLOBAL_RETURNVAL;
+void	ft_builtin_export_function(t_env_elem **envp_list, char **tab_args);
 
 #endif

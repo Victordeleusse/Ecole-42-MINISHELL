@@ -27,9 +27,9 @@ int	ft_str_detect(char *str, char *set)
 	while (str[i])
 	{
 		j = 0;
-		while (str[j])
+		while (set[j])
 		{
-			if (str[i] == str[j])
+			if (str[i] == set[j])
 				return (1);
 			j++;
 		}
@@ -42,6 +42,8 @@ int	ft_is_a_variable(char *ligne)
 {
 	int	i;
 
+	if (!ligne)
+		return (0);
 	i = 0;
 	while (ligne[i])
 	{
@@ -111,6 +113,8 @@ void	ft_lst_envp_add_back(t_env_elem **envp_elem_list, t_env_elem *elem)
 {
 	t_env_elem	*last;
 
+	if (!elem || !envp_elem_list)
+		return ;
 	if (!*envp_elem_list)
 	{
 		*envp_elem_list = elem;
@@ -120,6 +124,41 @@ void	ft_lst_envp_add_back(t_env_elem **envp_elem_list, t_env_elem *elem)
 	while (last->next)
 		last = last->next;
 	last->next = elem;
+}
+
+void	ft_lst_envp_remove_elem(t_env_elem **envp_elem_list, char *key)
+{
+	t_env_elem	*begin;
+	t_env_elem	*to_delete;
+
+	if (!key || !envp_elem_list)
+		return ;
+	begin = *envp_elem_list;
+	if (!begin->next)
+	{
+		if (!ft_strcmp(begin->name, key))
+			*envp_elem_list = NULL;
+		return ;
+	}
+	while (begin->next && ft_strcmp(begin->next->name, key))
+		begin = begin->next;
+	if (!ft_strcmp(begin->next->name, key))
+	{
+		to_delete = begin->next;
+		begin->next = to_delete->next;
+		free(to_delete->name);
+		to_delete->next = 0;
+		free(to_delete);
+	}
+	if (!begin->next)
+	{
+		if (!ft_strcmp(begin->name, key))
+		{
+			free(begin->name);
+			free(begin);
+		}
+	}
+		return ;
 }
 
 // check si la variable est deja presente dans l environnement_list
@@ -157,6 +196,8 @@ int	ft_check_variable_name_is_valid(char *ligne)
 
 	i = 0;
 	name = ft_extract_name(ligne);
+	if (!name)
+		return (0);
 	len_name = ft_strlen(name);
 	if (name[len_name - 1] == '+')
 		name[len_name - 1] = '\0';

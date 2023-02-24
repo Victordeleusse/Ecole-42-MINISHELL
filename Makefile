@@ -5,9 +5,11 @@ CFLAGS = -Wall -Werror -Wextra -g -MMD
 LFLAGS = -LLibft_vde-leus -lft -lreadline
 
 define SRCS :=
-	Environment/Environment.c
-	Environment/Export.c
-	Environment/Utils_Environment.c
+	Built_in_functions/Environment.c
+	Built_in_functions/Export.c
+	Built_in_functions/Environment_utils.c
+	Built_in_functions/Unset.c
+	Built_in_functions/Directory.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

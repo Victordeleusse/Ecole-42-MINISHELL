@@ -14,6 +14,25 @@
 #include "libft.h"
 #include "minishell.h"
 
+// -> Genere ma nouvelle variable, d environnement ou non
+
+static t_env_elem	*ft_generate_new_variable(char *ligne, int is_exported)
+{
+	t_env_elem	*elem;
+
+	elem = 	ft_calloc(sizeof(t_env_elem), 1);
+	if (!elem)
+	{
+		GLOBAL_RETURNVAL = 1;
+		return (ft_message_err(ERR_ALLOC), NULL);
+	}
+	elem->name = ft_extract_name(ligne);
+	elem->value = ft_extract_value(ligne);
+	elem->is_export = is_exported;
+	elem->next = NULL;
+	return (elem);
+}
+
 // -> Genere une liste chaine contenant l environnement SEULEMENT 
 // - INITIALISATION SUR LAQUELLE VIENDRA SE RAJOUTER TOUTES LES VARIABLES, D ENVIRONNEMENT OU NON
 
@@ -43,30 +62,13 @@ t_env_elem	*ft_generate_envp_list(char **envp)
 	return (env_elem_list);
 }
 
-// -> Genere ma nouvelle variable, d environnement ou non
-
-t_env_elem	*ft_generate_new_variable(char *ligne, int is_exported)
-{
-	t_env_elem	*elem;
-
-	elem = 	ft_calloc(sizeof(t_env_elem), 1);
-	if (!elem)
-	{
-		GLOBAL_RETURNVAL = 1;
-		return (ft_message_err(ERR_ALLOC), NULL);
-	}
-	elem->name = ft_extract_name(ligne);
-	elem->value = ft_extract_value(ligne);
-	elem->is_export = is_exported;
-	elem->next = NULL;
-	return (elem);
-}
 
 // -> Exporte ma variable nouvelle (QUE CE SOIT UNE VAR D ENV OU NON) dans l environnement
 
-void	ft_export_new_variable(char *ligne, t_env_elem **envp_list, int is_exported)
+void	ft_export_new_variable(t_env_elem **envp_list, char *ligne, int is_exported)
 {
 	t_env_elem	*new_elem;
+	int			len_name;
 
 	if (!ligne)
 	{
@@ -74,6 +76,9 @@ void	ft_export_new_variable(char *ligne, t_env_elem **envp_list, int is_exported
 		return ;
 	}
 	new_elem = ft_generate_new_variable(ligne, is_exported);
+	len_name = ft_strlen(new_elem->name);
+	if (new_elem->name[len_name - 1] == '+')
+		new_elem->name[len_name - 1] = '\0';
 	ft_lst_envp_add_back(envp_list, new_elem);
 }
 

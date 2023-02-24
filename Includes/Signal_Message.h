@@ -13,14 +13,11 @@
 #ifndef SIGNAL_MESSAGE_H
 # define SIGNAL_MESSAGE_H
 
-# include "Environment.h"
+# include "minishell.h"
 
 ////////////////////// Signal.c /////////////////////
 
 void		ft_get_data(void);
-t_env_elem	*ft_generate_envp_list(char **envp);
-void		ft_export_variable_in_env(char *new_elem_env, t_env_elem **envp_list, int is_exported);
-int			ft_check_is_already_present_and_exported(t_env_elem **envp_elem_list, char *str_entry);
 
 ////////////////////// Message.c /////////////////////
 

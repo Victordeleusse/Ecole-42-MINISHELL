@@ -10,13 +10,13 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Environment.h"
+#include "Export.h"
 #include "libft.h"
 #include "minishell.h"
 
 // bash$ export -> Affiche l ensemble de mes variables d'environnement avec "export name=value"
 
-void	ft_export_empty_arg(char **envp_in_tab)
+static void	ft_export_empty_arg(char **envp_in_tab)
 {
 	int	i;
 
@@ -35,28 +35,32 @@ void	ft_builtin_export_function(t_env_elem **envp_list, char **tab_args)
 	int			i;
 	char		**envp_in_tab;
 
-	envp_in_tab = ft_envp_in_tab(envp_list); 
-	if (!tab_args[1])
-	{
-		ft_export_empty_arg(envp_in_tab);
-		GLOBAL_RETURNVAL = 0;
+	if (!envp_list || !tab_args)
 		return ;
-	}
-	i = 1;
-	while (tab_args[i])
-	{
-		if (!ft_is_a_variable(tab_args[i]))
-			i++;
-		else
+	envp_in_tab = ft_envp_in_tab(envp_list); 
+	if (!envp_in_tab)
+		return ;
+	if (!tab_args[1])
+		ft_export_empty_arg(envp_in_tab);
+	else 
+	{	
+		i = 1;
+		while (tab_args[i])
 		{
-			if (!ft_check_variable_name_is_valid(tab_args[i]))
-				;
-			else if (ft_check_variable_is_already_present(envp_list, tab_args[i]))
-				ft_add_or_replace_value(envp_list, tab_args[i]);
+			if (!ft_is_a_variable(tab_args[i]))
+				i++;
 			else
-				ft_export_new_variable(tab_args[i], envp_list, 1);
-			i++;
+			{
+				if (!ft_check_variable_name_is_valid(tab_args[i]))
+					;
+				else if (ft_check_variable_is_already_present(envp_list, tab_args[i]))
+					ft_add_or_replace_value(envp_list, tab_args[i]);
+				else
+					ft_export_new_variable(envp_list, tab_args[i], 1);
+				i++;
+			}
 		}
 	}
+	GLOBAL_RETURNVAL = 0;
 }
 

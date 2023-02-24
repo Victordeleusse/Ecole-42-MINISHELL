@@ -12,7 +12,8 @@
 
 #include <stdio.h>
 #include "minishell.h"
-#include "Environment.h"
+#include "libft.h"
+
 
 int	GLOBAL_RETURNVAL;
 
@@ -20,23 +21,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_env_elem	*my_envp;
 	t_env_elem	*begin;
+	char		**args_tab_export;
+	char		export_instruction[] = "export PIERRE==10 NICO TITOU=32";
+	char		**args_tab_unset;
+	char		unset_instruction[] = "unset ";
+
 	(void)argc;
 	(void)argv;
-	// int			test;
-
-	// // ft_get_data();
 	my_envp = ft_generate_envp_list(envp);
-	// ft_export_variable_in_env("VICTOR=", &my_envp, 1);
-	begin = my_envp;
-	while (begin)
-	{
-		printf("%s ->", begin->name);
-		printf("%s\n", begin->value);
-		begin = begin->next;
-	}
-	// my_envp = ft_generate_envp_list(envp);
-	printf("\n\nMODIFS\n\n");
-	ft_add_or_replace_value(&my_envp, "VICTOR+=Bonjour");
+	args_tab_export = ft_split(export_instruction, ' ');
+	args_tab_unset = ft_split(unset_instruction, ' ');
+	// // ft_get_data();
+	ft_builtin_export_function(&my_envp, args_tab_export);
+	ft_builtin_unset_function(&my_envp, args_tab_unset);
+	printf("\n\n");
 	begin = my_envp;
 	while (begin)
 	{
