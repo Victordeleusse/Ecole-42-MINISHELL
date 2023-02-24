@@ -48,6 +48,7 @@ typedef struct s_env
 
 				/* Built-in Functions */
 
+void	ftbuiltin_echo(t_env *environment, char **args);
 void	ftbuiltin_pwd(t_env *environment);
 void	ftbuiltin_export(t_env *environment, char **args);
 void	ftbuiltin_unset(t_env *environment, char **args);

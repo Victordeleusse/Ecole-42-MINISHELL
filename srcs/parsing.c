@@ -14,7 +14,9 @@
 
 static int	parsing_builtin(t_env *environment, char **args, char *line)
 {
-	if (ft_strcmp(args[0], "pwd") == 0)
+	if (ft_strcmp(args[0], "echo") == 0)
+		ftbuiltin_echo(environment, args);
+	else if (ft_strcmp(args[0], "pwd") == 0)
 		ftbuiltin_pwd(environment);
 	else if (ft_strcmp(args[0], "export") == 0)
 		ftbuiltin_export(environment, args);
