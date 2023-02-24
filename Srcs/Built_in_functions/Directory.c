@@ -33,15 +33,15 @@ void	ft_builtin_current_directory(char **tab_args)
 	}
 }
 
-// void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args)
-// {
-// 	char	path[1024];
+void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args)
+{
+	char	path[1024];
 
-// 	if (getcwd(path, 1024) == NULL)
-// 	{	
-// 		perror(errno);
-// 		GLOBAL_RETURNVAL = 1;
-// 	}
-// 	write(1, path, ft_strlen(path));
-// 	return ;
-// }
+	if (getcwd(path, 1024) == NULL)
+	{	
+		perror(errno);
+		GLOBAL_RETURNVAL = 1;
+	}
+	write(1, path, ft_strlen(path));
+	return ;
+}
