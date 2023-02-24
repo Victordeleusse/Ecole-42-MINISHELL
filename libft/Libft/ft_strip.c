@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 09:47:45 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 10:25:33 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:12:19 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,4 @@ char	*ft_strip(char *str)
 	if (i > 0)
 		ft_memmove(str, str + i, ft_strlen(str + i) + 1);
 	return (str);
-	ft_printf("apres: |%s|\n", str);
 }

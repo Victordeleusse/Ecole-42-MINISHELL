@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:26:08 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 12:10:36 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:12:09 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ static void	_export_element(t_env *environment, \
 
 static int	_export_key(char *arg, char *key, size_t i)
 {
+	char	*errmsg;
+
 	(void) i;
 	if (!key)
 	{
@@ -78,7 +80,10 @@ static int	_export_key(char *arg, char *key, size_t i)
 	|| (!ft_strinset(key, VARNAMESET, ft_strlen(key) - 1)) \
 	|| (*key == '+' || !ft_strinset(key + (ft_strlen(key) - 1), VARNAMESET "+", 1)))
 	{
-		ft_printf("minishell: export: `%s': not a valid identifier\n", arg);
+		errmsg = ft_strrjoin("minishell: export: `", arg, "': not a valid identifier\n");
+		ft_putstr_fd(errmsg, 2);
+		if (errmsg)
+			free(errmsg);
 		g_returnval = 1;
 		return (0);
 	}

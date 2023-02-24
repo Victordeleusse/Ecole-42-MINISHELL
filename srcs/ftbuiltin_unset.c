@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:15:33 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 10:52:40 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:13:51 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ void	ftbuiltin_unset(t_env *environment, char **args)
 {
 	size_t	i;
 	char	*arg;
+	char	*errmsg;
 
 	g_returnval = 0;
 	i = 1;
@@ -49,7 +50,10 @@ void	ftbuiltin_unset(t_env *environment, char **args)
 			return ;
 		if (!ft_strinset(arg, VARNAMESET, ft_strlen(arg)))
 		{
-			ft_printf("minishell: unset: `%s': not a valid identifier\n", arg);
+			errmsg = ft_strrjoin("minishell: unset: `", arg, "': not a valid identifier\n");
+			ft_putstr_fd(errmsg, 2);
+			if (errmsg)
+				free(errmsg);
 			g_returnval = 1;
 			return ;
 		}

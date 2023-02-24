@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:04:02 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:10:08 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	parsing(t_env *environment, char **line)
 		execute_cmd(environment, args);
 		free(*line);
 		closing_the_program(environment);
-		ft_printf("Dans le fils g_returnval = %d\n", g_returnval);
 		exit(g_returnval);	
 	}
 	else
