@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:52:28 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:39:23 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	parsing_builtin(t_env *environment, char **args, char *line)
 {
 	if (ft_strcmp(args[0], "echo") == 0)
 		ftbuiltin_echo(environment, args);
+	if (ft_strcmp(args[0], "cd") == 0)
+		ftbuiltin_cd(environment, args);
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		ftbuiltin_pwd(environment);
 	else if (ft_strcmp(args[0], "export") == 0)

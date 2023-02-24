@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:13:35 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:24:52 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:18:03 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define BLUE "\033[34m"
 # define WHITE "\033[37m"
 # define MAGENTA "\033[35m"
+# define CYAN "\033[36m"
 # define ENDCL "\033[0m"
 
 # define WHITESPACES " \t\n\v\f\r"

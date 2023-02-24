@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 14:09:12 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 11:39:10 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_env
 				/* Built-in Functions */
 
 void	ftbuiltin_echo(t_env *environment, char **args);
+void	ftbuiltin_cd(t_env *environment, char **args);
 void	ftbuiltin_pwd(t_env *environment);
 void	ftbuiltin_export(t_env *environment, char **args);
 void	ftbuiltin_unset(t_env *environment, char **args);
