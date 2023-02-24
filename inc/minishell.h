@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 15:20:19 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:53:01 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,14 @@
 
 # define PROMPT "minishell →"
 # define ERRALLOC "minishell: Could not allocate memory.\n"
-# define SEPARATOR -84
+# define ERRPIPE "minishell: syntax error near unexpected token `|\'\n"
 # define VARNAMESET "abcdefghijklmnopqrstuvwxyz\
 ABCDEFGHIJKLMNOPQRSTUVWXYZ\
 0123456789_"
-# define VARKEY -42
+
+# define PIPECHAR -1
+# define VARKEY -2
+# define SEPARATOR -3
 
 # ifndef true
 #  define true 1
@@ -66,6 +69,8 @@ int		execute_cmd(t_env *environment, char **args);
 
 					/* Parsing */
 
+// split_cmds.c
+char	**split_cmds(char **ptr);
 // parsing.c
 void	parsing(t_env *environment, char **line);
 // parse_args.c

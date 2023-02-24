@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 15:13:35 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:01:01 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:45:25 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ int		ft_strinset(const char *str, const char *set, size_t len);
 int		ft_iswhitespace(char c);
 char	*ft_strinsert(char *str, char *insertion, int index);
 void	print_tabstr(char **tab);
+int		ft_inset(char c, char *set);
 
 #endif

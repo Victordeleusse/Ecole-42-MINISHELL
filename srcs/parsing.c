@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:10:08 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 17:45:21 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ static int	parsing_builtin(t_env *environment, char **args, char *line)
 	return (1);
 }
 
-void	parsing(t_env *environment, char **line)
+void	_parse_cmd(t_env *environment, char **cmds, char **line)
 {
 	char	**args;
 	pid_t	pid;
-
+	
 	args = parse_args(environment, line);
 	if (!args)
 		return ;
@@ -55,7 +55,7 @@ void	parsing(t_env *environment, char **line)
 	if (pid == 0)
 	{
 		execute_cmd(environment, args);
-		free(*line);
+		free_tabstr(cmds);
 		closing_the_program(environment);
 		exit(g_returnval);	
 	}
@@ -63,4 +63,21 @@ void	parsing(t_env *environment, char **line)
 		wait(&g_returnval);
 	g_returnval = WEXITSTATUS(g_returnval);
 	free_tabstr(args);
+}
+
+void	parsing(t_env *environment, char **line)
+{
+	char	**cmds;
+	size_t	i;
+
+	cmds = split_cmds(line);
+	if (!cmds)
+		return ;
+	i = 0;
+	while (cmds[i])
+	{
+		_parse_cmd(environment, cmds, cmds + i);
+		i++;
+	}
+	free_tabstr(cmds);
 }

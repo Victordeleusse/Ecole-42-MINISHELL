@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:48:16 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 15:56:28 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:19:03 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static void	_actions_singlequoteopen(char *line, \
 	int *single_quote_open, size_t *i)
 {
-	if (line[(*i)] == '\\' && line[(*i)] != '\0')
-		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
-	else if (line[(*i)] == '\'')
+	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
+	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
+	if (line[(*i)] == '\'')
 	{
 		*single_quote_open = false;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
@@ -28,9 +28,9 @@ static void	_actions_singlequoteopen(char *line, \
 static void	_actions_doublequoteopen(char *line, \
 	int *double_quote_open, size_t *i)
 {
-	if (line[(*i)] == '\\' && line[(*i)] != '\0')
-		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
-	else if (line[(*i)] == '\"')
+	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
+	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
+	if (line[(*i)] == '\"')
 	{
 		*double_quote_open = false;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
@@ -44,9 +44,9 @@ static void	_actions_doublequoteopen(char *line, \
 static void	_actions_default(char *line, \
 	int *single_quote_open, int *double_quote_open, size_t *i)
 {
-	if (line[(*i)] == '\\' && line[(*i)] != '\0')
-		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
-	else if (line[(*i)] == '\'')
+	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
+	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
+	if (line[(*i)] == '\'')
 	{
 		*single_quote_open = true;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
