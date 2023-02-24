@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 11:39:10 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:20:19 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,14 @@
 
 # include "libft.h"
 # include <stdio.h>
+
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <signal.h>
+
+# include <sys/types.h>
+# include <sys/wait.h>
+# include <sys/stat.h>
 
 # define PROMPT "minishell →"
 # define ERRALLOC "minishell: Could not allocate memory.\n"
@@ -46,15 +51,18 @@ typedef struct s_env
 	char			*pwd;
 }					t_env;
 
-				/* Built-in Functions */
+			/* Built-in Functions & Commands */
 
-void	ftbuiltin_echo(t_env *environment, char **args);
+void	ftbuiltin_echo(char **args);
 void	ftbuiltin_cd(t_env *environment, char **args);
 void	ftbuiltin_pwd(t_env *environment);
 void	ftbuiltin_export(t_env *environment, char **args);
 void	ftbuiltin_unset(t_env *environment, char **args);
 void	ftbuiltin_env(t_env *environment);
 void	ftbuiltin_exit(t_env *environment, char **args, char *line);
+
+// execute_cmd.c
+int		execute_cmd(t_env *environment, char **args);
 
 					/* Parsing */
 
@@ -78,11 +86,14 @@ void	change_signal_behavior(void);
 // get_environment.c
 t_env	*get_environment(char *envp[]);
 
-					/* Utils */
+					/* Environment */
 
 // environment.c
+char	**format_environment(t_env *environment);
 void	free_environment(t_env *environment);
 char	*get_value_by_key(t_env *environment, char *key);
 int		env_lstaddback(t_env *env, char *key, char *value, int exported);
+// path.c
+char	**get_path(char *envp[]);
 
 #endif

@@ -6,17 +6,18 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:15:33 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 10:52:40 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:38:01 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ftbuiltin_echo(t_env *environment, char **args)
+void	ftbuiltin_echo(char **args)
 {
 	size_t	i;
 	int		newline;
 
+	g_returnval = 0;
 	newline = true;
 	i = 1;
 	if (!args[1])

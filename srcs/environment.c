@@ -30,6 +30,39 @@ void	free_environment(t_env *environment)
 	}
 }
 
+char	**format_environment(t_env *environment)
+{
+	t_env	*elem;
+	size_t	size;
+	size_t	i;
+	char	**env;
+
+	if (!environment)
+		return (NULL);
+	elem = environment->next;
+	size = 0;
+	while (elem)
+	{
+		elem = elem->next;
+		size++;
+	}
+	env = malloc(sizeof(char *) * (size + 1));
+	if (!env)
+		return (ft_putstr_fd(ERRALLOC, 2), NULL);
+	i = 0;
+	elem = environment->next;
+	while (i < size && elem)
+	{
+		env[i] = ft_strrjoin(elem->key, "=", elem->value);
+		if (!env[i])
+			return (free_tabstr(env), ft_putstr_fd(ERRALLOC, 2), NULL);
+		elem = elem->next;
+		i++;
+	}
+	env[i] = NULL;
+	return (env);
+}
+
 char	*get_value_by_key(t_env *environment, char *key)
 {
 	t_env	*current;

@@ -1,32 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_args.c                                  :+:      :+:    :+:   */
+/*   print_tabstr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 13:03:48 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:19:30 by tchevrie         ###   ########.fr       */
+/*   Created: 2023/02/24 14:54:03 by tchevrie          #+#    #+#             */
+/*   Updated: 2023/02/24 14:54:11 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-char	**parse_args(t_env *environment, char **line)
+void	print_tabstr(char **tab)
 {
-	char	**args;
+	size_t	i;
 
-	(void) environment;
-	if (!quotes_interpretation(environment, line))
-		return (NULL);
-	args = ft_split(*line, SEPARATOR);
-	if (!args)
+	if (!tab)
+		return ;
+	i = 0;
+	while (tab[i])
 	{
-		ft_putstr_fd(ERRALLOC, 2);
-		g_returnval = 12;
-		free(*line);
-		closing_the_program(environment);
-		exit(g_returnval);
+		ft_printf("%s\n", tab[i]);
+		i++;
 	}
-	return (args);
 }

@@ -1,32 +1,48 @@
+
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_args.c                                  :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/23 13:03:48 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/23 16:19:30 by tchevrie         ###   ########.fr       */
+/*   Created: 2023/01/25 01:02:28 by tchevrie          #+#    #+#             */
+/*   Updated: 2023/01/25 17:39:29 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	**parse_args(t_env *environment, char **line)
+static char	*get_path_ptr(char *envp[])
 {
-	char	**args;
+	int		i;
+	char	*ptr;
 
-	(void) environment;
-	if (!quotes_interpretation(environment, line))
-		return (NULL);
-	args = ft_split(*line, SEPARATOR);
-	if (!args)
+	i = 0;
+	while (1)
 	{
-		ft_putstr_fd(ERRALLOC, 2);
-		g_returnval = 12;
-		free(*line);
-		closing_the_program(environment);
-		exit(g_returnval);
+		ptr = envp[i];
+		if (!ptr)
+			break ;
+		if (strncmp(ptr, "PATH=", 5) == 0)
+			return (ptr);
+		i++;
 	}
-	return (args);
+	return (NULL);
+}
+
+char	**get_path(char *envp[])
+{
+	char	*path_ptr;
+	char	**path;
+
+	if (!envp)
+		return (NULL);
+	path_ptr = get_path_ptr(envp);
+	if (!path_ptr)
+		return (NULL);
+	path_ptr += 5;
+	path = ft_split(path_ptr, ':');
+	return (path);
 }

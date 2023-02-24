@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:34:21 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 12:06:37 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 15:19:54 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	_noarg(t_env *environment)
 void	ftbuiltin_cd(t_env *environment, char **args)
 {
 	char	*err_str;
-	char	*home;
 	int		r;
 
 	if (args && args[0] && !args[1])

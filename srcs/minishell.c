@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 11:28:06 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/24 16:00:35 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	main(int argc, char **argv, char *envp[])
 			free(line);
 	}
 	closing_the_program(environment);
+	ft_putstr_fd("exit\n", 2);
 	return (g_returnval);
 }
