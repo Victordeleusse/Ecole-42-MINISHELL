@@ -14,18 +14,19 @@
 #include "minishell.h"
 #include "Environment.h"
 
-int	RETURNVAL;
+int	GLOBAL_RETURNVAL;
 
 int	main(int argc, char **argv, char **envp)
 {
 	t_env_elem	*my_envp;
 	t_env_elem	*begin;
-	// int		i;
-
 	(void)argc;
 	(void)argv;
+	// int			test;
+
+	// // ft_get_data();
 	my_envp = ft_generate_envp_list(envp);
-	ft_export_variable_in_env("VICTOR=", &my_envp, 1);
+	// ft_export_variable_in_env("VICTOR=", &my_envp, 1);
 	begin = my_envp;
 	while (begin)
 	{
@@ -33,7 +34,15 @@ int	main(int argc, char **argv, char **envp)
 		printf("%s\n", begin->value);
 		begin = begin->next;
 	}
-	printf("\n\n%d\n",ft_check_is_already_present_and_exported(&my_envp, "VICTOR=bonjour"));
-	// ft_get_data();
+	// my_envp = ft_generate_envp_list(envp);
+	printf("\n\nMODIFS\n\n");
+	ft_add_or_replace_value(&my_envp, "VICTOR+=Bonjour");
+	begin = my_envp;
+	while (begin)
+	{
+		printf("%s ->", begin->name);
+		printf("%s\n", begin->value);
+		begin = begin->next;
+	}
 	return (0);
 }
