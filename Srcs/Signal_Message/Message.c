@@ -15,5 +15,7 @@
 
 void	ft_message_err(char	*str)
 {
-	write(1, str, ft_strlen(str));
+	write(2, str, ft_strlen(str));
+	write(2, "\n", 1);
+	S_GLOBAL.GLOBAL_RETURN = 1;
 }

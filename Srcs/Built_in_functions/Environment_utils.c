@@ -158,7 +158,8 @@ void	ft_lst_envp_remove_elem(t_env_elem **envp_elem_list, char *key)
 			free(begin);
 		}
 	}
-		return ;
+	if (!ft_strcmp(key, "HOME"))
+		S_GLOBAL.IS_HOME = 0;
 }
 
 // check si la variable est deja presente dans l environnement_list

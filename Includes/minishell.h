@@ -20,12 +20,18 @@
 # include "Directory.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
-# define ERR_IN_SHELL	"minishell-TitouVictor$: "
+# define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
+# define ERR_IN_SHELL_CD	"minishell-TitouVictor$: cd"
+# define ERR_CD_TOO_MANY_ARGS	"minishell-TitouVictor$: cd: too many arguments"
+# define ERR_CD_NO_HOME	"minishell-TitouVictor$: cd: HOME not set"
+# define ERR_CD	"cd"
 
 struct S_GLOBAL_MINISHELL
 {
 	int		GLOBAL_RETURN;
-	char	*PWD;
+	int		IS_HOME;
+	char	*HOME_PATH;
+	char	PWD[1024];
 };
 
 extern struct S_GLOBAL_MINISHELL S_GLOBAL;

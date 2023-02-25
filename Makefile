@@ -9,7 +9,7 @@ define SRCS :=
 	Built_in_functions/Export.c
 	Built_in_functions/Environment_utils.c
 	Built_in_functions/Unset.c
-	Built_in_functions/Directory.c
+	Built_in_functions/Directory_PWD_CD.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

@@ -13,7 +13,7 @@
 #ifndef DIRECTORY_H
 # define DIRECTORY_H
 
-void	ft_builtin_get_current_directory(char **args_tab);
-void	ft_builtin_change_directory(char **args_tab);
+void	ft_builtin_get_current_directory(void);
+void	ft_builtin_change_directory(char **tab_args);
 
 #endif
