@@ -18,13 +18,17 @@
 # include "Export.h"
 # include "Unset.h"
 # include "Directory.h"
+# include "Exit_and_Free.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
 # define ERR_IN_SHELL_CD	"minishell-TitouVictor$: cd"
+# define ERR_IN_SHELL_EXIT	"minishell-TitouVictor$: exit: "
 # define ERR_CD_TOO_MANY_ARGS	"minishell-TitouVictor$: cd: too many arguments"
 # define ERR_CD_NO_HOME	"minishell-TitouVictor$: cd: HOME not set"
 # define ERR_CD	"cd"
+# define ERR_ENV_TOO_MANY_ARGS	"minishell-TitouVictor$: cd: too many arguments"
+# define ERR_EXIT_TOO_MANY_ARGS	"minishell-TitouVictor$: exit: too many arguments"
 
 struct S_GLOBAL_MINISHELL
 {
