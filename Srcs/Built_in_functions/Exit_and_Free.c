@@ -97,7 +97,6 @@ void	ft_builtin_exit_function(t_env_elem **envp_list, char **tab_args)
 			nombre = nombre + 256;
 	}
 	S_GLOBAL.GLOBAL_RETURN = nombre % 256;
-	fprintf(stderr, "\n\nSORTIE THEORIQUE : %d\n", S_GLOBAL.GLOBAL_RETURN);
 	ft_free_all(envp_list, tab_args);
 	exit(S_GLOBAL.GLOBAL_RETURN);
 }
