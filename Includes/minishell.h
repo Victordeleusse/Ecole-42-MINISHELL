@@ -20,7 +20,14 @@
 # include "Directory.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
+# define ERR_IN_SHELL	"minishell-TitouVictor$: "
 
-extern int GLOBAL_RETURNVAL;
+struct S_GLOBAL_MINISHELL
+{
+	int		GLOBAL_RETURN;
+	char	*PWD;
+};
+
+extern struct S_GLOBAL_MINISHELL S_GLOBAL;
 
 #endif

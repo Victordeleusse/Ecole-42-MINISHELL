@@ -206,7 +206,7 @@ int	ft_check_variable_name_is_valid(char *ligne)
 		write(1, "export: ", ft_strlen("export: "));
 		write(1, name, ft_strlen(name));
 		write(1, " Invalid name : not a valid identifier", ft_strlen(" Invalid name : not a valid identifier"));
-		GLOBAL_RETURNVAL = 1;
+		S_GLOBAL.GLOBAL_RETURN = 1;
 		free(name);
 		return (0);
 	}

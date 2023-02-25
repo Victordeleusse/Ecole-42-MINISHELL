@@ -61,6 +61,6 @@ void	ft_builtin_export_function(t_env_elem **envp_list, char **tab_args)
 			}
 		}
 	}
-	GLOBAL_RETURNVAL = 0;
+	S_GLOBAL.GLOBAL_RETURN = 0;
 }
 

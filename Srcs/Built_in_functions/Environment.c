@@ -23,11 +23,16 @@ static t_env_elem	*ft_generate_new_variable(char *ligne, int is_exported)
 	elem = 	ft_calloc(sizeof(t_env_elem), 1);
 	if (!elem)
 	{
-		GLOBAL_RETURNVAL = 1;
+		S_GLOBAL.GLOBAL_RETURN = 1;
 		return (ft_message_err(ERR_ALLOC), NULL);
 	}
 	elem->name = ft_extract_name(ligne);
 	elem->value = ft_extract_value(ligne);
+	if (!ft_strcmp(elem->name, "HOME"))
+	{	
+		S_GLOBAL.PWD = ft_calloc(sizeof(char), (ft_strlen(elem->value) + 1));
+		ft_strlcpy(S_GLOBAL.PWD, elem->value, ft_strlen(elem->value) + 1);
+	}
 	elem->is_export = is_exported;
 	elem->next = NULL;
 	return (elem);
@@ -44,17 +49,17 @@ t_env_elem	*ft_generate_envp_list(char **envp)
 	t_env_elem		*next_elem;
 
 	if (!envp || !envp[0])
-		return (GLOBAL_RETURNVAL = 1, NULL);
+		return (S_GLOBAL.GLOBAL_RETURN = 1, NULL);
 	env_elem_list = ft_generate_new_variable(envp[0], 1);
 	if (!env_elem_list)
-		return (GLOBAL_RETURNVAL = 1, ft_message_err(ERR_ALLOC), NULL);
+		return (S_GLOBAL.GLOBAL_RETURN = 1, ft_message_err(ERR_ALLOC), NULL);
 	begin = env_elem_list;
 	i = 1;
 	while (envp[i])
 	{
 		next_elem = ft_generate_new_variable(envp[i], 1);
 		if (!next_elem)
-			return (GLOBAL_RETURNVAL = 1, ft_message_err(ERR_ALLOC), NULL);
+			return (S_GLOBAL.GLOBAL_RETURN = 1, ft_message_err(ERR_ALLOC), NULL);
 		begin->next = next_elem;
 		begin = begin->next;
 		i++;
@@ -72,7 +77,7 @@ void	ft_export_new_variable(t_env_elem **envp_list, char *ligne, int is_exported
 
 	if (!ligne)
 	{
-		GLOBAL_RETURNVAL = 1;
+		S_GLOBAL.GLOBAL_RETURN = 1;
 		return ;
 	}
 	new_elem = ft_generate_new_variable(ligne, is_exported);
@@ -141,7 +146,7 @@ char	**ft_envp_in_tab(t_env_elem	**env_elem_list)
 	}
 	envp_tab = ft_calloc(sizeof(char *), len + 1);
 	if (!envp_tab)
-		return (GLOBAL_RETURNVAL = 1, ft_message_err(ERR_ALLOC), NULL);
+		return (S_GLOBAL.GLOBAL_RETURN = 1, ft_message_err(ERR_ALLOC), NULL);
 	envp_tab[len] = 0;
 	begin = *env_elem_list;
 	i = 0;
