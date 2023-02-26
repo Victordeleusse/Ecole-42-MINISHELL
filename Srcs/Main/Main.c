@@ -33,7 +33,7 @@ int	main(int argc, char **argv, char **envp)
 	// char		**args_tab_exit;
 	// char		exit_instruction[] = "exit -26";
 	char		**args_tab_echo;
-	char		echo_instruction[] = "echo Bonjour";
+	char		echo_instruction[] = "echo -n Bonjour Victor et Titou";
 	// int	len;
 
 	// len = 0;

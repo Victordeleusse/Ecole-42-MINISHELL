@@ -35,7 +35,7 @@ void	ft_builtin_echo_function(char **tab_args)
 		write(1, tab_args[i], ft_strlen(tab_args[i]));
 		i++;
 	}
-	if (is_n)
+	if (!is_n)
 		write(1, "\n", 1);
 	S_GLOBAL.GLOBAL_RETURN = 1;
 	return ;
