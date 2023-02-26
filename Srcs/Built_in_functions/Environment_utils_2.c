@@ -10,10 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Environment.h"
-#include <stddef.h>
-#include <stdio.h>
-#include "libft.h"
 #include "minishell.h"
 
 int	ft_str_detect(char *str, char *set)

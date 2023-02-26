@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Environment.h"
-#include "libft.h"
 #include "minishell.h"
 
 // -> Genere ma nouvelle variable, d environnement ou non
@@ -160,4 +158,3 @@ char	**ft_envp_in_tab(t_env_elem	**env_elem_list)
 	}
 	return (envp_tab);
 }
-

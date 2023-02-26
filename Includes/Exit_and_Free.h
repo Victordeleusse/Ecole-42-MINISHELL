@@ -13,8 +13,6 @@
 #ifndef EXIT_AND_FREE_H
 # define EXIT_AND_FREE_H
 
-# include "Environment.h"
-
 void	ft_free_list(t_env_elem **envp_list);
 void	ft_free_tab(char **tab);
 void	ft_free_all(t_env_elem **envp_list, char **tab_args);

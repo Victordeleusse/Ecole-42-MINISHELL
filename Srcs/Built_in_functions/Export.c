@@ -10,8 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Export.h"
-#include "libft.h"
 #include "minishell.h"
 
 // bash$ export -> Affiche l ensemble de mes variables d'environnement avec "export name=value"
@@ -63,4 +61,3 @@ void	ft_builtin_export_function(t_env_elem **envp_list, char **tab_args)
 	}
 	S_GLOBAL.GLOBAL_RETURN = 0;
 }
-

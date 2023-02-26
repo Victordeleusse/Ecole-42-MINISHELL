@@ -10,14 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Directory.h"
-#include "libft.h"
 #include "minishell.h"
-#include "Signal_Message.h"
-#include <stdio.h>
-#include <dirent.h>
-#include <unistd.h>
-#include <errno.h>  
 
 static void	ft_get_pwd(void)
 {

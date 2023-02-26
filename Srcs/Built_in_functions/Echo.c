@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Unset.h                                            :+:      :+:    :+:   */
+/*   Echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,33 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UNSET_H
-# define UNSET_H
+#include "minishell.h"
 
-void	ft_builtin_unset_function(t_env_elem **envp_list, char **tab_args);
+void	ft_builtin_echo_function(char **tab_args)
+{
+	int	is_n;
+	int	i;
 
-#endif
+	is_n = 0;
+	i = 1;
+	if (!tab_args[1])
+	{
+		write(1, "\n", 1);
+		S_GLOBAL.GLOBAL_RETURN = 1;
+		return ;
+	}
+	if (!ft_strcmp(tab_args[1], "-n"))
+	{
+		is_n = 1;
+		i = 2;
+	}
+	while(tab_args[i])
+	{
+		write(1, tab_args[i], ft_strlen(tab_args[i]));
+		i++;
+	}
+	if (is_n)
+		write(1, "\n", 1);
+	S_GLOBAL.GLOBAL_RETURN = 1;
+	return ;
+}

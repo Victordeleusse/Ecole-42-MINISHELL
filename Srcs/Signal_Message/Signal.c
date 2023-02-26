@@ -10,12 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "Signal_Message.h"
-#include <unistd.h>
-#include <signal.h>
-#include <readline/readline.h>
-#include <readline/history.h>
-#include "libft.h"
+#include "minishell.h"
 
 static void	ft_signal_ctrl_c(int sig)
 {

@@ -13,10 +13,6 @@
 #ifndef EXPORT_H
 # define EXPORT_H
 
-# include "Environment.h"
-
-////////////////////// Export.c /////////////////////
-
 void	ft_builtin_export_function(t_env_elem **envp_list, char **tab_args);
 
 #endif

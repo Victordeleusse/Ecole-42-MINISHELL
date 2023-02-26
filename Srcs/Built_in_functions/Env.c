@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "Environment.h"
-#include "libft.h"
-#include "Signal_Message.h"
 
 void	ft_builtin_env_function(t_env_elem **envp_list, char **tab_args)
 {

@@ -13,8 +13,6 @@
 #ifndef SIGNAL_MESSAGE_H
 # define SIGNAL_MESSAGE_H
 
-# include "minishell.h"
-
 ////////////////////// Signal.c /////////////////////
 
 void		ft_get_data(void);

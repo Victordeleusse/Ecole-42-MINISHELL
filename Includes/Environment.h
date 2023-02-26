@@ -23,7 +23,7 @@ typedef struct s_env_elem
 	char				*value;
 	int					is_export;
 	struct s_env_elem	*next;
-} t_env_elem;
+}t_env_elem;
 
 t_env_elem	*ft_generate_envp_list(char **envp);
 char		**ft_envp_in_tab(t_env_elem	**env_elem_list);

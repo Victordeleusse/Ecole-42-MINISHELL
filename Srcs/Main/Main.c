@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include "minishell.h"
-#include "libft.h"
 
 struct S_GLOBAL_MINISHELL S_GLOBAL;
 
@@ -32,8 +30,10 @@ int	main(int argc, char **argv, char **envp)
 	// char		cd_instruction[] = "cd ../..";
 	// char		**args_tab_env;
 	// char		env_instruction[] = "env";
-	char		**args_tab_exit;
-	char		exit_instruction[] = "exit -26";
+	// char		**args_tab_exit;
+	// char		exit_instruction[] = "exit -26";
+	char		**args_tab_echo;
+	char		echo_instruction[] = "echo Bonjour";
 	// int	len;
 
 	// len = 0;
@@ -48,11 +48,11 @@ int	main(int argc, char **argv, char **envp)
 	// args_tab_pwd = ft_split(pwd_instruction, ' ');
 	// args_tab_cd = ft_split(cd_instruction, ' ');
 	// args_tab_env = ft_split(env_instruction, ' ');
-	args_tab_exit = ft_split(exit_instruction, ' ');
+	args_tab_echo = ft_split(echo_instruction, ' ');
 	// ft_builtin_export_function(&my_envp, args_tab_export);
 	// ft_builtin_unset_function(&my_envp, args_tab_unset);
 	// ft_builtin_export_function(&my_envp, args_tab_export2);
-	ft_builtin_exit_function(&my_envp, args_tab_exit);	
+	ft_builtin_echo_function(args_tab_echo);	
 	// printf("\n\n");
 	// begin = my_envp;
 	// while (begin)
@@ -68,7 +68,7 @@ int	main(int argc, char **argv, char **envp)
 	// printf("\n\n%s", S_GLOBAL.HOME_PATH);
 	// ft_builtin_change_directory();
 	// ft_builtin_env_function(&my_envp, args_tab_env);
-	ft_builtin_exit_function(&my_envp, args_tab_exit);
+	// ft_builtin_exit_function(&my_envp, args_tab_exit);
 	// printf("valeur : %d -> len : %d\n", ft_atoi(argv[1], &len), len);
 	return (0);
 }

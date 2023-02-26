@@ -13,12 +13,23 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+# include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <signal.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+# include <dirent.h>
+# include <errno.h> 
+
+# include "libft.h"
 # include "Environment.h"
 # include "Signal_Message.h"
 # include "Export.h"
 # include "Unset.h"
 # include "Directory.h"
 # include "Exit_and_Free.h"
+# include "Echo.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"

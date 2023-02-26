@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Unset.h                                            :+:      :+:    :+:   */
+/*   Echo.h                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UNSET_H
-# define UNSET_H
+#ifndef ECHO_H
+# define ECHO_H
 
-void	ft_builtin_unset_function(t_env_elem **envp_list, char **tab_args);
+void	ft_builtin_echo_function(char **tab_args);
 
 #endif
