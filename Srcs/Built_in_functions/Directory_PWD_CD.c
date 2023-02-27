@@ -39,7 +39,7 @@ void	ft_builtin_get_current_directory(void)
 
 static void ft_change_directory_no_arg(void)
 {
-	if (S_GLOBAL.IS_HOME == 0)
+	if (!S_GLOBAL.IS_HOME)
 	{
 		ft_message_err(ERR_CD_NO_HOME);
 		return ;

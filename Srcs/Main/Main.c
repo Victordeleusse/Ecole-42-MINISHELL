@@ -14,61 +14,38 @@
 
 struct S_GLOBAL_MINISHELL S_GLOBAL;
 
+// static int ft_read_data(char **command_buff)
+// {
+// 	*command_buff = readline("minishell-TitouVictor$ ");
+// 	if (!*command_buff)
+// 	{	
+// 		write(2, "exit\n", 5);
+// 		return (1);
+// 	}
+// 	if (ft_strlen(*command_buff) >= 0)
+// 		add_history(*command_buff);
+// 	return (0);
+// }
+
 int	main(int argc, char **argv, char **envp)
 {
-	t_env_elem	*my_envp;
-	// t_env_elem	*begin;
-	// char		**args_tab_export;
-	// char		export_instruction[] = "export PIERRE==10 NICO TITOU=32";
-	// char		**args_tab_export2;
-	// char		export_instruction2[] = "export HOME=7";
-	// char		**args_tab_unset;
-	// char		unset_instruction[] = "unset HOME";
-	// char		**args_tab_pwd;
-	// char		pwd_instruction[] = "pwd";
-	// char		**args_tab_cd;
-	// char		cd_instruction[] = "cd ../..";
-	// char		**args_tab_env;
-	// char		env_instruction[] = "env";
-	// char		**args_tab_exit;
-	// char		exit_instruction[] = "exit -26";
-	char		**args_tab_echo;
-	char		echo_instruction[] = "echo -n Bonjour Victor et Titou";
-	// int	len;
-
-	// len = 0;
-	// ft_get_data();
+	// char		*command_buff;
+	char		**args_tab;
+	char		args_exit[] = "exit 52d";
+	t_env_elem	*envp_list;
 	(void)argc;
 	(void)argv;
-	// (void)envp;
-	my_envp = ft_generate_envp_list(envp);
-	// args_tab_export = ft_split(export_instruction, ' ');
-	// args_tab_export2 = ft_split(export_instruction2, ' ');
-	// args_tab_unset = ft_split(unset_instruction, ' ');
-	// args_tab_pwd = ft_split(pwd_instruction, ' ');
-	// args_tab_cd = ft_split(cd_instruction, ' ');
-	// args_tab_env = ft_split(env_instruction, ' ');
-	args_tab_echo = ft_split(echo_instruction, ' ');
-	// ft_builtin_export_function(&my_envp, args_tab_export);
-	// ft_builtin_unset_function(&my_envp, args_tab_unset);
-	// ft_builtin_export_function(&my_envp, args_tab_export2);
-	ft_builtin_echo_function(args_tab_echo);	
-	// printf("\n\n");
-	// begin = my_envp;
-	// while (begin)
+
+	envp_list = ft_generate_envp_list(envp);
+	args_tab = ft_split(args_exit, ' ');
+	ft_builtin_exit_function(&envp_list, args_tab);
+	// signal(SIGINT, ft_signal_ctrl_c);
+	// signal(SIGQUIT, (__sighandler_t)1);
+	// while (1)
 	// {
-	// 	printf("%s ->", begin->name);
-	// 	printf("%s\n", begin->value);
-	// 	begin = begin->next;
+	// 	if (ft_read_data(&command_buff))
+	// 		break ;
+		
 	// }
-	// ft_builtin_get_current_directory();
-	// ft_builtin_change_directory(args_tab_cd);
-	// ft_builtin_get_current_directory();
-	// printf("\n\n%d", S_GLOBAL.IS_HOME);
-	// printf("\n\n%s", S_GLOBAL.HOME_PATH);
-	// ft_builtin_change_directory();
-	// ft_builtin_env_function(&my_envp, args_tab_env);
-	// ft_builtin_exit_function(&my_envp, args_tab_exit);
-	// printf("valeur : %d -> len : %d\n", ft_atoi(argv[1], &len), len);
 	return (0);
 }

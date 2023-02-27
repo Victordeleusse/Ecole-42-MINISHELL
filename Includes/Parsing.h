@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Signal.c                                           :+:      :+:    :+:   */
+/*   Parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,13 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef PARSING_H
+# define PARSING_H
 
-void	ft_signal_ctrl_c(int sig)
-{
-	(void)sig;
-	write(2, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
-}
+int	ft_parsing_function(char **command_buffer);
+
+#endif

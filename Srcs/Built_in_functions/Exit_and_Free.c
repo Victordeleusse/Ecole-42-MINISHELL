@@ -49,6 +49,22 @@ void	ft_free_all(t_env_elem **envp_list, char **tab_args)
 	ft_free_list(envp_list);
 }
 
+static int	ft_is_valid_exit_argument(char *str)
+{
+	int	nombre;
+	int	len;
+	int	str_len;
+
+	len = 0;
+	nombre = ft_atoi(str, &len);
+	str_len = ft_strlen(str);
+	if (*str == '-')
+		len++;
+	if (len != str_len)
+		return (0);
+	return (1);
+}
+
 void	ft_builtin_exit_function(t_env_elem **envp_list, char **tab_args)
 {
 	int	nombre;
@@ -64,11 +80,19 @@ void	ft_builtin_exit_function(t_env_elem **envp_list, char **tab_args)
 		S_GLOBAL.GLOBAL_RETURN = 0;
 		exit(S_GLOBAL.GLOBAL_RETURN);
 	}
-	if (tab_args[2])
+	if (tab_args[2] && ft_is_valid_exit_argument(tab_args[1]))
 	{
 		write(2, "exit\n", 5);
 		ft_message_err(ERR_EXIT_TOO_MANY_ARGS);
 		return ;
+	}
+	if (tab_args[2] && !ft_is_valid_exit_argument(tab_args[1]))
+	{
+		write(2, "exit\n", 5);
+		write(2, "minishell-TitouVictor$: exit: ", ft_strlen("minishell-TitouVictor$: exit: "));
+		ft_message_err(ERR_EXIT_NUM_ARG_REQUIRED);
+		ft_free_all(envp_list, tab_args);
+		exit(S_GLOBAL.GLOBAL_RETURN);
 	}
 	len = 0;
 	nombre = ft_atoi(tab_args[1], &len);
@@ -78,7 +102,7 @@ void	ft_builtin_exit_function(t_env_elem **envp_list, char **tab_args)
 	if (len != str_len)
 	{
 		write(2, "exit\n", 5);
-		ft_message_err(ERR_IN_SHELL_EXIT);
+		write(2, "minishell-TitouVictor$: exit: ", ft_strlen("minishell-TitouVictor$: exit: "));
 		write(2, tab_args[1], str_len);
 		write(2, ": numeric argument required\n", 29);
 		ft_free_all(envp_list, tab_args);

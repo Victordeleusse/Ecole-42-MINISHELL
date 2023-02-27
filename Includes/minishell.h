@@ -30,6 +30,7 @@
 # include "Directory.h"
 # include "Exit_and_Free.h"
 # include "Echo.h"
+# include "Parsing.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
@@ -40,6 +41,7 @@
 # define ERR_CD	"cd"
 # define ERR_ENV_TOO_MANY_ARGS	"minishell-TitouVictor$: cd: too many arguments"
 # define ERR_EXIT_TOO_MANY_ARGS	"minishell-TitouVictor$: exit: too many arguments"
+# define ERR_EXIT_NUM_ARG_REQUIRED "numeric argument required"
 
 struct S_GLOBAL_MINISHELL
 {
