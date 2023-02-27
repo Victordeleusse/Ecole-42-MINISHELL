@@ -20,7 +20,7 @@ char	*ft_strip(char *str)
 		return (NULL);
 	i = ft_strlen(str);
 	if (i == 0)
-		return (NULL);
+		return (str);
 	i = i - 1;
 	while (i > 0 && (str[i] == ' ' || ('\t' <= str[i] && str[i] <= '\r')))
 		i--;

@@ -12,7 +12,8 @@
 
 #include "minishell.h"
 
-static int	parsing_builtin(t_env *environment, char **args, char *line)
+static int	parsing_builtin(t_env *environment, char **args, \
+	char **cmds)
 {
 	if (ft_strcmp(args[0], "echo") == 0)
 		ftbuiltin_echo(args);
@@ -27,7 +28,7 @@ static int	parsing_builtin(t_env *environment, char **args, char *line)
 	else if (ft_strcmp(args[0], "env") == 0)
 		ftbuiltin_env(environment);
 	else if (ft_strcmp(args[0], "exit") == 0)
-		ftbuiltin_exit(environment, args, line);
+		ftbuiltin_exit(environment, args, cmds);
 	else
 		return (0);
 	free_tabstr(args);
@@ -49,7 +50,7 @@ void	_parse_cmd(t_env *environment, char **cmds, char **line)
 		g_returnval = 127;
 		return ;
 	}
-	else if (parsing_builtin(environment, args, *line))
+	else if (parsing_builtin(environment, args, cmds))
 		return ;
 	pid = fork();
 	if (pid == 0)
@@ -65,36 +66,11 @@ void	_parse_cmd(t_env *environment, char **cmds, char **line)
 	free_tabstr(args);
 }
 
-// char	*change_local_variables(char *line)
-// {
-// 	char	*var;
-// 	size_t	i;
-
-// 	if (!line)
-// 		return (NULL);
-// 	i = 0;
-// 	while (ft_iswhitespace(line[i]))
-// 		i++;
-// 	var = line + i;
-// 	while (ft_inset(line[i], VARNAMESET))
-// 		i++;
-// 	if (var == line + i || line[i] != '=')
-// 		return (line);
-// 	return (line);
-// }
-
-/*
-	On fait une variable avec la clef
-	On donne a une fonction la key et la str a partir du '=' + 1
-	Celle-ci trouve la valeur correspondante, et exporte le tout en var locale et renvoie un pointeur vers le caracter apres la fin de la value
-	ce qui est renvoye est donc la nouvelle line, maintenant videe de key=value
-	Et tant qu'on trouve une variable a export localement, on reproduit le tout a nouveau
-*/
-
 void	parsing(t_env *environment, char **line)
 {
 	char	**cmds;
 	size_t	i;
+	int		r;
 
 	cmds = split_cmds(line);
 	if (!cmds)
@@ -102,9 +78,20 @@ void	parsing(t_env *environment, char **line)
 	i = 0;
 	while (cmds[i])
 	{
-		cmds[i] = ft_strip(cmds[i]);
-		// cmds[i] = change_local_variables(cmds[i]);
-		_parse_cmd(environment, cmds, cmds + i);
+		while (1)
+		{
+			r = change_local_variables(environment, cmds[i]);
+			if (r == -1)
+				break ;
+			else if (r != 1)
+				break ;
+		}
+		if (r != -1)
+		{
+			ft_strip(cmds[i]);
+			if (cmds[i] && cmds[i][0])
+				_parse_cmd(environment, cmds, cmds + i);
+		}
 		i++;
 	}
 	free_tabstr(cmds);

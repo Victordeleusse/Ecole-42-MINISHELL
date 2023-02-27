@@ -12,11 +12,10 @@
 
 #include "minishell.h"
 
-void	ftbuiltin_exit(t_env *environment, char **args, char *line)
+void	ftbuiltin_exit(t_env *environment, char **args, char **cmds)
 {
 	free_tabstr(args);
-	if (line)
-		free(line);
+	free_tabstr(cmds);
 	closing_the_program(environment);
 	g_returnval = 0;
 	ft_putstr_fd("exit\n", 2);

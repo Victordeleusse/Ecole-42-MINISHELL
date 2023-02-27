@@ -103,5 +103,6 @@ int		ft_iswhitespace(char c);
 char	*ft_strinsert(char *str, char *insertion, int index);
 void	print_tabstr(char **tab);
 int		ft_inset(char c, char *set);
+char	*ft_strdupn(const char *s1, size_t n);
 
 #endif

@@ -22,7 +22,7 @@ char	*replace_key_by_value(t_env *environment, char *line)
 	size_t	i;
 
 	i = 0;
-	while (line[i])
+	while (line && line[i])
 	{
 		if (line[i] == VARKEY)
 		{
@@ -65,6 +65,7 @@ char	*replace_key_by_value(t_env *environment, char *line)
 			line = tmp;
 			if (!line)
 				return (NULL);
+			i--;
 		}
 		i++;
 	}

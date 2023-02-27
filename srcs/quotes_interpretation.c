@@ -15,8 +15,6 @@
 static void	_actions_singlequoteopen(char *line, \
 	int *single_quote_open, size_t *i)
 {
-	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
-	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 	if (line[(*i)] == '\'')
 	{
 		*single_quote_open = false;
@@ -28,8 +26,6 @@ static void	_actions_singlequoteopen(char *line, \
 static void	_actions_doublequoteopen(char *line, \
 	int *double_quote_open, size_t *i)
 {
-	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
-	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 	if (line[(*i)] == '\"')
 	{
 		*double_quote_open = false;
@@ -44,8 +40,6 @@ static void	_actions_doublequoteopen(char *line, \
 static void	_actions_default(char *line, \
 	int *single_quote_open, int *double_quote_open, size_t *i)
 {
-	// if (line[(*i)] == '\\' && line[(*i)] != '\0')
-	// 	ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 	if (line[(*i)] == '\'')
 	{
 		*single_quote_open = true;
