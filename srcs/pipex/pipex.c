@@ -1,52 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   pipex.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 15:13:36 by tchevrie         ###   ########.fr       */
+/*   Created: 2023/02/27 15:07:04 by tchevrie          #+#    #+#             */
+/*   Updated: 2023/02/27 16:34:26 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	parsing(t_env *environment, char **line)
+void	pipex(t_env *environment, char **cmds)
 {
-	char	**cmds;
-	size_t	i;
-	int		r;
+	int		pipefd[2];
+	int		middle_cmds;
 	size_t	size;
+	size_t	cmdnbr;
 
-	cmds = split_cmds(line);
-	if (!cmds)
-		return ;
 	size = 0;
 	while (cmds[size])
 		size++;
-	i = 0;
-	while (cmds[i])
+	if (size > 1)
 	{
-		while (1)
-		{
-			r = change_local_variables(environment, cmds[i], size);
-			if (r == -1)
-				break ;
-			else if (r != 1)
-				break ;
-		}
-		if (r != -1)
-			ft_strip(cmds[i]);
-		else
-		{
-			free_tabstr(cmds + i);
-			cmds[i] = NULL;
-			break ;
-		}	
-		i++;
+		if (!first_child(environment, pipefd, cmds))
+			return ;	
+		middle_cmds = size - 2;
+		cmdnbr = 1;
+		while (middle_cmds-- > 0)
+			middle_child(environment, pipefd, cmds, cmdnbr++);
 	}
-	if (cmds && *cmds)
-		pipex(environment, cmds);
-	free_tabstr(cmds);
+	last_child(environment, pipefd, cmds, size);
+	while (1)
+		if (wait(NULL) <= 0)
+			break ;
 }
