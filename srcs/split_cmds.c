@@ -29,9 +29,9 @@ static void	_actions_doublequoteopen(char c, \
 static void	_actions_default(char *c, \
 	int *single_quote_open, int *double_quote_open)
 {
-	if (*c == '\"')
+	if (*c == '\'')
 		*single_quote_open = true;
-	else if (*c == '\'')
+	else if (*c == '\"')
 		*double_quote_open = true;
 	else if (*c == '|')
 		*c = PIPECHAR;

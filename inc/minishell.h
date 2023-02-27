@@ -62,7 +62,7 @@ void	ftbuiltin_pwd(t_env *environment);
 void	ftbuiltin_export(t_env *environment, char **args);
 void	ftbuiltin_unset(t_env *environment, char **args);
 void	ftbuiltin_env(t_env *environment);
-void	ftbuiltin_exit(t_env *environment, char **args, char *line);
+void	ftbuiltin_exit(t_env *environment, char **args, char **cmds);
 
 // execute_cmd.c
 int		execute_cmd(t_env *environment, char **args);
@@ -93,6 +93,8 @@ t_env	*get_environment(char *envp[]);
 
 					/* Environment */
 
+// change_local_variables.c
+int	change_local_variables(t_env *environment, char *line);
 // environment.c
 char	**format_environment(t_env *environment);
 void	free_environment(t_env *environment);
