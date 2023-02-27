@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 17:53:01 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:29:06 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ t_env	*get_environment(char *envp[]);
 					/* Environment */
 
 // change_local_variables.c
-int	change_local_variables(t_env *environment, char *line);
+int	change_local_variables(t_env *environment, char *line, size_t size);
 // environment.c
 char	**format_environment(t_env *environment);
 void	free_environment(t_env *environment);

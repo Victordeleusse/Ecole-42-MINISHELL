@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 17:45:21 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 10:30:09 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ static void	_export_element(t_env *environment, \
 	env_lstaddback(environment, key, value, 0);
 }
 
-int	change_local_variables(t_env *environment, char *line)
+int	change_local_variables(t_env *environment, char *line, size_t size)
 {
 	char	*ptr;
 	char	*key;
@@ -156,7 +156,13 @@ int	change_local_variables(t_env *environment, char *line)
 		value = ft_strdup("");
 	if (!value)
 		return (ft_putstr_fd(ERRALLOC, 2), free(key), -1);
-	_export_element(environment, key, value, append);
 	ft_memmove(ptr, line, ft_strlen(line) + 1);
+	if (size > 1)
+	{
+		free(key);
+		free(value);
+	}
+	else
+		_export_element(environment, key, value, append);
 	return (1);
 }
