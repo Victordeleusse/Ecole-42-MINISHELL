@@ -15,7 +15,7 @@ run:	all
 
 valgrind:	all
 			clear
-			valgrind --suppressions=assets/ignore_readline_leaks.supp --leak-check=full --show-leak-kinds=all ./${NAME}
+			valgrind --track-fds=yes --suppressions=assets/ignore_readline_leaks.supp --leak-check=full --show-leak-kinds=all ./${NAME}
 #			valgrind --suppressions=ignore_readline_leaks.supp --track-fds=yes --leak-check=full --show-leak-kinds=all ./${NAME}
 
 clean:	

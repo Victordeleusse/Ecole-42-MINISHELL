@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 16:35:05 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:30:59 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,12 +69,15 @@ int		execute_cmd(t_env *environment, char **args);
 
 					/* Parsing */
 
+// parse_builtin.c
+int	parse_builtin(t_env *environment, char **args, \
+	char **cmds, size_t cmdnbr);
 // split_cmds.c
 char	**split_cmds(char **ptr);
 // parsing.c
 void	parsing(t_env *environment, char **line);
 // parse_cmd.c
-void	parse_cmd(t_env *environment, char **cmds, char **line, size_t cmdnbr);
+char	**parse_cmd(t_env *environment, char **line);
 // parse_args.c
 char	**parse_args(t_env *environment, char **line);
 // replace_key_by_value.c
