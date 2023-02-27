@@ -7,7 +7,7 @@ NAME = minishell
 
 all:	
 		+$(MAKE) -C libft
-		cc -o ${NAME} -g ${CFLAGS} srcs/*.c ${INC} ${LIBS}
+		cc -o ${NAME} -g ${CFLAGS} srcs/minishell.c srcs/*/*.c ${INC} ${LIBS}
 
 run:	all
 		clear
