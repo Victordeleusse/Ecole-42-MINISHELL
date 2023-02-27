@@ -6,13 +6,13 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 18:15:33 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:13:51 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:40:09 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	ftbuiltin_unset_element(t_env *environment, char *arg)
+void	ftbuiltin_unset_element(t_env *environment, char *arg)
 {
 	t_env	*elem;
 	t_env	*tmp;

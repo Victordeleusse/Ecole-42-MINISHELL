@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 15:07:04 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 17:13:12 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:52:37 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,14 @@ void	pipex(t_env *environment, char **cmds)
 
 	defaultfd[0] = dup(0);
 	defaultfd[1] = dup(1);
+	env_lstaddback(environment, ft_strdup("@!stdincp"), ft_itoa(defaultfd[0]), 0);
+	env_lstaddback(environment, ft_strdup("@!stdoutcp"), ft_itoa(defaultfd[1]), 0);
 	if (defaultfd[0] == -1 || defaultfd[1] == -1)
+	{
+		ftbuiltin_unset_element(environment, "@!stdincp");
+		ftbuiltin_unset_element(environment, "@!stdoutcp");
 		return ;
+	}
 	size = 0;
 	while (cmds[size])
 		size++;
@@ -40,7 +46,9 @@ void	pipex(t_env *environment, char **cmds)
 			revert_to_default_fds(defaultfd);
 			close(defaultfd[0]);
 			close(defaultfd[1]);
-			return ;	
+			ftbuiltin_unset_element(environment, "@!stdincp");
+			ftbuiltin_unset_element(environment, "@!stdoutcp");
+			return ;
 		}	
 		middle_cmds = size - 2;
 		cmdnbr = 1;
@@ -58,4 +66,6 @@ void	pipex(t_env *environment, char **cmds)
 	revert_to_default_fds(defaultfd);
 	close(defaultfd[0]);
 	close(defaultfd[1]);
+	ftbuiltin_unset_element(environment, "@!stdincp");
+	ftbuiltin_unset_element(environment, "@!stdoutcp");
 }

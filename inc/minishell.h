@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 16:17:29 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 17:30:59 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:40:30 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ t_env	*get_environment(char *envp[]);
 
 					/* Environment */
 
+// ftbuiltin_unset.c
+void	ftbuiltin_unset_element(t_env *environment, char *arg);
 // change_local_variables.c
 int	change_local_variables(t_env *environment, char *line, size_t size);
 // environment.c
