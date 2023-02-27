@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:49:18 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 17:31:30 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 17:57:37 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,12 @@ int	parse_builtin(t_env *environment, char **args, \
 	else if (ft_strcmp(args[0], "env") == 0)
 		ftbuiltin_env(environment);
 	else if (ft_strcmp(args[0], "exit") == 0)
-		ftbuiltin_exit(environment, args, cmds);
+	{
+		if (size == 1)
+			ftbuiltin_exit(environment, args, cmds);
+		else
+			g_returnval = 0;
+	}
 	else
 		return (0);
 	free_tabstr(args);

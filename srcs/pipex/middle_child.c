@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/27 16:33:35 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 16:59:08 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 18:01:26 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ int	middle_child(t_env *environment, int pipefd[2], char **cmds, size_t cmdnbr)
 {
 	pid_t	pid;
 	int		new_pipefd[2];
+	char	**args;
 
 	close(pipefd[1]);
+	args = parse_cmd(environment, cmds + cmdnbr);
+	if (!args)
+		return ;
 	if (pipe(new_pipefd) == -1)
 		return (perror("minishell: pipe"), 0);
 	pid = fork();
