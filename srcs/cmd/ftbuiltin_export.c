@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/22 16:26:08 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:12:09 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:31:48 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,10 +139,10 @@ void	ftbuiltin_export(t_env *environment, char **args)
 				if (*key && key[ft_strlen(key) - 1] == '+')
 				{
 					key[ft_strlen(key) - 1] = '\0';
-					_export_value(environment, arg, &key, true);
+					_export_value(environment, arg, &key, TRUE);
 				}
 				else
-					_export_value(environment, arg, &key, false);
+					_export_value(environment, arg, &key, FALSE);
 			}
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 17:17:52 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 17:52:42 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:31:48 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ static void	_actions_singlequoteopen(char c, \
 	int *single_quote_open)
 {
 	if (c == '\'')
-		*single_quote_open = false;
+		*single_quote_open = FALSE;
 }
 
 static void	_actions_doublequoteopen(char c, \
 	int *double_quote_open)
 {
 	if (c == '\"')
-		*double_quote_open = false;
+		*double_quote_open = FALSE;
 }
 
 static void	_actions_default(char *c, \
 	int *single_quote_open, int *double_quote_open)
 {
 	if (*c == '\'')
-		*single_quote_open = true;
+		*single_quote_open = TRUE;
 	else if (*c == '\"')
-		*double_quote_open = true;
+		*double_quote_open = TRUE;
 	else if (*c == '|')
 		*c = PIPECHAR;
 }
@@ -62,8 +62,8 @@ char	**split_cmds(char **ptr)
 	line = ft_strip(*ptr);
 	if (!line)
 		return (NULL);
-	single_quote_open = false;
-	double_quote_open = false;
+	single_quote_open = FALSE;
+	double_quote_open = FALSE;
 	i = 0;
 	if (line[i] == '|')
 		return (ft_putstr_fd(ERRPIPE, 2), NULL);

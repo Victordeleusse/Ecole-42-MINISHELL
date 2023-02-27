@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   quote_interpretation.c                             :+:      :+:    :+:   */
+/*   quotes_interpretation.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/23 12:48:16 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 16:19:03 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:31:48 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	_actions_singlequoteopen(char *line, \
 {
 	if (line[(*i)] == '\'')
 	{
-		*single_quote_open = false;
+		*single_quote_open = FALSE;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 		(*i)--;
 	}
@@ -28,7 +28,7 @@ static void	_actions_doublequoteopen(char *line, \
 {
 	if (line[(*i)] == '\"')
 	{
-		*double_quote_open = false;
+		*double_quote_open = FALSE;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 		(*i)--;
 	}
@@ -42,13 +42,13 @@ static void	_actions_default(char *line, \
 {
 	if (line[(*i)] == '\'')
 	{
-		*single_quote_open = true;
+		*single_quote_open = TRUE;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 		(*i)--;
 	}
 	else if (line[(*i)] == '\"')
 	{
-		*double_quote_open = true;
+		*double_quote_open = TRUE;
 		ft_memmove(line + (*i), line + (*i) + 1, ft_strlen(line + (*i)));
 		(*i)--;
 	}
@@ -85,8 +85,8 @@ int	quotes_interpretation(t_env *environment, char **line)
 
 	ft_strip(*line);
 	i = 0;
-	single_quote_open = false;
-	double_quote_open = false;
+	single_quote_open = FALSE;
+	double_quote_open = FALSE;
 	while ((*line)[i])
 	{
 		if (single_quote_open)

@@ -6,7 +6,7 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 10:30:09 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:31:48 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,23 @@ static void	_actions_singlequoteopen(char c, \
 	int *single_quote_open)
 {
 	if (c == '\'')
-		*single_quote_open = false;
+		*single_quote_open = FALSE;
 }
 
 static void	_actions_doublequoteopen(char c, \
 	int *double_quote_open)
 {
 	if (c == '\"')
-		*double_quote_open = false;
+		*double_quote_open = FALSE;
 }
 
 static void	_actions_default(char c, \
 	int *single_quote_open, int *double_quote_open)
 {
 	if (c == '\'')
-		*single_quote_open = true;
+		*single_quote_open = TRUE;
 	else if (c == '\"')
-		*double_quote_open = true;
+		*double_quote_open = TRUE;
 }
 
 static int	_parse_value(t_env *environment, char **line, char **value)
@@ -73,8 +73,8 @@ static int	_parse_value(t_env *environment, char **line, char **value)
 	int		single_quote_open;
 	int		double_quote_open;
 
-	single_quote_open = false;
-	double_quote_open = false;
+	single_quote_open = FALSE;
+	double_quote_open = FALSE;
 	value_start = (*line);
 	value_end = value_start;
 	while (*value_end && (single_quote_open || double_quote_open || !ft_iswhitespace(*value_end)))

@@ -30,9 +30,9 @@ char	*replace_key_by_value(t_env *environment, char *line)
 			first_part = ft_strdup(line);
 			if (!first_part)
 				return (free(line), NULL);
-			question_mark = false;
+			question_mark = FALSE;
 			if (line[i + 1] == '\?')
-				question_mark = true;
+				question_mark = TRUE;
 			if (question_mark)
 				second_part = line + i + 2;
 			else
