@@ -6,11 +6,52 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/24 11:34:21 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/24 15:19:54 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:07:21 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	_export_element(t_env *environment, \
+	char *key, char *value)
+{
+	t_env	*elem;
+	char	*tmp;
+	
+	elem = environment;
+	if (!elem)
+	{
+		free(key);
+		free(value);
+		return ;
+	}
+	if (!key)
+	{
+		free(value);
+		return ;
+	}
+	elem = elem->next;
+	while (elem)
+	{
+		if (ft_strcmp(elem->key, key) == 0)
+		{
+			free(key);
+			elem->exported = 1;
+			if (value)
+			{
+				tmp = elem->value;
+				elem->value = value;
+				free(tmp);
+			}
+			return ;
+		}
+		elem = elem->next;
+	}
+	if (value)
+		env_lstaddback(environment, key, value, 1);
+	else
+		free(key);
+}
 
 static void	_noarg(t_env *environment)
 {
@@ -42,8 +83,13 @@ static void	_noarg(t_env *environment)
 void	ftbuiltin_cd(t_env *environment, char **args)
 {
 	char	*err_str;
+	char	*key;
+	char	*value;
 	int		r;
 
+	key = ft_strdup("OLDPWD");
+	value = getcwd(NULL, 0);
+	_export_element(environment, key, value);
 	if (args && args[0] && !args[1])
 		_noarg(environment);
 	else if (args && args[0] && args[1])
@@ -63,4 +109,7 @@ void	ftbuiltin_cd(t_env *environment, char **args)
 	}
 	else
 		g_returnval = 1;
+	key = ft_strdup("PWD");
+	value = getcwd(NULL, 0);
+	_export_element(environment, key, value);
 }

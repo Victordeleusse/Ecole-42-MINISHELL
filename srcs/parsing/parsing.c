@@ -6,30 +6,42 @@
 /*   By: tchevrie <tchevrie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/21 19:18:27 by tchevrie          #+#    #+#             */
-/*   Updated: 2023/02/27 10:48:39 by tchevrie         ###   ########.fr       */
+/*   Updated: 2023/02/27 14:26:00 by tchevrie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static int	parsing_builtin(t_env *environment, char **args, \
-	char **cmds, size_t size)
+	char **cmds, size_t cmdnbr)
 {
+	size_t	size;
+
+	size = 0;
+	while (cmds[size])
+		size++;
 	if (ft_strcmp(args[0], "echo") == 0)
 		ftbuiltin_echo(args);
 	else if (ft_strcmp(args[0], "cd") == 0)
-		ftbuiltin_cd(environment, args);
+	{
+		if (cmdnbr == size - 1)
+			ftbuiltin_cd(environment, args);
+	}
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		ftbuiltin_pwd(environment);
 	else if (ft_strcmp(args[0], "export") == 0)
 	{
 		if (size == 1)
 			ftbuiltin_export(environment, args);
+		else
+			g_returnval = 0;
 	}
 	else if (ft_strcmp(args[0], "unset") == 0)
 	{
 		if (size == 1)
 			ftbuiltin_unset(environment, args);
+		else
+			g_returnval = 0;
 	}
 	else if (ft_strcmp(args[0], "env") == 0)
 		ftbuiltin_env(environment);
@@ -41,7 +53,7 @@ static int	parsing_builtin(t_env *environment, char **args, \
 	return (1);
 }
 
-void	_parse_cmd(t_env *environment, char **cmds, char **line, size_t size)
+void	_parse_cmd(t_env *environment, char **cmds, char **line, size_t cmdnbr)
 {
 	char	**args;
 	pid_t	pid;
@@ -56,7 +68,7 @@ void	_parse_cmd(t_env *environment, char **cmds, char **line, size_t size)
 		g_returnval = 127;
 		return ;
 	}
-	else if (parsing_builtin(environment, args, cmds, size))
+	else if (parsing_builtin(environment, args, cmds, cmdnbr))
 		return ;
 	pid = fork();
 	if (pid == 0)
@@ -100,7 +112,9 @@ void	parsing(t_env *environment, char **line)
 		{
 			ft_strip(cmds[i]);
 			if (cmds[i] && cmds[i][0])
-				_parse_cmd(environment, cmds, cmds + i, size);
+				_parse_cmd(environment, cmds, cmds + i, i);
+			else
+				g_returnval = 0;
 		}
 		i++;
 	}
