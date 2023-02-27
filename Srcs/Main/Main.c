@@ -30,15 +30,17 @@ struct S_GLOBAL_MINISHELL S_GLOBAL;
 int	main(int argc, char **argv, char **envp)
 {
 	// char		*command_buff;
-	char		**args_tab;
-	char		args_exit[] = "exit 52d";
-	t_env_elem	*envp_list;
+	// char		**args_tab;
+	// char		args_exit[] = "exit 52d";
+	// t_env_elem	*envp_list;
+	(void)envp;
 	(void)argc;
 	(void)argv;
 
-	envp_list = ft_generate_envp_list(envp);
-	args_tab = ft_split(args_exit, ' ');
-	ft_builtin_exit_function(&envp_list, args_tab);
+	ft_parsing_function("Bon|jour &.< ");
+	// envp_list = ft_generate_envp_list(envp);
+	// args_tab = ft_split(args_exit, ' ');
+	// ft_builtin_exit_function(&envp_list, args_tab);
 	// signal(SIGINT, ft_signal_ctrl_c);
 	// signal(SIGQUIT, (__sighandler_t)1);
 	// while (1)

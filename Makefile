@@ -16,6 +16,9 @@ define SRCS :=
 	Built_in_functions/Exit_and_Free.c
 	Built_in_functions/Echo.c
 
+	Parsing_functions/Parsing.c
+	Parsing_functions/Parsing_utils.c
+
 	Signal_Message/Signal.c
 	Signal_Message/Message.c
 endef
