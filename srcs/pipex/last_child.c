@@ -35,10 +35,7 @@ void	last_child(t_env *environment, int pipefd[2], char **cmds, size_t size)
 	{
 		perror("minishell: fork");
 		if (size > 1)
-		{
 			close(pipefd[0]);
-			close(pipefd[1]);
-		}
 	}
 	else if (pid == 0)
 	{
