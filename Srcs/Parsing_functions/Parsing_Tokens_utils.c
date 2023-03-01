@@ -74,8 +74,6 @@ static char	*ft_generate_string_from_symbol_double(char c)
 	return (string);
 }
 
-
-
 t_token	*ft_generate_token_from_string(char *command_buff)
 {
 	t_token	*new_token;
@@ -125,7 +123,7 @@ t_token	*ft_generate_token_from_symbol(char c, char d, int *is_open_simple, int 
 		*is_open_simple = 1;
 		new_token->string = ft_generate_string_from_symbol(c);
 	}
-	if (c == '\'' && (*is_open_simple) == 1)
+	else if (c == '\'' && (*is_open_simple) == 1)
 	{
 		new_token->symbol = SINGLE_RIGHT;
 		*is_open_simple = 0;

@@ -67,12 +67,18 @@ char	*ft_generate_str_for_token(char	*command_buff);
 t_token	*ft_generate_token_from_string(char *command_buff);
 t_token	*ft_generate_token_from_symbol(char c, char d, int *is_open_simple, int *is_open_double);
 
-//////////////////////// Handle_Quote.c /////////////////////////
+//////////////////////// Handle_Quote_utils.c /////////////////////////
 
 void	ft_merge_tokens(t_token *token_list, t_token *token_begin);
 int		ft_handle_single(t_token *token_list);
 int		ft_handle_double(t_token *token_list);
-t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int *is_open_double);
+int		ft_detect_dollar
+
+//////////////////////// Handle_Quote.c /////////////////////////
+
+void	ft_handle_dollar
+t_token	*ft_clean_quote_token_list(t_env_elem *envp_list, t_token *token_list, int *is_open_simple, int *is_open_double);
+
 
 //////////////////////// Parsing.c /////////////////////////
 
