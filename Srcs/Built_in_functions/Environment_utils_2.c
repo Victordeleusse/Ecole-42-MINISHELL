@@ -68,6 +68,8 @@ char	*ft_extract_name(char *envp_index)
 	if (envp_index[i] != '=')
 		return (NULL);
 	env_name = ft_calloc(sizeof(char), len + 1);
+	if (!env_name)
+		return (NULL);
 	i = 0;
 	while (i < len)
 	{
@@ -96,6 +98,8 @@ char	*ft_extract_value(char *envp_index)
 	while (envp_index[i + len])
 		len++;
 	env_value = ft_calloc(sizeof(char), len + 1);
+	if (!env_value)
+		return (NULL);
 	j = 0;
 	while (j < len)
 	{

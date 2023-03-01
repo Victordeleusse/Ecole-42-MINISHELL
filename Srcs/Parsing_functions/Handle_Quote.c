@@ -12,14 +12,37 @@
 
 #include "minishell.h"
 
-void	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
+// To handle "$ENV_VAR" vs. '$ENV_VAR' or "$ ENV_VAR"
+
+int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 {
 	t_token	*token_begin;
+	int		i;
 
 	token_begin = token_list;
-
-
+	while (token_begin)
+	{
+		if (ft_detect_dollar_in_double_quote(token_begin))
+		{
+			i = 0;
+			while (token_begin->string[i])
+			{
+				while (token_begin->string[i] && token_begin->string[i] != '$')
+					i++;
+				if (token_begin->string[i] && token_begin->string[i] == '$' && token_begin->string[i + 1] && token_begin->string[i + 1] != ' ')
+				{	
+					if (!ft_substitute_dollar_env_var(envp_list, token_begin, &i))
+						return (0);
+				}
+				i++;
+			}
+		}
+		token_begin = token_begin->next;
+	}
+	return (1);
 }
+
+// To handle SINGLE and DOUBLE QUOTES 
 
 t_token	*ft_clean_quote_token_list(t_env_elem *envp_list, t_token *token_list, int *is_open_simple, int *is_open_double)
 {
@@ -57,6 +80,5 @@ t_token	*ft_clean_quote_token_list(t_env_elem *envp_list, t_token *token_list, i
 		if (token_begin)
 			token_begin = token_begin->next;
 	}
-	ft_handle_dollar()
 	return (token_list);
 }

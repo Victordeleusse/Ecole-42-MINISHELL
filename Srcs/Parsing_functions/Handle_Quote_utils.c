@@ -68,11 +68,63 @@ int	ft_handle_double(t_token *token_list)
 	return (0);
 }
 
-int	ft_detect_dollar_in_double_quote(t_token *token_list)
+int	ft_detect_dollar_in_double_quote(t_token *token_begin)
 {
-	t_token	*token_begin;
+	int		i;
 
-	token_begin = token_list;
+	if (token_begin->string[0] == '"')
+	{
+		i = 0;
+		while (token_begin->string[i])
+		{
+			if (token_begin->string[i] == '$')
+				return (1);
+			i++;			
+		}
+	}
+	return (0);
+}
+
+int	ft_substitute_dollar_env_var(t_env_elem *envp_list, t_token *token_begin, int *i)
+{
+	int			k;
+	int			len_init;
+	int			len_value;
+	char		*first_part;
+	char		*last_part;
+	char		*str_to_replace;
+	t_env_elem	*envp_begin;
+
+	first_part = ft_calloc(sizeof(char), (*i) + 1);
+	if (!first_part)
+		return (0);
+	k = 0;
+	while (k < *i)
+	{
+		
+	}
+	k = *i;
+	len_init = 0;
+	while (token_begin->string[*i] != ' ')
+	{	
+		len_init++;
+		(*i) = (*i) + 1;
+	}
+	str_to_replace = ft_calloc(sizeof(char), len_init);
+	if (!str_to_replace)
+		return (0);
+	k++;
+	while (token_begin->string[k] != ' ')
+	{
+		str_to_replace[k - 1] = token_begin->string[k];
+		k++;
+	}
+	envp_begin = envp_list;
+	while (ft_strcmp(str_to_replace, envp_begin->name))
+		envp_begin = envp_begin->next;
+	if (!envp_begin)
+		return (1);
+	len_value = ft_strlen(envp_begin->value);
 
 
 }

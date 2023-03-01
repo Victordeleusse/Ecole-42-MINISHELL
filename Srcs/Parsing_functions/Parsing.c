@@ -76,6 +76,5 @@ t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is
 	return (token_list);
 }
 
-// Coder le fait que si open_simple == 1 || open_double == 1 a la fin de la lecture -> ERREUR
 
 
