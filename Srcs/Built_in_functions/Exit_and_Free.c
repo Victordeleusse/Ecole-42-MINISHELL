@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_free_list(t_env_elem **envp_list)
+void	ft_free_env_list(t_env_elem **envp_list)
 {
 	t_env_elem *begin;
 	t_env_elem *current;
@@ -46,7 +46,7 @@ void	ft_free_all(t_env_elem **envp_list, char **tab_args)
 	rl_clear_history();
 	free(S_GLOBAL.HOME_PATH);
 	ft_free_tab(tab_args);
-	ft_free_list(envp_list);
+	ft_free_env_list(envp_list);
 }
 
 static int	ft_is_valid_exit_argument(char *str)

@@ -12,35 +12,70 @@
 
 #include "minishell.h"
 
-static char	**ft_generate_command_buffer_tab(char *command_buffer)
+void	ft_free_token_list(t_token	*token_list)
 {
-	char	**command_buffer_tab;
+	t_token	*token_next;
 
-	command_buffer_tab = ft_split(command_buffer, ' ');
-	free(command_buffer);
-	return (command_buffer_tab);
-}
-
-t_token	*ft_parsing_function(char **command_buffer_tab)
-{
-	int		i;
-	int		is_open_simple;
-	int		is_open_double;
-	t_token	*token_list;
-	t_token	*token_begin;
-
-	if (!command_buffer_tab || !*command_buffer_tab)
-		return (NULL);
-	is_open_double = 1;
-	is_open_simple = 1;
-	token_list = ft_calloc(sizeof(t_token), 1);
-	token_begin = token_list;
-	ft_generate_first_token(token_begin, command_buffer_tab[i], &is_open_simple, &is_open_double);
-	i = 1;
-	while (command_buffer_tab[i])
+	while (token_list)
 	{
-		while (token_begin->next)
-			token_begin = token_begin->next;
-		i++;
+		free(token_list->string);
+		token_next = token_list->next;
+		free(token_list);
+		token_list = token_next;
 	}
 }
+
+t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is_open_double)
+{
+	int		i;
+	t_token	*token_list;
+	t_token	*token_begin;
+	t_token	*token_next;
+
+	i = 0;
+	token_list = ft_calloc(sizeof(t_token), 1);
+	while (command_buff[i] && ft_is_separator(command_buff[i]))
+		i++;
+	if (command_buff[i] && ft_is_a_string(command_buff[i]))
+	{
+		token_list = ft_generate_token_from_string(command_buff + i);
+		token_begin = token_list;
+		while (command_buff[i] && ft_is_a_string(command_buff[i]))
+			i++;
+	}
+	if (command_buff[i] && ft_is_special_character(command_buff[i]))
+	{
+		token_list = ft_generate_token_from_symbol(command_buff[i], command_buff[i+1], is_open_simple, is_open_double);
+		token_begin = token_list;
+		if (token_begin->symbol == DOUBLE_DIR_LEFT || token_begin->symbol == DOUBLE_DIR_RIGHT)
+			i++;
+		i++;
+	}
+	while (command_buff[i])
+	{
+		while (command_buff[i] && ft_is_separator(command_buff[i]))
+			i++;
+		if (command_buff[i] && ft_is_a_string(command_buff[i]))
+		{
+			token_next = ft_generate_token_from_string(command_buff + i);
+			token_begin->next = token_next;
+			token_begin = token_begin->next;
+			while (command_buff[i] && ft_is_a_string(command_buff[i]))
+				i++;
+		}
+		if (command_buff[i] && ft_is_special_character(command_buff[i]))
+		{
+			token_next = ft_generate_token_from_symbol(command_buff[i], command_buff[i+1], is_open_simple, is_open_double);
+			token_begin->next = token_next;
+			if (token_next->symbol == DOUBLE_DIR_LEFT || token_next->symbol == DOUBLE_DIR_RIGHT)
+				i++;
+			token_begin = token_begin->next;
+			i++;
+		}
+	}
+	return (token_list);
+}
+
+// Coder le fait que si open_simple == 1 || open_double == 1 a la fin de la lecture -> ERREUR
+
+

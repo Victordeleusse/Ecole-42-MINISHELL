@@ -17,7 +17,9 @@ define SRCS :=
 	Built_in_functions/Echo.c
 
 	Parsing_functions/Parsing.c
-	Parsing_functions/Parsing_utils.c
+	Parsing_functions/Parsing_Tokens_utils.c
+	Parsing_functions/Parsing_Parser_utils.c
+	Parsing_functions/Handle_Quote.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

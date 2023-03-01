@@ -21,6 +21,11 @@
 # include <readline/history.h>
 # include <dirent.h>
 # include <errno.h> 
+# include <sys/types.h>
+# include <sys/uio.h>
+# include <fcntl.h>
+# include <sys/wait.h>
+# include <string.h>
 
 # include "libft.h"
 # include "Environment.h"
@@ -31,6 +36,7 @@
 # include "Exit_and_Free.h"
 # include "Echo.h"
 # include "Parsing.h"
+# include "Pipex.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
