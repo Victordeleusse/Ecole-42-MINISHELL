@@ -19,6 +19,7 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 	t_token	*token_begin;
 	int		i;
 
+	(void)envp_list;
 	token_begin = token_list;
 	while (token_begin)
 	{
@@ -31,7 +32,7 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 					i++;
 				if (token_begin->string[i] && token_begin->string[i] == '$' && token_begin->string[i + 1] && token_begin->string[i + 1] != ' ')
 				{	
-					if (!ft_substitute_dollar_env_var(envp_list, token_begin, &i))
+					if (!ft_substitute_dollar_env_var(envp_list, token_begin, i))
 						return (0);
 				}
 				i++;
@@ -44,7 +45,7 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 
 // To handle SINGLE and DOUBLE QUOTES 
 
-t_token	*ft_clean_quote_token_list(t_env_elem *envp_list, t_token *token_list, int *is_open_simple, int *is_open_double)
+t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int *is_open_double)
 {
 	t_token	*token_begin;
 

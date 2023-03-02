@@ -214,3 +214,21 @@ int	ft_check_variable_name_is_valid(char *ligne)
 	free (name);
 	return (1);
 }
+
+// Check si le nom est un un environment variable name
+
+char	*ft_is_a_env_var_name(t_env_elem *envp_elem_list, char *target)
+{
+	t_env_elem	*envp_begin;
+
+	if (!envp_elem_list)
+		return (0);
+	envp_begin = envp_elem_list;
+	while (envp_begin)
+	{
+		if (!ft_strcmp(envp_begin->name, target))
+			return (envp_begin->value);
+		envp_begin = envp_begin->next;
+	}
+	return (NULL);
+}

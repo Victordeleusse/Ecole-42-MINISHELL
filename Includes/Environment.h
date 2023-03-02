@@ -41,6 +41,8 @@ void		ft_lst_envp_add_back(t_env_elem **envp_elem_list, t_env_elem *elem);
 void		ft_lst_envp_remove_elem(t_env_elem **envp_elem_list, char *key);
 int			ft_check_variable_is_already_present(t_env_elem **envp_elem_list, char *str_entry);
 int			ft_check_variable_name_is_valid(char *ligne);
+char		*ft_is_a_env_var_name(t_env_elem *envp_elem_list, char *target);
+
 
 ////////////////////// Env.c /////////////////////
 

@@ -73,12 +73,13 @@ void	ft_merge_tokens(t_token *token_list, t_token *token_begin);
 int		ft_handle_single(t_token *token_list);
 int		ft_handle_double(t_token *token_list);
 int		ft_detect_dollar_in_double_quote(t_token *token_list);
-
+char	*ft_str_in_str(char *source, char *token_string, int i, int len_target);
+int		ft_substitute_dollar_env_var(t_env_elem *envp_list, t_token *token_list, int i);
 
 //////////////////////// Handle_Quote.c /////////////////////////
 
 int		ft_handle_dollar(t_env_elem *envp_list, t_token *token_list);
-t_token	*ft_clean_quote_token_list(t_env_elem *envp_list, t_token *token_list, int *is_open_simple, int *is_open_double);
+t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int *is_open_double);
 
 //////////////////////// Parsing.c /////////////////////////
 
