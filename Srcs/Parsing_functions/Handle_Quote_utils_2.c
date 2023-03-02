@@ -22,12 +22,8 @@ char	*ft_str_in_str(char *source, char *token_string, int i, int len_target)
 	int		j;
 
 	len_source = (int)ft_strlen(source);
-	printf("len_source : %d\n", len_source);
 	len_old_token_string = (int)ft_strlen(token_string);
-	printf("token_string : %s\n", token_string);
-	printf("len_target : %d\n", len_target);
 	len_new_token_string = len_source + len_old_token_string - len_target;
-	printf("len_new_token_string : %d\n", len_new_token_string);
 	new_token_string = ft_calloc(sizeof(char), len_new_token_string + 1);
 	if (!new_token_string)
 		return (NULL);
@@ -71,8 +67,10 @@ int	ft_substitute_dollar_env_var(t_env_elem *envp_list, t_token *token_begin, in
 		j++;
 	}
 	if (!ft_is_a_env_var_name(envp_list, target))
-		token_begin->string = ft_str_in_str(" ", token_begin->string, i, j + 1);
+		token_begin->string = ft_str_in_str("", token_begin->string, i, j + 1);
 	else
 		token_begin->string = ft_str_in_str(ft_is_a_env_var_name(envp_list, target), token_begin->string, i, j + 1);
+	if (!token_begin->string)
+		return (0);
 	return (1);
 }

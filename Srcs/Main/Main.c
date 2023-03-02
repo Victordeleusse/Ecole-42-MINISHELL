@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*token_begin;
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
-	char	str_pars[] = "< Makefile cat | wc -l > \" out ls $PATH -la a << b | c \" > d";
+	char	str_pars[] = "        Makefile    bonjour   cat < <<     | dd    wc   -l > sss \"     out \'ls $PATHS -la a << b | c \" > d >>";
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -45,22 +45,16 @@ int	main(int argc, char **argv, char **envp)
 	envp_list = ft_generate_envp_list(envp);
 	token_list = ft_generate_token_list(str_pars, &is_open_simple, &is_open_double);
 	token_list = ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double);
-	if (!token_list)
-	{
-		fprintf(stderr, "PROBLEME PARCING DETECTE\n");
-		return (S_GLOBAL.GLOBAL_RETURN);
-	}
+	ft_handle_dollar(envp_list, token_list);
+	///////
+	ft_manage_list_for_redirection(token_list);
 	token_begin = token_list;
-	printf("%d\n", ft_handle_dollar(envp_list, token_list));
-	printf("New string : %s\n", ft_str_in_str("REMPLACEMENT", "Bonjour Z comment ca va ?", 8, 1));
-	// while (token_begin)
-	// {
-	// 	if (token_begin->is_symbol)
-	// 		printf("Symbol : %d -> ", token_begin->symbol);
-	// 	// if (!token_begin->is_symbol)
-	// 	printf("String : %s\n", token_begin->string);
-	// 	token_begin = token_begin->next;
-	// }
+	while (token_begin)
+	{
+		printf("Symbol : %d -> ", (int)token_begin->symbol);
+		printf("String : %s\n", token_begin->string);
+		token_begin = token_begin->next;
+	}
 	// args_tab = ft_split(args_exit, ' ');
 	// ft_builtin_exit_function(&envp_list, args_tab);
 	// signal(SIGINT, ft_signal_ctrl_c);

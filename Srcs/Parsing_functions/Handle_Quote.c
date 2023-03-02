@@ -33,7 +33,13 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 				if (token_begin->string[i] && token_begin->string[i] == '$' && token_begin->string[i + 1] && token_begin->string[i + 1] != ' ')
 				{	
 					if (!ft_substitute_dollar_env_var(envp_list, token_begin, i))
-						return (0);
+					{
+						ft_free_env_list(&envp_list);
+						ft_free_token_list(token_list);
+						fprintf(stderr, "ERREUR GESTION DES QUOTES\n");
+						S_GLOBAL.GLOBAL_RETURN = 1;
+						exit(S_GLOBAL.GLOBAL_RETURN);
+					}	
 				}
 				i++;
 			}
@@ -54,7 +60,8 @@ t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int
 	{
 		ft_free_token_list(token_list);
 		S_GLOBAL.GLOBAL_RETURN = 1;
-		return (NULL);
+		fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
+		exit(S_GLOBAL.GLOBAL_RETURN);
 	}
 	while (token_begin)
 	{
@@ -62,24 +69,37 @@ t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int
 			token_begin = token_begin->next;
 		if (token_begin && token_begin->symbol == SINGLE_LEFT)
 		{	
-			if (!ft_handle_single(token_begin))
+			if (!ft_handle_single(token_begin, is_open_double))
 			{
 				ft_free_token_list(token_list);
 				S_GLOBAL.GLOBAL_RETURN = 1;
-				return (NULL);
+				fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
+				exit(S_GLOBAL.GLOBAL_RETURN);
+				// return (NULL);
 			}
 		}
 		else if (token_begin && token_begin->symbol == DOUBLE_LEFT)
 		{
-			if (!ft_handle_double(token_begin))
+			if (!ft_handle_double(token_begin, is_open_simple))
 			{
 				ft_free_token_list(token_list);
 				S_GLOBAL.GLOBAL_RETURN = 1;
-				return (NULL);
+				fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
+				exit(S_GLOBAL.GLOBAL_RETURN);
+				// return (NULL);
 			}
 		}
 		if (token_begin)
 			token_begin = token_begin->next;
 	}
+	if ((*is_open_double) || (*is_open_simple))
+	{
+		ft_free_token_list(token_list);
+		S_GLOBAL.GLOBAL_RETURN = 1;
+		fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
+		exit(S_GLOBAL.GLOBAL_RETURN);
+		// return (NULL);
+	}
+	ft_clean_whitespace(token_list);
 	return (token_list);
 }

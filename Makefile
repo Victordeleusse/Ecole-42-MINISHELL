@@ -16,12 +16,13 @@ define SRCS :=
 	Built_in_functions/Exit_and_Free.c
 	Built_in_functions/Echo.c
 
-	Parsing_functions/Parsing.c
+	Parsing_functions/Parsing_Tokens.c
 	Parsing_functions/Parsing_Tokens_utils.c
-	Parsing_functions/Parsing_Parser_utils.c
 	Parsing_functions/Handle_Quote.c
 	Parsing_functions/Handle_Quote_utils.c
 	Parsing_functions/Handle_Quote_utils_2.c
+	Parsing_functions/Parsing_Parser.c
+	Parsing_functions/Parsing_Parser_utils.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

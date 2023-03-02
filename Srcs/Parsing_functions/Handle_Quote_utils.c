@@ -28,7 +28,7 @@ void	ft_merge_tokens(t_token *token_list, t_token *token_begin)
 }
 
 
-int	ft_handle_single(t_token *token_list)
+int	ft_handle_single(t_token *token_list, int *is_open_double)
 {
 	t_token	*token_begin;
 	t_token	*token_next;
@@ -37,6 +37,10 @@ int	ft_handle_single(t_token *token_list)
 	while (token_begin && token_begin->symbol != SINGLE_RIGHT)
 	{
 		token_next = token_begin->next;
+		if ((token_begin->symbol == DOUBLE_LEFT || token_begin->symbol == DOUBLE_RIGHT) && *is_open_double)
+			*is_open_double = *is_open_double - 1;
+		else if ((token_begin->symbol == DOUBLE_LEFT || token_begin->symbol == DOUBLE_RIGHT) && !(*is_open_double))
+			*is_open_double = *is_open_double + 1;
 		ft_merge_tokens(token_list, token_begin);
 		token_begin = token_next;
 	}
@@ -48,15 +52,19 @@ int	ft_handle_single(t_token *token_list)
 	return (0);
 }
 
-int	ft_handle_double(t_token *token_list)
+int	ft_handle_double(t_token *token_list, int *is_open_single)
 {
 	t_token	*token_begin;
 	t_token	*token_next;
-
+	
 	token_begin = token_list->next;
 	while (token_begin && token_begin->symbol != DOUBLE_RIGHT)
 	{
 		token_next = token_begin->next;
+		if ((token_begin->symbol == SINGLE_LEFT || token_begin->symbol == SINGLE_RIGHT) && *is_open_single)
+			*is_open_single = *is_open_single - 1;
+		else if ((token_begin->symbol == SINGLE_LEFT || token_begin->symbol == SINGLE_RIGHT) && !(*is_open_single))
+			*is_open_single = *is_open_single + 1;
 		ft_merge_tokens(token_list, token_begin);
 		token_begin = token_next;
 	}

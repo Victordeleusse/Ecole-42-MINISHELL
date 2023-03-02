@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing.c                                          :+:      :+:    :+:   */
+/*   Parsing_Tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_free_token_list(t_token	*token_list)
+void	ft_free_token_list(t_token *token_list)
 {
 	t_token	*token_next;
 
@@ -36,14 +36,14 @@ t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is
 	token_list = ft_calloc(sizeof(t_token), 1);
 	while (command_buff[i] && ft_is_separator(command_buff[i]))
 		i++;
-	if (command_buff[i] && ft_is_a_string(command_buff[i]))
+	if (command_buff[i] && (ft_is_a_string(command_buff[i]) && !ft_is_separator(command_buff[i])))
 	{
 		token_list = ft_generate_token_from_string(command_buff + i);
 		token_begin = token_list;
 		while (command_buff[i] && ft_is_a_string(command_buff[i]))
 			i++;
 	}
-	if (command_buff[i] && ft_is_special_character(command_buff[i]))
+	else if (command_buff[i] && ft_is_special_character(command_buff[i]))
 	{
 		token_list = ft_generate_token_from_symbol(command_buff[i], command_buff[i+1], is_open_simple, is_open_double);
 		token_begin = token_list;
@@ -53,7 +53,7 @@ t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is
 	}
 	while (command_buff[i])
 	{
-		while (command_buff[i] && ft_is_separator(command_buff[i]))
+		if (command_buff[i] && ft_is_separator(command_buff[i]))
 			i++;
 		if (command_buff[i] && ft_is_a_string(command_buff[i]))
 		{

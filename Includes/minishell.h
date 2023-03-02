@@ -35,7 +35,8 @@
 # include "Directory.h"
 # include "Exit_and_Free.h"
 # include "Echo.h"
-# include "Parsing.h"
+# include "Parsing_Tokens.h"
+# include "Parsing_Parsers.h"
 # include "Pipex.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"

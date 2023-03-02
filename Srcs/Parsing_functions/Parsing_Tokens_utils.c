@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing_utils.c                                    :+:      :+:    :+:   */
+/*   Parsing_Tokens_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -32,7 +32,7 @@ int	ft_is_separator(char c)
 
 int	ft_is_a_string(char c)
 {
-	if (c && !ft_is_special_character(c) && !ft_is_separator(c))
+	if (c && !ft_is_special_character(c))
 		return (1);
 	return (0);
 }
@@ -43,11 +43,11 @@ char	*ft_generate_str_for_token(char	*command_buff)
 	char	*str;
 
 	i = 0;
-	while (command_buff[i] && !ft_is_special_character(command_buff[i]) && !ft_is_separator(command_buff[i]))
+	while (command_buff[i] && !ft_is_special_character(command_buff[i]))
 		i++;
 	str = ft_calloc(sizeof(char), i + 1);
 	i = 0;
-	while (command_buff[i] && !ft_is_special_character(command_buff[i]) && !ft_is_separator(command_buff[i]))
+	while (command_buff[i] && !ft_is_special_character(command_buff[i]))
 	{
 		str[i] = command_buff[i];
 		i++;
@@ -145,4 +145,31 @@ t_token	*ft_generate_token_from_symbol(char c, char d, int *is_open_simple, int 
 	return (new_token);
 }
 
+void	ft_clean_whitespace(t_token *envp_list)
+{
+	t_token	*begin;
+	int		i;
+	int		k;
+
+	begin = envp_list;
+	while (begin)
+	{
+		if (begin->string[0] != '"')
+		{
+			i = 0;
+			while (begin->string[i])
+			{	
+				k = 0;
+				while (begin->string[i] && !ft_is_separator(begin->string[i]))
+					i++;
+				if (begin->string[i] && ft_is_separator(begin->string[i]))
+					i++;
+				while (begin->string[i + k] && ft_is_separator(begin->string[i + k]))
+					k++;
+				ft_memmove(begin->string + i, begin->string + i + k, ft_strlen(begin->string + i + k) + 1);
+			}
+		}
+		begin = begin->next;
+	}
+}
 

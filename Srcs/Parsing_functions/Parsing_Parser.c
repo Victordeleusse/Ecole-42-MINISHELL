@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing_Parsers_utils.c                            :+:      :+:    :+:   */
+/*   Parsing_Parsers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,49 +12,22 @@
 
 #include "minishell.h"
 
-static int	ft_is_not_empty_token(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token->string[i])
-	{
-		if (token->string[i] != ' ')
-			return (1);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_is_an_unexpected_token(t_token *token)
-{
-	
-}
-
-void	ft_remove_empty_token_from_list(t_token *token_list)
+int	ft_manage_list_for_redirection(t_token *token_list)
 {
 	t_token	*begin;
-	t_token	*next;
 
+	ft_remove_empty_token_from_list(token_list);
+	if (!token_list)
+		return (0);
 	begin = token_list;
-	while (!ft_is_not_empty_token(begin))
-	{
-		token_list = token_list->next;
-		free(begin->string);
-		free(begin);
-		begin = token_list;
-	}
 	while (begin)
 	{
-		if (begin->next && !ft_is_not_empty_token(begin->next) && begin->next->next)
+		if (begin->symbol == DIR_RIGHT || begin->symbol == DIR_LEFT || begin->symbol == DOUBLE_DIR_RIGHT || begin->symbol == DOUBLE_DIR_LEFT)
 		{
-			next = begin->next->next;
-			free(begin->next->string);
-			free(begin->next);
-			begin->next = next;
+			if(begin->next)
+				ft_merge_tokens(begin, begin->next);
 		}
-		else 
-			begin = begin->next;
+		begin = begin->next;
 	}
+	return (1);
 }
-
