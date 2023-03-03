@@ -41,6 +41,8 @@ int	ft_is_not_an_unexpected_token(t_token *token)
 			ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, ">>");
 		else if (token->string[i + 1] && token->string[i + 1] == DOUBLE_DIR_LEFT && token->string[i] == token->string[i + 1])
 			ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "<<");
+		else if (token->string[i + 1] && token->string[i + 1] == '?')
+			ft_message_unexpected_token(MSG_INTERROGATION_SYMBOL, "");
 		else
 		{	
 			token->string[i + 1] = '\0';

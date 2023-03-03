@@ -28,15 +28,6 @@ typedef enum s_symbol
 	DOUBLE_DIR_LEFT
 } t_symbol;
 
-typedef enum s_folder_parser
-{
-	HERE_DOC = 1,
-	OUTFILE_TRUNC,
-	OUTFILE_APPEND,
-	INFILE
-}t_folder_parser;
-
-
 typedef struct s_token
 {
 	int				is_symbol;
@@ -44,19 +35,6 @@ typedef struct s_token
 	char			*string;
 	struct s_token	*next;
 } t_token;
-
-typedef struct s_parser
-{
-	int				is_symbol;
-	t_symbol		symbol;
-	int				is_folder;
-	t_folder_parser	folder_type;
-	char			*delimiter;
-	int				fd_folder;
-	char			*string;
-	struct s_parser	*next;
-	struct s_parser	*previous;
-} t_parser;
 
 //////////////////////// Parsing_Tokens_utils.c /////////////////////////
 

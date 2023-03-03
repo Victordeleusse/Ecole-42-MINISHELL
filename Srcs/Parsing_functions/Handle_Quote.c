@@ -75,7 +75,6 @@ t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int
 				S_GLOBAL.GLOBAL_RETURN = 1;
 				fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
 				exit(S_GLOBAL.GLOBAL_RETURN);
-				// return (NULL);
 			}
 		}
 		else if (token_begin && token_begin->symbol == DOUBLE_LEFT)
@@ -86,7 +85,6 @@ t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int
 				S_GLOBAL.GLOBAL_RETURN = 1;
 				fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
 				exit(S_GLOBAL.GLOBAL_RETURN);
-				// return (NULL);
 			}
 		}
 		if (token_begin)
@@ -98,7 +96,6 @@ t_token	*ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int
 		S_GLOBAL.GLOBAL_RETURN = 1;
 		fprintf(stderr, "PROBLEME PARCING DETECTE - QUOTES OUVERTS\n");
 		exit(S_GLOBAL.GLOBAL_RETURN);
-		// return (NULL);
 	}
 	ft_clean_whitespace(token_list);
 	return (token_list);

@@ -42,5 +42,48 @@ int	ft_manage_list_for_redirection(t_token *token_list)
 		}
 		begin = begin->next;
 	}
+	ft_clean_whitespace(token_list);
 	return (1);
 }
+
+// To generate a PARSER ELEMENT
+
+// Making a dup on token->string to free the token_list after having generate the parser_list
+
+// t_parser *ft_generate_parser(t_token *token)
+// {
+// 	t_parser	*parser;
+
+// 	parser = ft_calloc(sizeof(t_parser), 1);
+// 	parser->string = ft_strdup(token->string);
+// 	parser->next = NULL;
+// 	parser->previous = NULL;
+// 	parser->parser_type = NULL;
+// 	parser->delimiter = NULL;
+// 	parser->file_name = NULL;
+// 	parser->fd = -1;
+// 	if (token->symbol == DIR_LEFT)
+// 	{	
+// 		parser->parser_type = INFILE;
+// 		parser->file_name = ft_get_filename_or_delimiter_from_token(token);
+// 	}
+// 	else if (token->symbol == DOUBLE_DIR_LEFT)
+// 	{	
+// 		parser->parser_type = HERE_DOC;
+// 		parser->delimiter = ft_get_filename_or_delimiter_from_token(token);
+// 	}
+// 	else if (token->symbol == DIR_RIGHT)
+// 	{
+// 		parser->parser_type = OUTFILE_TRUNC;
+// 		parser->file_name = ft_get_filename_or_delimiter_from_token(token);
+// 	}
+// 	else if (token->symbol == DOUBLE_DIR_RIGHT)
+// 	{
+// 		parser->parser_type = OUTFILE_APPEND;
+// 		parser->file_name = ft_get_filename_or_delimiter_from_token(token);
+// 	}
+// 	else if (token->symbol == SIMPLE_PIPE)
+// 		parser->parser_type = PIPE;
+// 	else
+// 		parser->parser_type = ARG_CMD;
+// }

@@ -13,8 +13,9 @@
 #ifndef PARSING_PARSERS_H
 # define PARSING_PARSERS_H
 
-# define UNEXPECTED_TOKENS "#&<>|"
+# define UNEXPECTED_TOKENS "#&<>|?"
 # define MSG_UNEXPECTED_TOKEN "minishell-TitouVictor$: syntax error near unexpected token "
+# define MSG_INTERROGATION_SYMBOL "minishell-TitouVictor$: ambiguous redirect "
 
 typedef enum s_parser_type
 {
@@ -33,9 +34,9 @@ typedef struct s_parser
 	char			*delimiter;
 	char			*file_name;
 	int				fd;
-	t_parser		*previous;
-	t_parser		*next;
-}t_parser;
+	struct s_parser	*previous;
+	struct s_parser	*next;
+} t_parser;
 
 ///////////////// Parsing_Parser_utils.c //////////////
 
