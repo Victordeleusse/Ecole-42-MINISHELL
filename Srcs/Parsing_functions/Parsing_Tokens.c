@@ -15,13 +15,15 @@
 void	ft_free_token_list(t_token *token_list)
 {
 	t_token	*token_next;
+	t_token	*token_begin;
 
-	while (token_list)
+	token_begin = token_list;
+	while (token_begin)
 	{
-		free(token_list->string);
-		token_next = token_list->next;
-		free(token_list);
-		token_list = token_next;
+		free(token_begin->string);
+		token_next = token_begin->next;
+		free(token_begin);
+		token_begin = token_next;
 	}
 }
 

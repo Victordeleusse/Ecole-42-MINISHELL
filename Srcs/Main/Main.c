@@ -37,7 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	t_token	*token_begin;
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
-	char	str_pars[] = "        Makefile    bonjour   cat < <<     | dd    wc   -l > sss \"     out \'ls $PATHS -la a << b | c \" > d >>";
+	char	str_pars[] = "        Makefile    bonjour   cat << <   test  | dd    wc   -l > sss \"     out \'ls $PATHS -la a <<  b | c \" > d >>";
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -47,7 +47,8 @@ int	main(int argc, char **argv, char **envp)
 	token_list = ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double);
 	ft_handle_dollar(envp_list, token_list);
 	///////
-	ft_manage_list_for_redirection(token_list);
+	if (!ft_manage_list_for_redirection(token_list))
+		exit(S_GLOBAL.GLOBAL_RETURN);	
 	token_begin = token_list;
 	while (token_begin)
 	{

@@ -20,5 +20,7 @@ void	ft_signal_ctrl_c(int sig);
 ////////////////////// Message.c /////////////////////
 
 void		ft_message_err(char	*str);
+void		ft_message_unexpected_token(char *str, char *token_str);
+
 
 #endif

@@ -12,6 +12,9 @@
 
 #include "minishell.h"
 
+// If detection of a char from str occur in set, this function will return 1
+// Else it will return 0
+
 int	ft_str_detect(char *str, char *set)
 {
 	int	i;
