@@ -35,9 +35,11 @@ int	main(int argc, char **argv, char **envp)
 	t_env_elem	*envp_list;
 	t_token	*token_list;
 	t_token	*token_begin;
+	t_parser	*parser_list;
+	t_parser	*parser_begin;
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
-	char	str_pars[] = "        Makefile    bonjour   cat >    ?       test  | dd    wc   -l >        sss \"    <<< out \'ls $PATHS -la a <<  b | c \" >  d >>";
+	char	str_pars[] = "        Makefile    bonjour   cat >  test test test  | dd    wc   -l >  sss \"    <<< out \'ls $PATHS -la a <<  b | c \" >  d a b      c >>";
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -46,15 +48,22 @@ int	main(int argc, char **argv, char **envp)
 	token_list = ft_generate_token_list(str_pars, &is_open_simple, &is_open_double);
 	token_list = ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double);
 	ft_handle_dollar(envp_list, token_list);
-	///////
 	if (!ft_manage_list_for_redirection(token_list))
-		exit(S_GLOBAL.GLOBAL_RETURN);	
+		exit(S_GLOBAL.GLOBAL_RETURN);
 	token_begin = token_list;
 	while (token_begin)
 	{
 		printf("Symbol : %d -> ", (int)token_begin->symbol);
 		printf("String : %s\n", token_begin->string);
 		token_begin = token_begin->next;
+	}
+	////////
+	parser_list = ft_generate_list_parser(token_list);
+	parser_begin = parser_list;
+	while (parser_begin)
+	{
+		printf("%d | %s\n", (int)parser_begin->parser_type, parser_begin->string);
+		parser_begin = parser_begin->next;
 	}
 	// args_tab = ft_split(args_exit, ' ');
 	// ft_builtin_exit_function(&envp_list, args_tab);

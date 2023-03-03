@@ -80,3 +80,18 @@ void	ft_remove_empty_token_from_list(t_token *token_list)
 	}
 }
 
+char	*ft_get_filename_or_delimiter_from_token(char *string)
+{
+	char	*result;
+	int		i;
+	int		len;
+
+	i = 0;
+	len = 0;
+	while (string[i] && !ft_is_separator(string[i]))
+		i++;
+	if (string[i] && ft_is_separator(string[i]))
+		i++;
+	result = ft_strdup(string + i);
+	return (result);
+}
