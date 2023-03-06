@@ -52,7 +52,7 @@ void	ft_clean_whitespace(t_token *envp_list);
 void	ft_merge_tokens(t_token *token_list, t_token *token_begin);
 int		ft_handle_single(t_token *token_list, int *is_open_double);
 int		ft_handle_double(t_token *token_list, int *is_open_single);
-int		ft_detect_dollar_in_double_quote(t_token *token_list);
+int		ft_detect_dollar_out_of_simple_quote(t_token *token_begin);
 char	*ft_str_in_str(char *source, char *token_string, int i, int len_target);
 int		ft_substitute_dollar_env_var(t_env_elem *envp_list, t_token *token_list, int i);
 

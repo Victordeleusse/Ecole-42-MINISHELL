@@ -76,11 +76,11 @@ int	ft_handle_double(t_token *token_list, int *is_open_single)
 	return (0);
 }
 
-int	ft_detect_dollar_in_double_quote(t_token *token_begin)
+int	ft_detect_dollar_out_of_simple_quote(t_token *token_begin)
 {
 	int		i;
 
-	if (token_begin->string[0] == '"')
+	if (token_begin->string[0] != '\'')
 	{
 		i = 0;
 		while (token_begin->string[i])

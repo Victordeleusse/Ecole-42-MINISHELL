@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef PIPEX_H
-# define PIPEX_H
+#ifndef EXEC_FUNCTION_H
+# define EXEC_FUNCTION_H
 
-
+int	get_fd_infile(t_parser *parser_elem);
+int	get_fd_outfile_trunc(t_parser *parser_elem);
+int	get_fd_outfile_append(t_parser *parser_elem);
 
 #endif

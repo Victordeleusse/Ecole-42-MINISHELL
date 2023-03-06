@@ -24,6 +24,8 @@ define SRCS :=
 	Parsing_functions/Parsing_Parser.c
 	Parsing_functions/Parsing_Parser_utils.c
 
+	Execution/Get_files.c
+
 	Signal_Message/Signal.c
 	Signal_Message/Message.c
 endef

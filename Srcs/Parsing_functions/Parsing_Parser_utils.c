@@ -26,6 +26,20 @@ static int	ft_is_not_empty_token(t_token *token)
 	return (0);
 }
 
+static int	ft_follow_is_not_empty(char	*str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 int	ft_is_not_an_unexpected_token(t_token *token)
 {
 	int	i;
@@ -33,8 +47,13 @@ int	ft_is_not_an_unexpected_token(t_token *token)
 	i = 0;
 	while (token->string[i] && !ft_is_separator(token->string[i]))
 		i++;
-	if (token->string[i + 1])
+	if (ft_follow_is_not_empty(token->string + i))
 		i++;
+	else 
+	{
+		ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "newline");
+		return (0);
+	}
 	if (ft_str_detect(&token->string[i], UNEXPECTED_TOKENS))
 	{
 		if (token->string[i + 1] && token->string[i + 1] == DOUBLE_DIR_RIGHT && token->string[i] == token->string[i + 1])

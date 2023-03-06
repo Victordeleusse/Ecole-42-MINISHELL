@@ -30,15 +30,15 @@ static int ft_read_data(char **command_buff)
 int	main(int argc, char **argv, char **envp)
 {
 	char		*command_buff;
-	char		**args_tab;
+	// char		**args_tab;
 	// // char		args_exit[] = "exit 52d";
 	t_env_elem	*envp_list;
-	// // t_token	*token_list;
-	// // t_token	*token_begin;
-	// t_parser	*parser_list;
-	// t_parser	*parser_begin;
-	// int		is_open_simple = 0;
-	// int		is_open_double = 0;
+	t_token	*token_list;
+	// t_token	*token_begin;
+	t_parser	*parser_list;
+	t_parser	*parser_begin;
+	int		is_open_simple = 0;
+	int		is_open_double = 0;
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -50,21 +50,30 @@ int	main(int argc, char **argv, char **envp)
 		if (ft_read_data(&command_buff))
 			break ;	
 		envp_list = ft_generate_envp_list(envp);
-		// // token_list = ft_generate_token_list(command_buff, &is_open_simple, &is_open_double);
-		// // token_list = ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double);
-		// // ft_handle_dollar(envp_list, token_list);
-		// // if (!ft_manage_list_for_redirection(token_list))
-		// // 	exit(S_GLOBAL.GLOBAL_RETURN);
-		// // parser_list = ft_generate_list_parser(token_list);
-		// // parser_begin = parser_list;
-		// // while (parser_begin)
-		// // {
-		// // 	printf("%d | %s\n", (int)parser_begin->parser_type, parser_begin->string);
-		// // 	parser_begin = parser_begin->next;
-		// // }
-		args_tab = ft_split(command_buff, ' ');
+		token_list = ft_generate_token_list(command_buff, &is_open_simple, &is_open_double);
+		token_list = ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double);
+		ft_handle_dollar(envp_list, token_list);
+		// token_begin = token_list;
+		// while (token_begin)
+		// {
+		// 	printf("Symbol : %d -> ", (int)token_begin->symbol);
+		// 	printf("String : %s\n", token_begin->string);
+		// 	token_begin = token_begin->next;
+		// }
+		if (!ft_manage_list_for_redirection(token_list))
+			exit(S_GLOBAL.GLOBAL_RETURN);
+		parser_list = ft_generate_list_parser(token_list);
+		parser_begin = parser_list;
+		while (parser_begin)
+		{
+			printf("%d | %s\n", (int)parser_begin->parser_type, parser_begin->string);
+			parser_begin = parser_begin->next;
+		}
+		// get_fd_infile(parser_list);
+		// printf("fd infile : %d\n", parser_list->fd);
+		// args_tab = ft_split(command_buff, ' ');
 		// ft_builtin_get_current_directory();
-		ft_builtin_change_directory(&envp_list, args_tab);
+		// ft_builtin_change_directory(&envp_list, args_tab);
 		// // ft_builtin_echo_function(args_tab);
 	}
 	// token_begin = token_list;

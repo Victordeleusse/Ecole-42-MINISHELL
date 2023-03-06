@@ -23,7 +23,7 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 	token_begin = token_list;
 	while (token_begin)
 	{
-		if (ft_detect_dollar_in_double_quote(token_begin))
+		if (ft_detect_dollar_out_of_simple_quote(token_begin))
 		{
 			i = 0;
 			while (token_begin->string[i])

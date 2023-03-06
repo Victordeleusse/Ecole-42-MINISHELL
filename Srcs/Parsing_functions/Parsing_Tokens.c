@@ -55,8 +55,6 @@ t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is
 	}
 	while (command_buff[i])
 	{
-		if (command_buff[i] && ft_is_separator(command_buff[i]))
-			i++;
 		if (command_buff[i] && ft_is_a_string(command_buff[i]))
 		{
 			token_next = ft_generate_token_from_string(command_buff + i);

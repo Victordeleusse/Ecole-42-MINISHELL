@@ -37,7 +37,7 @@
 # include "Echo.h"
 # include "Parsing_Tokens.h"
 # include "Parsing_Parsers.h"
-# include "Pipex.h"
+# include "Exec_function.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"

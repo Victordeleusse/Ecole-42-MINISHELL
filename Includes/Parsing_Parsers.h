@@ -33,6 +33,7 @@ typedef struct s_parser
 	t_parser_type	parser_type;
 	char			*string;
 	char			*delimiter;
+	int				is_a_quote_delimiter;
 	char			*file_name;
 	int				fd;
 	struct s_parser	*next;

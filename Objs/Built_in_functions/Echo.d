@@ -4,4 +4,4 @@ Objs/Built_in_functions/Echo.o: Srcs/Built_in_functions/Echo.c \
   Includes/Environment.h Includes/Signal_Message.h Includes/Export.h \
   Includes/Unset.h Includes/Directory.h Includes/Exit_and_Free.h \
   Includes/Echo.h Includes/Parsing_Tokens.h Includes/Parsing_Parsers.h \
-  Includes/Pipex.h
+  Includes/Exec_function.h

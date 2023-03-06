@@ -57,6 +57,7 @@ t_parser *ft_generate_parser(t_token *token)
 	parser->string = ft_strdup(token->string);
 	parser->next = NULL;
 	parser->delimiter = NULL;
+	parser->is_a_quote_delimiter = 0;
 	parser->file_name = NULL;
 	parser->fd = DEFAULT_FD_PARSER;
 	if (token->symbol == DIR_LEFT)

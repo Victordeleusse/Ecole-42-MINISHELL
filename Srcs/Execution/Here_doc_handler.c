@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Pipex.c                                            :+:      :+:    :+:   */
+/*   Here_doc_handler.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	pipex(t_env_elem **envp_list, char **tab_args)
-{
-	
-}
+// int	get_fd_from_here_doc(t_parser *parser_elem)
+// {
+
+// }
