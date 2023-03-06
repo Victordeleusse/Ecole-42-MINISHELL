@@ -40,6 +40,7 @@
 # include "Exec_function.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
+# define ERR_HERE_DOC	"Here_doc : Erreur lors d'allocation du fichier temporaire"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
 # define ERR_IN_SHELL_CD	"minishell-TitouVictor$: cd"
 # define ERR_IN_SHELL_EXIT	"minishell-TitouVictor$: exit: "

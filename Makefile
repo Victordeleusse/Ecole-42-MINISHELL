@@ -25,6 +25,7 @@ define SRCS :=
 	Parsing_functions/Parsing_Parser_utils.c
 
 	Execution/Get_files.c
+	Execution/Here_doc_handler.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

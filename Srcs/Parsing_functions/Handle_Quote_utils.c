@@ -17,7 +17,10 @@ void	ft_merge_tokens(t_token *token_list, t_token *token_begin)
 	char	*new_str_1;
 	char	*new_str;
 
-	new_str_1 = ft_strjoin(token_list->string, " ");
+	if (ft_is_a_string(token_begin->string[0]))
+		new_str_1 = ft_strjoin(token_list->string, "");
+	else
+		new_str_1 = ft_strjoin(token_list->string, " ");
 	new_str = ft_strjoin(new_str_1, token_begin->string);
 	free(new_str_1);
 	free(token_list->string);

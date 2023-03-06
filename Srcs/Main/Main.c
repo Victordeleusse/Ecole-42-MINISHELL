@@ -69,7 +69,7 @@ int	main(int argc, char **argv, char **envp)
 			printf("%d | %s\n", (int)parser_begin->parser_type, parser_begin->string);
 			parser_begin = parser_begin->next;
 		}
-		// get_fd_infile(parser_list);
+		ft_get_here_doc_traitement(parser_list);
 		// printf("fd infile : %d\n", parser_list->fd);
 		// args_tab = ft_split(command_buff, ' ');
 		// ft_builtin_get_current_directory();
