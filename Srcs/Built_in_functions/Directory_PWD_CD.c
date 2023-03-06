@@ -12,33 +12,52 @@
 
 #include "minishell.h"
 
-static void	ft_get_pwd(void)
-{
-	int	i;
-	
-	i = 0;
-	while (i < 1024)
-	{
-		S_GLOBAL.PWD[i] = '\0';
-		i++;
-	}
-	if (getcwd(S_GLOBAL.PWD, 1024) == NULL)
-	{	
-		perror(ERR_IN_SHELL_PWD);
-		S_GLOBAL.GLOBAL_RETURN = 1;
-	}
-}
+//// PWD command ////
 
 void	ft_builtin_get_current_directory(void)
 {
-	ft_get_pwd();
+	S_GLOBAL.PWD = getcwd(NULL, 0);
+	if (!S_GLOBAL.PWD)
+	{	
+		perror(ERR_IN_SHELL_PWD);
+		S_GLOBAL.GLOBAL_RETURN = 1;
+		return ;
+	}
 	write(1, S_GLOBAL.PWD, ft_strlen(S_GLOBAL.PWD));
 	write(1, "\n", 1);
 	S_GLOBAL.GLOBAL_RETURN = 0;
 }
 
-static void ft_change_directory_no_arg(void)
+//// CD command ////
+
+static void	ft_set_home_value(t_env_elem **envp_list)
 {
+	t_env_elem	*begin;
+	
+	if (!envp_list || !(*envp_list))
+	{	
+		S_GLOBAL.IS_HOME = 0;
+		S_GLOBAL.HOME_PATH = NULL;
+		return ;
+	}
+	begin = *envp_list;
+	while (begin)
+	{
+		if (!ft_strcmp(begin->name, "HOME"))
+		{	
+			S_GLOBAL.IS_HOME = 1;
+			S_GLOBAL.HOME_PATH = begin->value;	
+			return ;
+		}
+		begin = begin->next;
+	}
+	S_GLOBAL.IS_HOME = 0;
+	S_GLOBAL.HOME_PATH = NULL;
+}
+
+static void ft_change_directory_no_arg(t_env_elem **envp_list)
+{
+	ft_set_home_value(envp_list);
 	if (!S_GLOBAL.IS_HOME)
 	{
 		ft_message_err(ERR_CD_NO_HOME);
@@ -53,13 +72,13 @@ static void ft_change_directory_no_arg(void)
 	S_GLOBAL.GLOBAL_RETURN = 0;
 }
 
-void	ft_builtin_change_directory(char **tab_args)
+void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args)
 {
-	char	*tmp;
-	
-	if (*tab_args && !tab_args[1])
+	if (!tab_args[1])
 	{
-		ft_change_directory_no_arg();
+		ft_change_directory_no_arg(envp_list);
+		ft_builtin_get_current_directory();
+		fprintf(stderr, "PWD : %s\n", S_GLOBAL.PWD);
 		return ;	
 	}
 	if (tab_args[2])
@@ -70,16 +89,10 @@ void	ft_builtin_change_directory(char **tab_args)
 
 	if (chdir(tab_args[1]) != 0)
 	{
-		ft_get_pwd();
-		tmp = ft_strjoin(S_GLOBAL.PWD, "/");
-		tmp = ft_strjoin(tmp, tab_args[1]);
-		if (chdir(tmp) != 0)
-		{
-			perror(ERR_CD);
-			S_GLOBAL.GLOBAL_RETURN = 1;
-			free(tmp);
-			return ;
-		}
-		free(tmp);
+		perror(ERR_CD);
+		S_GLOBAL.GLOBAL_RETURN = 1;
+		return ;
 	}
+	ft_builtin_get_current_directory();
+	fprintf(stderr, "PWD : %s\n", S_GLOBAL.PWD);
 }

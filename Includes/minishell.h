@@ -55,7 +55,7 @@ struct S_GLOBAL_MINISHELL
 	int		GLOBAL_RETURN;
 	int		IS_HOME;
 	char	*HOME_PATH;
-	char	PWD[1024];
+	char	*PWD;
 };
 
 extern struct S_GLOBAL_MINISHELL S_GLOBAL;

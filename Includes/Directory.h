@@ -14,6 +14,6 @@
 # define DIRECTORY_H
 
 void	ft_builtin_get_current_directory(void);
-void	ft_builtin_change_directory(char **tab_args);
+void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args);
 
 #endif
