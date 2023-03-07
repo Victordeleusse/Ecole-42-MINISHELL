@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Get_files.c                                        :+:      :+:    :+:   */
+/*   Get_simple_files.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,7 +20,9 @@ int	ft_get_fd_infile(t_parser *parser_elem)
 	int		len;
 	char	*file_path;
 
-	i = 2;
+	i = 1;
+	if (parser_elem->string[i] == ' ')
+		i = 2;
 	len = 0;
 	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
 		len++;
@@ -31,10 +33,12 @@ int	ft_get_fd_infile(t_parser *parser_elem)
 		file_path[len] = parser_elem->string[i + len];
 		len++;
 	}
+	free(parser_elem->file_name);
+	parser_elem->file_name = file_path;
 	parser_elem->fd = open(file_path, O_RDONLY);
 	if (parser_elem->fd < 0)
 	{
-		perror(file_path);
+		ft_message_p_err(file_path);
 		return (0);
 	}
 	return (1);
@@ -48,7 +52,9 @@ int	ft_get_fd_outfile_trunc(t_parser *parser_elem)
 	int		len;
 	char	*file_path;
 
-	i = 2;
+	i = 1;
+	if (parser_elem->string[i] == ' ')
+		i = 2;
 	len = 0;
 	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
 		len++;
@@ -59,10 +65,12 @@ int	ft_get_fd_outfile_trunc(t_parser *parser_elem)
 		file_path[len] = parser_elem->string[i + len];
 		len++;
 	}
+	free(parser_elem->file_name);
+	parser_elem->file_name = file_path;
 	parser_elem->fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, 0000664);
 	if (parser_elem->fd < 0)
 	{
-		perror(file_path);
+		ft_message_p_err(file_path);
 		return (0);
 	}
 	return (1);
@@ -76,7 +84,9 @@ int	ft_get_fd_outfile_append(t_parser *parser_elem)
 	int		len;
 	char	*file_path;
 
-	i = 3;
+	i = 2;
+	if (parser_elem->string[i] == ' ')
+		i = 3;
 	len = 0;
 	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
 		len++;
@@ -87,10 +97,12 @@ int	ft_get_fd_outfile_append(t_parser *parser_elem)
 		file_path[len] = parser_elem->string[i + len];
 		len++;
 	}
+	free(parser_elem->file_name);
+	parser_elem->file_name = file_path;
 	parser_elem->fd = open(file_path, O_WRONLY | O_CREAT | O_APPEND, 0000664);
 	if (parser_elem->fd < 0)
 	{
-		perror(file_path);
+		ft_message_p_err(file_path);
 		return (0);
 	}
 	return (1);

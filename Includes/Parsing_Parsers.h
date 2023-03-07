@@ -36,6 +36,8 @@ typedef struct s_parser
 	int				is_a_quote_delimiter;
 	char			*file_name;
 	int				fd;
+	int				index;
+	t_env_elem		*envp_list;
 	struct s_parser	*next;
 } t_parser;
 
@@ -48,7 +50,7 @@ char		*ft_get_filename_or_delimiter_from_token(char *string);
 ///////////////// Parsing_Parser.c //////////////
 
 int			ft_manage_list_for_redirection(t_token *token_list);
-t_parser	*ft_generate_parser(t_token *token);
-t_parser	*ft_generate_list_parser(t_token *token_list);
+t_parser	*ft_generate_parser(t_token *token, t_env_elem *envp_list);
+t_parser 	*ft_generate_list_parser(t_token *token_list, t_env_elem *envp_list);
 
 #endif

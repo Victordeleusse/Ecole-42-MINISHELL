@@ -49,7 +49,7 @@ int	ft_manage_list_for_redirection(t_token *token_list)
 // To generate a PARSER ELEMENT
 // Making a dup on token->string to free the token_list after having generate the parser_list
 
-t_parser *ft_generate_parser(t_token *token)
+t_parser *ft_generate_parser(t_token *token, t_env_elem *envp_list)
 {
 	t_parser	*parser;
 
@@ -60,6 +60,8 @@ t_parser *ft_generate_parser(t_token *token)
 	parser->is_a_quote_delimiter = 0;
 	parser->file_name = NULL;
 	parser->fd = DEFAULT_FD_PARSER;
+	parser->index = 0;
+	parser->envp_list = envp_list;
 	if (token->symbol == DIR_LEFT)
 	{	
 		parser->parser_type = INFILE;
@@ -87,22 +89,26 @@ t_parser *ft_generate_parser(t_token *token)
 	return (parser);
 }
 
-t_parser *ft_generate_list_parser(t_token *token_list)
+t_parser *ft_generate_list_parser(t_token *token_list, t_env_elem *envp_list)
 {
 	t_token		*token_begin;
 	t_parser	*parser_list;
 	t_parser	*parser_begin;
 	t_parser	*parser_next;
+	int			index;
 
+	index = 0;
 	token_begin = token_list;
 	if (!token_begin)
 		return (NULL);
-	parser_begin = ft_generate_parser(token_begin);
+	parser_begin = ft_generate_parser(token_begin, envp_list);
 	parser_list = parser_begin;
 	token_begin = token_begin->next;
 	while (token_begin)
 	{
-		parser_next = ft_generate_parser(token_begin);
+		index++;
+		parser_next = ft_generate_parser(token_begin, envp_list);
+		parser_next->index = index;
 		parser_begin->next = parser_next;
 		parser_begin = parser_begin->next;
 		token_begin = token_begin->next;

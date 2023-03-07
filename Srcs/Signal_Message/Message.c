@@ -12,6 +12,12 @@
 
 #include "minishell.h"
 
+void	ft_message_p_err(char *str)
+{
+	perror(str);
+	S_GLOBAL.GLOBAL_RETURN = 1;
+}
+
 void	ft_message_err(char	*str)
 {
 	write(2, str, ft_strlen(str));

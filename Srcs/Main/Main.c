@@ -62,14 +62,18 @@ int	main(int argc, char **argv, char **envp)
 		// }
 		if (!ft_manage_list_for_redirection(token_list))
 			exit(S_GLOBAL.GLOBAL_RETURN);
-		parser_list = ft_generate_list_parser(token_list);
+		parser_list = ft_generate_list_parser(token_list, envp_list);
 		parser_begin = parser_list;
 		while (parser_begin)
 		{
+			if (!ft_handle_files(parser_begin))
+				return(S_GLOBAL.GLOBAL_RETURN);
+			if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
+				printf("%s -> fd : %d |", parser_begin->file_name, parser_begin->fd);
 			printf("%d | %s\n", (int)parser_begin->parser_type, parser_begin->string);
 			parser_begin = parser_begin->next;
 		}
-		ft_get_here_doc_traitement(parser_list);
+		// ft_get_here_doc_traitement(parser_list);
 		// printf("fd infile : %d\n", parser_list->fd);
 		// args_tab = ft_split(command_buff, ' ');
 		// ft_builtin_get_current_directory();
