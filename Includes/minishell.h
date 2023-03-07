@@ -38,9 +38,11 @@
 # include "Parsing_Tokens.h"
 # include "Parsing_Parsers.h"
 # include "Files.h"
+# include "Execution.h"
 
 # define ERR_ALLOC	"Erreur lors d'allocation memoire"
 # define ERR_HERE_DOC	"Here_doc : Erreur lors d'allocation du fichier temporaire"
+# define ERR_STOP_HERE_DOC	"minishell-TitouVictor$: warning: here-document delimited by end-of-file (wanted `end')"
 # define ERR_IN_SHELL_PWD	"minishell-TitouVictor$: pwd"
 # define ERR_IN_SHELL_CD	"minishell-TitouVictor$: cd"
 # define ERR_IN_SHELL_EXIT	"minishell-TitouVictor$: exit: "

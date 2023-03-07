@@ -64,20 +64,23 @@ static void ft_generate_rnd_file_fd(int *recep_fd, unsigned char **rnd_file_name
 }
 
 // // Let s read on STDIN thanks to get_next_line(0)
+// // Pay attention to the behaviour of the here_doc if ther is quote around the delimiter
 
-static int ft_read_and_write_tmp(char *delimiter, int *recep_fd)
+static int ft_read_and_write_tmp(t_parser *parser_elem, char *delimiter, int *recep_fd)
 {
 	char	*temp;
+	char	*temp_substitute;
 	int		len;
 
 	while (1)
 	{
 		write(1, "> ", 2);
 		temp = get_next_line(0);
-		// TRAITEMENT DU $ SI LE DELIMITER N EST PAS ENTRE QUOTE
 		if (!temp)
 		{
-			ft_message_p_err(ERR_HERE_DOC);
+			write(1, "\n", 1);
+			ft_message_err(ERR_STOP_HERE_DOC);
+			S_GLOBAL.GLOBAL_RETURN = 0;
 			return (0);
 		}
 		len = ft_strlen(temp);
@@ -86,6 +89,15 @@ static int ft_read_and_write_tmp(char *delimiter, int *recep_fd)
 		{
 			free(temp);
 			break ;
+		}
+		if (parser_elem->is_a_quote_delimiter == 0 && temp[0] == '$')
+		{
+			temp_substitute = ft_is_a_env_var_name(parser_elem->envp_list, temp + 1);
+			if (temp_substitute)
+			{	
+				free(temp);
+				temp = temp_substitute;
+			}
 		}
 		write(*recep_fd, temp, ft_strlen(temp));
 		write(*recep_fd, "\n", 1);
@@ -118,9 +130,13 @@ int	ft_get_here_doc_traitement(t_parser *parser_elem)
 	ft_generate_rnd_file_fd(&recep_fd, &rnd_file_name);
 	if (recep_fd < 0)
 		return (0);
-	if (!ft_read_and_write_tmp(parser_elem->delimiter, &recep_fd))
+	if (!ft_read_and_write_tmp(parser_elem, parser_elem->delimiter, &recep_fd))
 		return (0);
 	if (!ft_get_infile_from_heredoc(parser_elem, &recep_fd, (char *)rnd_file_name))
+	{	
+		free(rnd_file_name);
 		return (0);
+	}
+	free(rnd_file_name);
 	return (1);
 }

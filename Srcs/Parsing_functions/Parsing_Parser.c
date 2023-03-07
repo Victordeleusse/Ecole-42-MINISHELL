@@ -55,6 +55,7 @@ t_parser *ft_generate_parser(t_token *token, t_env_elem *envp_list)
 
 	parser = ft_calloc(sizeof(t_parser), 1);
 	parser->string = ft_strdup(token->string);
+	parser->is_command = 0;
 	parser->next = NULL;
 	parser->delimiter = NULL;
 	parser->is_a_quote_delimiter = 0;

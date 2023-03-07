@@ -31,6 +31,7 @@ typedef enum s_parser_type
 typedef struct s_parser
 {
 	t_parser_type	parser_type;
+	int				is_command;
 	char			*string;
 	char			*delimiter;
 	int				is_a_quote_delimiter;

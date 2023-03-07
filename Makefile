@@ -28,6 +28,8 @@ define SRCS :=
 	Files/Here_doc_handler.c
 	Files/Handle_files.c
 
+	Execution/Get_cmd_tab.c
+
 	Signal_Message/Signal.c
 	Signal_Message/Message.c
 endef
@@ -65,3 +67,15 @@ re:	fclean all
 .PHONY: clean fclean re 
 
 -include $(DEPS)
+
+
+
+
+
+
+
+
+
+### A GERER
+
+# cat >test1 >test2 >test3   | ecrase test1 et test2 - doit les ouvrir en trunc
