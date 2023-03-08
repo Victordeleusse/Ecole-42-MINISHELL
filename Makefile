@@ -19,6 +19,7 @@ define SRCS :=
 	Parsing_functions/Parsing_Tokens.c
 	Parsing_functions/Parsing_Tokens_utils.c
 	Parsing_functions/Parsing_Tokens_utils_2.c
+	Parsing_functions/Parsing_Tokens_utils_3.c
 	Parsing_functions/Handle_Quote.c
 	Parsing_functions/Handle_Quote_utils.c
 	Parsing_functions/Handle_Quote_utils_2.c

@@ -24,7 +24,8 @@ typedef enum s_parser_type
 	HERE_DOC,
 	OUTFILE_TRUNC,
 	OUTFILE_APPEND,
-	ARG_CMD,
+	CMD,
+	ARG,
 	PIPE
 } t_parser_type;
 

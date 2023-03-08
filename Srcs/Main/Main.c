@@ -60,13 +60,18 @@ int	main(int argc, char **argv, char **envp)
 		if (!ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double))
 			no_step_2 = 1;
 		token_begin = token_list;
-		while (token_begin)
-		{
-			if (token_begin->symbol == 0)
-				ft_token_split_cmd_args(token_begin);
-			token_begin = token_begin->next;
+		if (token_list && !no_step_1 && !no_step_2)
+		{	
+			token_begin = token_list;
+			while (token_begin)
+			{
+				printf("type : %d | string : %s\n", token_begin->symbol, token_begin->string);			
+				token_begin = token_begin->next;
+			}
 		}
 		printf("\n\n\n\n\n");
+		ft_get_cmd_and_args_token(token_list);
+		token_begin = token_list;
 		if (token_list && !no_step_1 && !no_step_2)
 		{	
 			token_begin = token_list;

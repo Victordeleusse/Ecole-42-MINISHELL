@@ -82,7 +82,21 @@ t_token	*ft_generate_token_from_string(char *command_buff)
 	new_token->is_symbol = 0;
 	new_token->symbol = 0;
 	new_token->next = NULL;
+	new_token->str_tab = NULL;
 	new_token->string = ft_generate_str_for_token(command_buff);
+	return (new_token);
+}
+
+t_token	*ft_generate_token_from_tab(t_token	*token, int *i)
+{
+	t_token	*new_token;
+
+	new_token = ft_calloc(sizeof(t_token), 1);
+	new_token->is_symbol = 0;
+	new_token->symbol = 0;
+	new_token->next = NULL;
+	new_token->str_tab = token->str_tab;
+	new_token->string = token->str_tab[*i];
 	return (new_token);
 }
 

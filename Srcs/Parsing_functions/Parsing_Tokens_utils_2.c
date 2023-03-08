@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing_Parsers.c                                  :+:      :+:    :+:   */
+/*   Parsing_Tokens_utils_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -96,25 +96,4 @@ int	ft_manage_unexpected_tokens(t_token *token_list)
 	}
 	ft_clean_whitespace(token_list);
 	return (1);
-}
-
-// // 
-
-void	ft_token_split_cmd_args(t_token *token_elem)
-{
-	t_token	*token_next;
-	int		i;
-	char	**str_tab;
-
-	i = 0;
-	if (token_elem->next)
-		token_next = token_elem->next;
-	else 
-		token_next = NULL;
-	str_tab = ft_split(token_elem->string, ' ');
-	while (str_tab[i])
-	{
-		printf("string new token : %s\n", str_tab[i]);
-		i++;
-	}
 }
