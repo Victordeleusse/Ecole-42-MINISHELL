@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Parsing_Parsers_utils.c                            :+:      :+:    :+:   */
+/*   Parsing_Parsers.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -40,39 +40,7 @@ static int	ft_follow_is_not_empty(char	*str)
 	return (0);
 }
 
-int	ft_is_not_an_unexpected_token(t_token *token)
-{
-	int	i;
-
-	i = 0;
-	while (token->string[i] && !ft_is_separator(token->string[i]))
-		i++;
-	if (ft_follow_is_not_empty(token->string + i))
-		i++;
-	else 
-	{
-		ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "newline");
-		return (0);
-	}
-	if (ft_str_detect(&token->string[i], UNEXPECTED_TOKENS))
-	{
-		if (token->string[i + 1] && token->string[i + 1] == DOUBLE_DIR_RIGHT && token->string[i] == token->string[i + 1])
-			ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, ">>");
-		else if (token->string[i + 1] && token->string[i + 1] == DOUBLE_DIR_LEFT && token->string[i] == token->string[i + 1])
-			ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "<<");
-		else if (token->string[i + 1] && token->string[i + 1] == '?')
-			ft_message_unexpected_token(MSG_INTERROGATION_SYMBOL, "");
-		else
-		{	
-			token->string[i + 1] = '\0';
-			ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, &token->string[i]);
-		}
-		return (0);
-	}
-	return (1);
-}
-
-void	ft_remove_empty_token_from_list(t_token *token_list)
+static void	ft_remove_empty_token_from_list(t_token *token_list)
 {
 	t_token	*begin;
 	t_token	*next;
@@ -99,18 +67,54 @@ void	ft_remove_empty_token_from_list(t_token *token_list)
 	}
 }
 
-char	*ft_get_filename_or_delimiter_from_token(char *string)
+int	ft_manage_unexpected_tokens(t_token *token_list)
 {
-	char	*result;
+	t_token	*begin;
+
+	ft_remove_empty_token_from_list(token_list);
+	if (!token_list)
+		return (0);
+	begin = token_list;
+	while (begin)
+	{
+		if (begin->symbol == DIR_RIGHT || begin->symbol == DIR_LEFT || begin->symbol == DOUBLE_DIR_RIGHT || begin->symbol == DOUBLE_DIR_LEFT)
+		{
+			if (begin->next && (begin->next->symbol == DIR_RIGHT || begin->next->symbol == DIR_LEFT || begin->next->symbol == DOUBLE_DIR_RIGHT || begin->next->symbol == DOUBLE_DIR_LEFT || begin->next->symbol == SIMPLE_PIPE))
+			{	
+				ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, begin->next->string);
+				ft_free_token_list(token_list);
+				return (0);
+			}
+			if (!begin->next || (begin->next && !ft_follow_is_not_empty(begin->next->string)))
+			{	
+				ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "newline");
+				ft_free_token_list(token_list);
+				return (0);
+			}
+		}
+		begin = begin->next;
+	}
+	ft_clean_whitespace(token_list);
+	return (1);
+}
+
+// // 
+
+void	ft_token_split_cmd_args(t_token *token_elem)
+{
+	t_token	*token_next;
 	int		i;
-	int		len;
+	char	**str_tab;
 
 	i = 0;
-	len = 0;
-	while (string[i] && !ft_is_separator(string[i]))
+	if (token_elem->next)
+		token_next = token_elem->next;
+	else 
+		token_next = NULL;
+	str_tab = ft_split(token_elem->string, ' ');
+	while (str_tab[i])
+	{
+		printf("string new token : %s\n", str_tab[i]);
 		i++;
-	if (string[i] && ft_is_separator(string[i]))
-		i++;
-	result = ft_strdup(string + i);
-	return (result);
+	}
 }

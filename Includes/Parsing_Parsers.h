@@ -14,8 +14,8 @@
 # define PARSING_PARSERS_H
 
 # define UNEXPECTED_TOKENS "#&<>|?"
-# define MSG_UNEXPECTED_TOKEN "minishell-TitouVictor$: syntax error near unexpected token "
-# define MSG_INTERROGATION_SYMBOL "minishell-TitouVictor$: ambiguous redirect "
+# define MSG_UNEXPECTED_TOKEN "minishell: syntax error near unexpected token "
+# define MSG_INTERROGATION_SYMBOL "minishell: ambiguous redirect "
 # define DEFAULT_FD_PARSER 9999
 
 typedef enum s_parser_type
@@ -44,8 +44,6 @@ typedef struct s_parser
 
 ///////////////// Parsing_Parser_utils.c //////////////
 
-int			ft_is_not_an_unexpected_token(t_token *token);
-void		ft_remove_empty_token_from_list(t_token *token_list);
 char		*ft_get_filename_or_delimiter_from_token(char *string);
 
 ///////////////// Parsing_Parser.c //////////////
