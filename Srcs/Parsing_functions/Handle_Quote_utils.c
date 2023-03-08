@@ -50,7 +50,6 @@ int	ft_handle_single(t_token *token_list, int *is_open_double)
 		ft_merge_tokens(token_list, token_begin);
 		return (1);
 	}
-	printf("string final : %s\n", token_list->string);
 	return (0);
 }
 

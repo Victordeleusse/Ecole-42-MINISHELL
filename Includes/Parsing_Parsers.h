@@ -32,7 +32,6 @@ typedef enum s_parser_type
 typedef struct s_parser
 {
 	t_parser_type	parser_type;
-	int				is_command;
 	char			*string;
 	char			*delimiter;
 	int				is_a_quote_delimiter;
@@ -45,11 +44,10 @@ typedef struct s_parser
 
 ///////////////// Parsing_Parser_utils.c //////////////
 
-char		*ft_get_filename_or_delimiter_from_token(char *string);
+void	ft_ordonate_parser_list(t_parser *parser_list);
 
 ///////////////// Parsing_Parser.c //////////////
 
-int			ft_manage_list_for_redirection(t_token *token_list);
 t_parser	*ft_generate_parser(t_token *token, t_env_elem *envp_list);
 t_parser 	*ft_generate_list_parser(t_token *token_list, t_env_elem *envp_list);
 

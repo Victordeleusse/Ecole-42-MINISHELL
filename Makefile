@@ -24,6 +24,7 @@ define SRCS :=
 	Parsing_functions/Handle_Quote_utils.c
 	Parsing_functions/Handle_Quote_utils_2.c
 	Parsing_functions/Parsing_Parser.c
+	Parsing_functions/Parsing_Parser_utils.c
 
 	Files/Get_simple_files.c
 	Files/Here_doc_handler.c

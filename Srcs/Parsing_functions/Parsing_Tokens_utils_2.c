@@ -82,13 +82,13 @@ int	ft_manage_unexpected_tokens(t_token *token_list)
 			if (begin->next && (begin->next->symbol == DIR_RIGHT || begin->next->symbol == DIR_LEFT || begin->next->symbol == DOUBLE_DIR_RIGHT || begin->next->symbol == DOUBLE_DIR_LEFT || begin->next->symbol == SIMPLE_PIPE))
 			{	
 				ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, begin->next->string);
-				ft_free_token_list(token_list);
+				// ft_free_token_list(token_list);
 				return (0);
 			}
 			if (!begin->next || (begin->next && !ft_follow_is_not_empty(begin->next->string)))
 			{	
 				ft_message_unexpected_token(MSG_UNEXPECTED_TOKEN, "newline");
-				ft_free_token_list(token_list);
+				// ft_free_token_list(token_list);
 				return (0);
 			}
 		}

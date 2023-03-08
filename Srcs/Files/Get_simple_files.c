@@ -24,17 +24,15 @@ int	ft_get_fd_infile(t_parser *parser_elem)
 	if (parser_elem->string[i] == ' ')
 		i = 2;
 	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
+	while (parser_elem->string[i + len])
 		len++;
 	file_path = ft_calloc(sizeof(char), len + 1);
 	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
+	while (parser_elem->string[i + len])
 	{
 		file_path[len] = parser_elem->string[i + len];
 		len++;
 	}
-	free(parser_elem->file_name);
-	parser_elem->file_name = file_path;
 	parser_elem->fd = open(file_path, O_RDONLY);
 	if (parser_elem->fd < 0)
 	{
