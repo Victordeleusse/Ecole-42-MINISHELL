@@ -80,7 +80,7 @@ int	main(int argc, char **argv, char **envp)
 					// 	if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
 					// 		printf("file name : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->file_name, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);			
 					// 	if (parser_begin->parser_type ==  HERE_DOC)
-					// 		printf("DELIMITER : %s -- ", parser_begin->delimiter);		
+					// 		printf("DELIMITER : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->delimiter, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);		
 					// 	if (parser_begin->parser_type ==  0)
 					// 		printf("CMD ? %d vs. ARG ? %d  ", parser_begin->is_cmd, parser_begin->is_arg);		
 					// 	printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
@@ -94,7 +94,7 @@ int	main(int argc, char **argv, char **envp)
 						while (exec_begin->tab_cmd_args[i])
 						{
 							printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
-							printf("infile %s & outfile %s\n", exec_begin->infile, exec_begin->outfile);
+							printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
 							i++;
 						}
 						printf("is a valid bloc : %d\n", exec_begin->is_valid);

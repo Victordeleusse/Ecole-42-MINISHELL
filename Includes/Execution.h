@@ -19,6 +19,8 @@ typedef struct s_exec
 	int				is_valid;
 	char			*infile;
 	int				fd_infile;
+	char			*delimiter;
+	int				is_a_quote_delimiter;
 	char			*outfile;
 	int				fd_outfile;
 	char			**tab_cmd_args;
