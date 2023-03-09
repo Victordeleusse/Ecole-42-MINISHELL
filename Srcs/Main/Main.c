@@ -32,11 +32,13 @@ int	main(int argc, char **argv, char **envp)
 	char		*command_buff;
 	t_env_elem	*envp_list;
 	t_token		*token_list;
-	// t_token		*token_begin;
 	t_parser	*parser_list;
-	t_parser	*parser_begin;
+	// t_parser	*parser_begin;
+	t_exec		*exec_list;
+	t_exec		*exec_begin;
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
+	int		i;
 	int		no_step_1 = 0;
 	int		no_step_2 = 0;
 	(void)envp;
@@ -70,16 +72,34 @@ int	main(int argc, char **argv, char **envp)
 					ft_get_cmd_and_args_token(token_list);
 					printf("\n\nPARSER\n");
 					parser_list = ft_generate_list_parser(token_list, envp_list);
-					ft_ordonate_parser_list(parser_list);
-					parser_begin = parser_list;
-					while (parser_begin)
+					if (!ft_ordonate_parser_list(parser_list))
+						;
+					// parser_begin = parser_list;
+					// while (parser_begin)
+					// {
+					// 	if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
+					// 		printf("file name : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->file_name, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);			
+					// 	if (parser_begin->parser_type ==  HERE_DOC)
+					// 		printf("DELIMITER : %s -- ", parser_begin->delimiter);		
+					// 	if (parser_begin->parser_type ==  0)
+					// 		printf("CMD ? %d vs. ARG ? %d  ", parser_begin->is_cmd, parser_begin->is_arg);		
+					// 	printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
+					// 	parser_begin = parser_begin->next;
+					// }
+					exec_list = ft_generate_exec_list(envp_list, parser_list);
+					exec_begin = exec_list;
+					while (exec_begin)
 					{
-						if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
-							printf("file name : %s -- ", parser_begin->file_name);			
-						if (parser_begin->parser_type ==  HERE_DOC)
-							printf("DELIMITER : %s -- ", parser_begin->delimiter);			
-						printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
-						parser_begin = parser_begin->next;
+						i = 0;
+						while (exec_begin->tab_cmd_args[i])
+						{
+							printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
+							printf("infile %s & outfile %s\n", exec_begin->infile, exec_begin->outfile);
+							i++;
+						}
+						printf("is a valid bloc : %d\n", exec_begin->is_valid);
+						exec_begin = exec_begin->next;
+						printf("\nNEW BLOC\n");
 					}
 				}
 			}

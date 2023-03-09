@@ -26,6 +26,7 @@ int		ft_get_here_doc_traitement(t_parser *parser_elem);
 
 ///////////////// Handle_files.c //////////////////
 
+void	ft_config_exec_files(t_parser *parser_list);
 int		ft_handle_files(t_parser *parser_elem);
 
 #endif

@@ -24,8 +24,6 @@ typedef enum s_parser_type
 	HERE_DOC,
 	OUTFILE_TRUNC,
 	OUTFILE_APPEND,
-	CMD,
-	ARG,
 	PIPE
 } t_parser_type;
 
@@ -37,6 +35,10 @@ typedef struct s_parser
 	int				is_a_quote_delimiter;
 	char			*file_name;
 	int				fd;
+	int				is_cmd;
+	int				is_arg;
+	int				is_infile_exec;
+	int				is_outfile_exec;
 	int				index;
 	t_env_elem		*envp_list;
 	struct s_parser	*next;

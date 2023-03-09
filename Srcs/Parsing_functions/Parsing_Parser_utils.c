@@ -38,18 +38,32 @@ static void	ft_merge_parser(t_parser *parser_elem, t_parser *parser_to_join)
 	free(parser_to_join);
 }
 
-static void	ft_distinguish_cmd_from_args(t_parser *parser_list)
+static void	ft_get_cmd_and_args_for_exec(t_parser *parser_list)
 {
-	t_parser *parser_begin;
+	t_parser	*parser_begin;
 
 	parser_begin = parser_list;
 	while (parser_begin)
-	{
-		while (parser_begin && parser_begin->parser_type != 0)
-			parser_begin = parser_begin->next; 
-		if (parser)
+	{	
+		while (parser_begin && parser_begin->parser_type != PIPE)
+		{
+			while (parser_begin && parser_begin->parser_type != PIPE && parser_begin->parser_type != 0)
+				parser_begin = parser_begin->next;
+			if (parser_begin && parser_begin->parser_type != PIPE && parser_begin->parser_type == 0)
+			{
+				parser_begin->is_cmd = 1;
+				parser_begin = parser_begin->next;
+			}
+			while (parser_begin && parser_begin->parser_type != PIPE)
+			{
+				if (parser_begin && parser_begin->parser_type != PIPE && parser_begin->parser_type == 0)
+					parser_begin->is_arg = 1;
+				parser_begin = parser_begin->next;
+			}
+		}
+		if (parser_begin && parser_begin->parser_type == PIPE)
+			parser_begin = parser_begin->next;
 	}
-
 }
 
 int	ft_ordonate_parser_list(t_parser *parser_list)
@@ -63,6 +77,8 @@ int	ft_ordonate_parser_list(t_parser *parser_list)
 			ft_merge_parser(parser_begin, parser_begin->next);
 		parser_begin = parser_begin->next;
 	}
+	ft_config_exec_files(parser_list);
+	ft_get_cmd_and_args_for_exec(parser_list);
 	parser_begin = parser_list;
 	while (parser_begin)
 	{

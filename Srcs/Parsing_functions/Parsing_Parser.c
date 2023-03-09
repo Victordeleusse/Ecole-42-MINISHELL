@@ -28,6 +28,10 @@ t_parser *ft_generate_parser(t_token *token, t_env_elem *envp_list)
 	parser->is_a_quote_delimiter = 0;
 	parser->file_name = NULL;
 	parser->fd = DEFAULT_FD_PARSER;
+	parser->is_cmd = 0;
+	parser->is_arg = 0;
+	parser->is_infile_exec = 0;
+	parser->is_outfile_exec = 0;
 	parser->index = 0;
 	parser->envp_list = envp_list;
 	if (token->symbol == DIR_LEFT)

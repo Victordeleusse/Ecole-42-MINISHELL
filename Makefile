@@ -30,7 +30,7 @@ define SRCS :=
 	Files/Here_doc_handler.c
 	Files/Handle_files.c
 
-	Execution/Get_cmd_tab.c
+	Execution/Generate_exec_list.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c
@@ -46,7 +46,7 @@ DEPS = $(OBJS:.o=.d)
 
 all: ${NAME}
 
-$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c : Makefile
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
 		mkdir -p ${dir $@}
 		${CC} ${CFLAGS} -c $< -o $@ $(INCLUDES)
 
