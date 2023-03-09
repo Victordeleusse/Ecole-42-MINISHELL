@@ -12,31 +12,39 @@
 
 #include "minishell.h"
 
+// // To clean quotes when 
+
+void	ft_clean_quote_before_getting_fd(char *file_name)
+{
+	int	i;
+
+	if (file_name[0] == '\"' || file_name[0] == '\'')
+		ft_memmove(file_name, file_name + 1, ft_strlen(file_name));
+	i = 0;
+	while (file_name[i])
+		i++;
+	i = i - 1;
+	if (file_name[i] == '\"' || file_name[i] == '\'')
+		file_name[i] = '\0';
+	i = i - 1;
+	while (file_name[i] == ' ' && file_name[i])
+	{
+		file_name[i] = '\0';
+		i = i - 1;
+	}
+}
+
 // // When the parser is an INFILE PARSER TYPE -> '<' en 0 puis arg[1] en 2
 
 int	ft_get_fd_infile(t_parser *parser_elem)
 {
-	int		i;
-	int		len;
-	char	*file_path;
-
-	i = 1;
-	if (parser_elem->string[i] == ' ')
-		i = 2;
-	len = 0;
-	while (parser_elem->string[i + len])
-		len++;
-	file_path = ft_calloc(sizeof(char), len + 1);
-	len = 0;
-	while (parser_elem->string[i + len])
-	{
-		file_path[len] = parser_elem->string[i + len];
-		len++;
-	}
-	parser_elem->fd = open(file_path, O_RDONLY);
+	if (!parser_elem->file_name)
+		return (0);
+	ft_clean_quote_before_getting_fd(parser_elem->file_name);
+	parser_elem->fd = open(parser_elem->file_name, O_RDONLY);
 	if (parser_elem->fd < 0)
 	{
-		ft_message_p_err(file_path);
+		ft_message_p_err(parser_elem->file_name);
 		return (0);
 	}
 	return (1);
@@ -46,29 +54,13 @@ int	ft_get_fd_infile(t_parser *parser_elem)
 
 int	ft_get_fd_outfile_trunc(t_parser *parser_elem)
 {
-	int		i;
-	int		len;
-	char	*file_path;
-
-	i = 1;
-	if (parser_elem->string[i] == ' ')
-		i = 2;
-	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
-		len++;
-	file_path = ft_calloc(sizeof(char), len + 1);
-	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
-	{
-		file_path[len] = parser_elem->string[i + len];
-		len++;
-	}
-	free(parser_elem->file_name);
-	parser_elem->file_name = file_path;
-	parser_elem->fd = open(file_path, O_CREAT | O_RDWR | O_TRUNC, 0000664);
+	if (!parser_elem->file_name)
+		return (0);
+	ft_clean_quote_before_getting_fd(parser_elem->file_name);
+	parser_elem->fd = open(parser_elem->file_name, O_CREAT | O_RDWR | O_TRUNC, 0000664);
 	if (parser_elem->fd < 0)
 	{
-		ft_message_p_err(file_path);
+		ft_message_p_err(parser_elem->file_name);
 		return (0);
 	}
 	return (1);
@@ -78,29 +70,13 @@ int	ft_get_fd_outfile_trunc(t_parser *parser_elem)
 
 int	ft_get_fd_outfile_append(t_parser *parser_elem)
 {
-	int		i;
-	int		len;
-	char	*file_path;
-
-	i = 2;
-	if (parser_elem->string[i] == ' ')
-		i = 3;
-	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
-		len++;
-	file_path = ft_calloc(sizeof(char), len + 1);
-	len = 0;
-	while (parser_elem->string[i + len] && !ft_is_separator(parser_elem->string[i + len]))
-	{
-		file_path[len] = parser_elem->string[i + len];
-		len++;
-	}
-	free(parser_elem->file_name);
-	parser_elem->file_name = file_path;
-	parser_elem->fd = open(file_path, O_WRONLY | O_CREAT | O_APPEND, 0000664);
+	if (!parser_elem->file_name)
+		return (0);
+	ft_clean_quote_before_getting_fd(parser_elem->file_name);
+	parser_elem->fd = open(parser_elem->file_name, O_WRONLY | O_CREAT | O_APPEND, 0000664);
 	if (parser_elem->fd < 0)
 	{
-		ft_message_p_err(file_path);
+		ft_message_p_err(parser_elem->file_name);
 		return (0);
 	}
 	return (1);

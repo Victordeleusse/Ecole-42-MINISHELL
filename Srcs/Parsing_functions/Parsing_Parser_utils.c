@@ -38,7 +38,21 @@ static void	ft_merge_parser(t_parser *parser_elem, t_parser *parser_to_join)
 	free(parser_to_join);
 }
 
-void	ft_ordonate_parser_list(t_parser *parser_list)
+static void	ft_distinguish_cmd_from_args(t_parser *parser_list)
+{
+	t_parser *parser_begin;
+
+	parser_begin = parser_list;
+	while (parser_begin)
+	{
+		while (parser_begin && parser_begin->parser_type != 0)
+			parser_begin = parser_begin->next; 
+		if (parser)
+	}
+
+}
+
+int	ft_ordonate_parser_list(t_parser *parser_list)
 {
 	t_parser *parser_begin;
 
@@ -49,4 +63,13 @@ void	ft_ordonate_parser_list(t_parser *parser_list)
 			ft_merge_parser(parser_begin, parser_begin->next);
 		parser_begin = parser_begin->next;
 	}
+	parser_begin = parser_list;
+	while (parser_begin)
+	{
+		if (!ft_handle_files(parser_begin))
+			return (0);
+		parser_begin = parser_begin->next;
+	}
+	return (1);
 }
+

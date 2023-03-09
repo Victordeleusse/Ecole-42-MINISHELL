@@ -14,11 +14,11 @@
 
 int	ft_handle_files(t_parser *parser_elem)
 {
-	if (parser_elem->parser_type == HERE_DOC)
-	{
-		if (!ft_get_here_doc_traitement(parser_elem))
-			return (0);
-	}
+	// if (parser_elem->parser_type == HERE_DOC)
+	// {
+	// 	if (!ft_get_here_doc_traitement(parser_elem))
+	// 		return (0);
+	// }
 	if (parser_elem->parser_type == INFILE)
 	{
 		if (!ft_get_fd_infile(parser_elem))

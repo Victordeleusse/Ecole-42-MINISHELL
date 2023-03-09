@@ -49,7 +49,7 @@ int	ft_handle_dollar(t_env_elem *envp_list, t_token *token_list)
 	return (1);
 }
 
-// To handle SINGLE and DOUBLE QUOTES 
+// To handle SINGLE and DOUBLE QUOTES
 
 int	ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int *is_open_double)
 {

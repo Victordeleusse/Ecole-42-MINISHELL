@@ -44,7 +44,7 @@ typedef struct s_parser
 
 ///////////////// Parsing_Parser_utils.c //////////////
 
-void	ft_ordonate_parser_list(t_parser *parser_list);
+int			ft_ordonate_parser_list(t_parser *parser_list);
 
 ///////////////// Parsing_Parser.c //////////////
 

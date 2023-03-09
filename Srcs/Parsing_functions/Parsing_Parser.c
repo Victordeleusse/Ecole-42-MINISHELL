@@ -21,6 +21,8 @@ t_parser *ft_generate_parser(t_token *token, t_env_elem *envp_list)
 
 	parser = ft_calloc(sizeof(t_parser), 1);
 	parser->string = ft_strdup(token->string);
+	if (parser->string[0] == ' ')
+			ft_memmove(parser->string, parser->string + 1, ft_strlen(parser->string));
 	parser->next = NULL;
 	parser->delimiter = NULL;
 	parser->is_a_quote_delimiter = 0;

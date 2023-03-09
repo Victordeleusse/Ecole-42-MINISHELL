@@ -46,7 +46,7 @@ DEPS = $(OBJS:.o=.d)
 
 all: ${NAME}
 
-$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
+$(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c : Makefile
 		mkdir -p ${dir $@}
 		${CC} ${CFLAGS} -c $< -o $@ $(INCLUDES)
 
