@@ -79,13 +79,13 @@ int	ft_ordonate_parser_list(t_parser *parser_list)
 	}
 	ft_config_exec_files(parser_list);
 	ft_get_cmd_and_args_for_exec(parser_list);
-	parser_begin = parser_list;
-	while (parser_begin)
-	{
-		if (!ft_handle_files(parser_begin))
-			return (0);
-		parser_begin = parser_begin->next;
-	}
+	// parser_begin = parser_list;
+	// while (parser_begin)
+	// {
+	// 	if (!ft_handle_files(parser_begin))
+	// 		return (0);
+	// 	parser_begin = parser_begin->next;
+	// }
 	return (1);
 }
 

@@ -74,5 +74,8 @@ int		ft_clean_quote_token_list(t_token *token_list, int *is_open_simple, int *is
 
 void	ft_free_token_list(t_token	*token_list);
 t_token	*ft_generate_token_list(char *command_buff, int *is_open_simple, int *is_open_double);
+int		ft_global_tokeniation(t_env_elem *envp_list, t_token *token_list, int *is_open_simple, int *is_open_double);
+
+
 
 #endif

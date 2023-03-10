@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   Get_cmd_tab.c                                      :+:      :+:    :+:   */
+/*   Generate_exec_list.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vde-leus <vde-leus@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -29,6 +29,8 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 	exec_elem->outfile = NULL;
 	exec_elem->fd_outfile = 0;
 	exec_elem->envp_list = envp_list;
+	exec_elem->env_path = ft_get_env_path(envp_list);
+	exec_elem->command_paths = ft_split(exec_elem->env_path, ':');
 	parser_begin = parser_list;
 	size_tab = 0;
 	while (parser_begin && parser_begin->parser_type != PIPE)
@@ -86,11 +88,11 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 	if (parser_begin && parser_begin->parser_type != PIPE)
 	{	
 		exec_begin = ft_generate_executable(envp_list, parser_begin);
-		if (exec_begin->is_valid)
-		{
-			exec_begin->index = indx;
-			indx++;
-		}
+		// if (exec_begin->is_valid)
+		// {
+		exec_begin->index = indx;
+		indx++;
+		// }
 	}
 	else
 		return (NULL);
@@ -106,11 +108,11 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 		if (parser_begin && parser_begin->parser_type != PIPE)
 		{	
 			exec_next = ft_generate_executable(envp_list, parser_begin);
-			if (exec_next->is_valid)
-			{
-				exec_next->index = indx;
-				indx++;
-			}
+			// if (exec_next->is_valid)
+			// {
+			exec_next->index = indx;
+			indx++;
+			// }
 		}
 		exec_begin->next = exec_next;
 		while (parser_begin && parser_begin->parser_type != PIPE)

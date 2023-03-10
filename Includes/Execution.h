@@ -25,8 +25,14 @@ typedef struct s_exec
 	int				fd_outfile;
 	char			**tab_cmd_args;
 	t_env_elem		*envp_list;
+	char			*env_path;
+	char			**command_paths;
 	struct s_exec	*next;
 }t_exec;
+
+
+char	*ft_get_env_path(t_env_elem *envp_list);
+
 
 //////////////// Generate_exec_list.c ///////////////////
 

@@ -39,18 +39,15 @@ int	main(int argc, char **argv, char **envp)
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
 	int		i;
-	int		no_step_1 = 0;
-	int		no_step_2 = 0;
 	(void)envp;
 	(void)argc;
 	(void)argv;
 
 	signal(SIGINT, ft_signal_ctrl_c);
 	signal(SIGQUIT, (__sighandler_t)1);
+	envp_list = ft_generate_envp_list(envp);
 	while (1)
 	{
-		no_step_1 = 0;
-		no_step_2 = 0;
 		is_open_simple = 0;
 		is_open_double = 0;
 		if (ft_read_data(&command_buff))
@@ -59,57 +56,41 @@ int	main(int argc, char **argv, char **envp)
 			;
 		else
 		{
-			envp_list = ft_generate_envp_list(envp);
 			token_list = ft_generate_token_list(command_buff, &is_open_simple, &is_open_double);
-			if (!ft_handle_dollar(envp_list, token_list) || !ft_manage_unexpected_tokens(token_list))
+			if (!ft_global_tokeniation(envp_list, token_list, &is_open_simple, &is_open_double))
 				;
-			else if (!ft_clean_quote_token_list(token_list, &is_open_simple, &is_open_double))
+			parser_list = ft_generate_list_parser(token_list, envp_list);
+			if (!ft_ordonate_parser_list(parser_list))
 				;
-			else 
+			// parser_begin = parser_list;
+			// while (parser_begin)
+			// {
+			// 	if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
+			// 		printf("file name : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->file_name, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);			
+			// 	if (parser_begin->parser_type ==  HERE_DOC)
+			// 		printf("DELIMITER : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->delimiter, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);		
+			// 	if (parser_begin->parser_type ==  0)
+			// 		printf("CMD ? %d vs. ARG ? %d  ", parser_begin->is_cmd, parser_begin->is_arg);		
+			// 	printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
+			// 	parser_begin = parser_begin->next;
+			// }
+			exec_list = ft_generate_exec_list(envp_list, parser_list);
+			exec_begin = exec_list;
+			while (exec_begin)
 			{
-				if (token_list)
+				i = 0;
+				while (exec_begin->tab_cmd_args[i])
 				{
-					ft_get_cmd_and_args_token(token_list);
-					printf("\n\nPARSER\n");
-					parser_list = ft_generate_list_parser(token_list, envp_list);
-					if (!ft_ordonate_parser_list(parser_list))
-						;
-					// parser_begin = parser_list;
-					// while (parser_begin)
-					// {
-					// 	if (parser_begin->parser_type == INFILE || parser_begin->parser_type == OUTFILE_APPEND || parser_begin->parser_type == OUTFILE_TRUNC)
-					// 		printf("file name : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->file_name, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);			
-					// 	if (parser_begin->parser_type ==  HERE_DOC)
-					// 		printf("DELIMITER : %s -- is for exec ? : IN %d | OUT %d ", parser_begin->delimiter, parser_begin->is_infile_exec, parser_begin->is_outfile_exec);		
-					// 	if (parser_begin->parser_type ==  0)
-					// 		printf("CMD ? %d vs. ARG ? %d  ", parser_begin->is_cmd, parser_begin->is_arg);		
-					// 	printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
-					// 	parser_begin = parser_begin->next;
-					// }
-					exec_list = ft_generate_exec_list(envp_list, parser_list);
-					exec_begin = exec_list;
-					while (exec_begin)
-					{
-						i = 0;
-						while (exec_begin->tab_cmd_args[i])
-						{
-							printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
-							printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
-							i++;
-						}
-						printf("is a valid bloc : %d\n", exec_begin->is_valid);
-						exec_begin = exec_begin->next;
-						printf("\nNEW BLOC\n");
-					}
+					printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
+					printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
+					i++;
 				}
+				printf("is a valid bloc : %d\nINDEX : %d\n\n", exec_begin->is_valid, exec_begin->index);
+				printf("ENV_PATH : %s\n\n", exec_begin->env_path);
+				exec_begin = exec_begin->next;
+				printf("\nNEW BLOC\n");
 			}
 		}
-		
-		/*
-		IMPLEMENTERft_split_parser(parser_begin);
-		*/
-
-
 	}
 	return (0);
 }

@@ -31,6 +31,7 @@ define SRCS :=
 	Files/Handle_files.c
 
 	Execution/Generate_exec_list.c
+	Execution/Pipex_utils.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c
