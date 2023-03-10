@@ -29,7 +29,7 @@ typedef struct s_exec
 {
 	int				index;
 	int				is_valid;
-	t_pipe			pipe[2];
+	t_pipe			pipes[2];
 	pid_t			pid;
 	pid_t			*tab_pid;
 	char			*infile;
@@ -40,7 +40,7 @@ typedef struct s_exec
 	t_outfile_type	outfile_type;
 	int				fd_outfile;
 	char			**tab_cmd_args;
-	t_env_elem		*envp_list;
+	char			**env;
 	char			*env_path;
 	char			**command_paths;
 	struct s_exec	*next;

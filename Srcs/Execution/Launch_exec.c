@@ -12,37 +12,62 @@
 
 #include "minishell.h"
 
+static void	ft_only_one_exec(t_exec *exec_list)
+{
+	t_exec	*exec_begin;
+	
+	exec_begin = exec_list;
+	if (exec_list->tab_cmd_args[0] == NULL)
+		return ;
+	if (!ft_get_infile(exec_begin))
+		exec_begin->fd_infile = STDIN_FILENO;
+	else
+		dup2(exec_begin->fd_infile, STDIN_FILENO);
+	if (!ft_get_outfile(exec_begin))
+		exec_begin->fd_outfile = STDOUT_FILENO;
+	else
+		dup2(exec_begin->fd_outfile, STDOUT_FILENO);
+	exec_begin->pid = fork();
+	if (exec_begin->pid == 0)
+		execve(ft_get_command_for_the_pipe(exec_begin), exec_begin->tab_cmd_args + 1, exec_begin->env);
+	else 
+		exec_begin->tab_pid[0] = exec_begin->pid;
+}
+
 void	ft_launch_exec(t_exec *exec_list)
 {
-	int		status;
-	int		fds1[2];
-	int		fds2[2];
-	t_pipe	pipe1;
-	t_pipe	pipe2;
-	t_exec	*exec_begin;
-	char	**env;
-
-	status = -1;
-	pipe1.fds = fds1;
-	pipe2.fds = fds2;
-	pipe(pipe1.fds);
-	pipe(pipe2.fds);
-	env = ft_envp_in_tab(&exec_list->envp_list);
-	exec_begin = exec_list;
-	while (exec_begin)
-	{
-
-	}
-	if (!exec_begin->next)
-	{
-		if (!ft_get_infile(exec_begin))
-			exec_begin->fd_infile = STDIN_FILENO;
-		else
-			dup2(exec_begin->fd_infile, STDIN_FILENO);
-		if (!ft_get_outfile(exec_begin))
-			exec_begin->fd_outfile = STDOUT_FILENO;
-		else
-			dup2(exec_begin->fd_outfile, STDOUT_FILENO);
-	}
-	execve(ft_get_command_for_the_pipe(exec_begin), exec_begin->tab_cmd_args + 1, env);
+	if (!exec_list->next)
+		ft_only_one_exec(exec_list);
+	while (wait(NULL) != -1)
+		;
 }
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	// 	if (!ft_get_infile(exec_begin))
+	// 		exec_begin->fd_infile = STDIN_FILENO;
+	// 	else
+	// 		dup2(exec_begin->fd_infile, STDIN_FILENO);
+	// 	if (!ft_get_outfile(exec_begin))
+	// 		exec_begin->fd_outfile = STDOUT_FILENO;
+	// 	else
+	// 		dup2(exec_begin->fd_outfile, STDOUT_FILENO);
+	// }
+	// execve(ft_get_command_for_the_pipe(exec_begin), exec_begin->tab_cmd_args + 1, env);

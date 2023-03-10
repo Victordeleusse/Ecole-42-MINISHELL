@@ -12,6 +12,16 @@
 
 #include "minishell.h"
 
+static void	ft_init_pipes(t_exec *exec_begin)
+{
+	exec_begin->pipes[0].is_open = false;
+	exec_begin->pipes[0].fds[0] = -1;
+	exec_begin->pipes[0].fds[1] = -1;
+	exec_begin->pipes[1].is_open = false;
+	exec_begin->pipes[1].fds[0] = -1;
+	exec_begin->pipes[1].fds[1] = -1;
+}
+
 t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 {
 	t_exec		*exec_elem;
@@ -28,7 +38,7 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 	exec_elem->fd_infile = -1;
 	exec_elem->outfile = NULL;
 	exec_elem->fd_outfile = -1;
-	exec_elem->envp_list = envp_list;
+	exec_elem->env = ft_envp_in_tab(&envp_list);
 	exec_elem->env_path = ft_get_env_path(envp_list);
 	exec_elem->command_paths = ft_split(exec_elem->env_path, ':');
 	parser_begin = parser_list;
@@ -78,7 +88,23 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 		parser_begin = parser_begin->next;
 	}
 	exec_elem->next = NULL;
+	ft_init_pipes(exec_elem);
 	return (exec_elem);
+}
+
+
+static void	ft_init_pid_tab(t_exec *exec_list, int size_list)
+{
+	pid_t		*tab_pid;
+	t_exec		*exec_begin;
+
+	exec_begin = exec_list;
+	tab_pid = ft_calloc(sizeof(pid_t), size_list);
+	while (exec_begin)
+	{
+		exec_begin->tab_pid = tab_pid;
+		exec_begin = exec_begin->next;
+	}	
 }
 
 t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
@@ -88,7 +114,6 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 	t_exec		*exec_begin;
 	t_exec		*exec_next;
 	int			indx;
-	pid_t		*tab_pid;
 
 
 	parser_begin = parser_list;
@@ -123,7 +148,6 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 			parser_begin = parser_begin->next;
 		exec_begin = exec_begin->next;
 	}
-	tab_pid = ft_calloc(sizeof(pid_t), indx);
-	exec_list = exec_begin;
+	ft_init_pid_tab(exec_list, indx);
 	return (exec_list);
 }

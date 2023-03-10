@@ -26,6 +26,7 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <string.h>
+# include <stdbool.h>
 
 # include "libft.h"
 # include "Environment.h"
