@@ -25,9 +25,9 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 	exec_elem->is_a_quote_delimiter = -1;
 	exec_elem->is_valid = 1;
 	exec_elem->infile = NULL;
-	exec_elem->fd_infile = 0;
+	exec_elem->fd_infile = -1;
 	exec_elem->outfile = NULL;
-	exec_elem->fd_outfile = 0;
+	exec_elem->fd_outfile = -1;
 	exec_elem->envp_list = envp_list;
 	exec_elem->env_path = ft_get_env_path(envp_list);
 	exec_elem->command_paths = ft_split(exec_elem->env_path, ':');
@@ -68,7 +68,13 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 			}
 		}
 		if (parser_begin && parser_begin->is_outfile_exec == 1)
+		{	
 			exec_elem->outfile = ft_strdup(parser_begin->file_name);
+			if (parser_begin->parser_type == OUTFILE_APPEND)
+				exec_elem->outfile_type = OUT_APPEND;
+			if (parser_begin->parser_type == OUTFILE_TRUNC)
+				exec_elem->outfile_type = OUT_TRUNC;
+		}
 		parser_begin = parser_begin->next;
 	}
 	exec_elem->next = NULL;
@@ -82,17 +88,16 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 	t_exec		*exec_begin;
 	t_exec		*exec_next;
 	int			indx;
+	pid_t		*tab_pid;
+
 
 	parser_begin = parser_list;
 	indx = 1;
 	if (parser_begin && parser_begin->parser_type != PIPE)
 	{	
 		exec_begin = ft_generate_executable(envp_list, parser_begin);
-		// if (exec_begin->is_valid)
-		// {
 		exec_begin->index = indx;
 		indx++;
-		// }
 	}
 	else
 		return (NULL);
@@ -108,11 +113,8 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 		if (parser_begin && parser_begin->parser_type != PIPE)
 		{	
 			exec_next = ft_generate_executable(envp_list, parser_begin);
-			// if (exec_next->is_valid)
-			// {
 			exec_next->index = indx;
 			indx++;
-			// }
 		}
 		exec_begin->next = exec_next;
 		while (parser_begin && parser_begin->parser_type != PIPE)
@@ -121,5 +123,7 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 			parser_begin = parser_begin->next;
 		exec_begin = exec_begin->next;
 	}
+	tab_pid = ft_calloc(sizeof(pid_t), indx);
+	exec_list = exec_begin;
 	return (exec_list);
 }

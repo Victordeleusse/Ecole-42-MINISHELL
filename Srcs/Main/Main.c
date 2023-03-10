@@ -76,20 +76,29 @@ int	main(int argc, char **argv, char **envp)
 			// }
 			exec_list = ft_generate_exec_list(envp_list, parser_list);
 			exec_begin = exec_list;
+			// while (exec_begin)
+			// {
+			// 	i = 0;
+			// 	while (exec_begin->tab_cmd_args[i])
+			// 	{
+			// 		printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
+			// 		printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
+			// 		i++;
+			// 	}
+			// 	printf("is a valid bloc : %d\nINDEX : %d\n\n", exec_begin->is_valid, exec_begin->index);
+			// 	exec_begin = exec_begin->next;
+			// 	printf("\nNEW BLOC\n");
+			// }
 			while (exec_begin)
 			{
-				i = 0;
-				while (exec_begin->tab_cmd_args[i])
-				{
-					printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
-					printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
-					i++;
-				}
-				printf("is a valid bloc : %d\nINDEX : %d\n\n", exec_begin->is_valid, exec_begin->index);
-				printf("ENV_PATH : %s\n\n", exec_begin->env_path);
+				
 				exec_begin = exec_begin->next;
-				printf("\nNEW BLOC\n");
 			}
+
+			if (fork() == 0)
+				ft_launch_exec(exec_list);
+			while (wait(NULL) != -1)
+				;
 		}
 	}
 	return (0);
