@@ -33,6 +33,7 @@ define SRCS :=
 	Execution/Generate_exec_list.c
 	Execution/Pipex_utils.c
 	Execution/Launch_exec.c
+	Execution/Pipe.c
 
 	Signal_Message/Signal.c
 	Signal_Message/Message.c

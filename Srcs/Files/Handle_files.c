@@ -72,11 +72,11 @@ void	ft_config_exec_files(t_parser *parser_list)
 
 int	ft_handle_files(t_parser *parser_elem)
 {
-	// if (parser_elem->parser_type == HERE_DOC)
-	// {
-	// 	if (!ft_get_here_doc_traitement(parser_elem))
-	// 		return (0);
-	// }
+	if (parser_elem->parser_type == HERE_DOC)
+	{
+		if (!ft_get_here_doc_traitement(parser_elem))
+			return (0);
+	}
 	if (parser_elem->parser_type == INFILE && !parser_elem->is_infile_exec && !parser_elem->is_outfile_exec)
 	{
 		if (!ft_get_fd_infile(parser_elem))

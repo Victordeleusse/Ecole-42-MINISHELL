@@ -12,16 +12,6 @@
 
 #include "minishell.h"
 
-static void	ft_init_pipes(t_exec *exec_begin)
-{
-	exec_begin->pipes[0].is_open = false;
-	exec_begin->pipes[0].fds[0] = -1;
-	exec_begin->pipes[0].fds[1] = -1;
-	exec_begin->pipes[1].is_open = false;
-	exec_begin->pipes[1].fds[0] = -1;
-	exec_begin->pipes[1].fds[1] = -1;
-}
-
 t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 {
 	t_exec		*exec_elem;
@@ -31,9 +21,11 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 
 	exec_elem = ft_calloc(sizeof(t_exec), 1);
 	exec_elem->index = 0;
+	exec_elem->fd_here_doc = -1;
 	exec_elem->delimiter = NULL;
 	exec_elem->is_a_quote_delimiter = -1;
 	exec_elem->is_valid = 1;
+	exec_elem->previous_valid = 1;
 	exec_elem->infile = NULL;
 	exec_elem->fd_infile = -1;
 	exec_elem->outfile = NULL;
@@ -73,6 +65,7 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 				exec_elem->infile = ft_strdup(parser_begin->file_name);
 			if (parser_begin->parser_type == HERE_DOC)
 			{
+				exec_elem->fd_here_doc = parser_begin->fd;
 				exec_elem->delimiter = ft_strdup(parser_begin->delimiter);
 				exec_elem->is_a_quote_delimiter = parser_begin->is_a_quote_delimiter;
 			}
@@ -88,26 +81,11 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 		parser_begin = parser_begin->next;
 	}
 	exec_elem->next = NULL;
-	ft_init_pipes(exec_elem);
 	return (exec_elem);
 }
 
 
-static void	ft_init_pid_tab(t_exec *exec_list, int size_list)
-{
-	pid_t		*tab_pid;
-	t_exec		*exec_begin;
-
-	exec_begin = exec_list;
-	tab_pid = ft_calloc(sizeof(pid_t), size_list);
-	while (exec_begin)
-	{
-		exec_begin->tab_pid = tab_pid;
-		exec_begin = exec_begin->next;
-	}	
-}
-
-t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
+t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list, int *nb_cmd)
 {
 	t_parser	*parser_begin;
 	t_exec		*exec_list;
@@ -115,9 +93,8 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 	t_exec		*exec_next;
 	int			indx;
 
-
-	parser_begin = parser_list;
 	indx = 1;
+	parser_begin = parser_list;
 	if (parser_begin && parser_begin->parser_type != PIPE)
 	{	
 		exec_begin = ft_generate_executable(envp_list, parser_begin);
@@ -148,6 +125,6 @@ t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list)
 			parser_begin = parser_begin->next;
 		exec_begin = exec_begin->next;
 	}
-	ft_init_pid_tab(exec_list, indx);
+	(*nb_cmd) = indx - 1;
 	return (exec_list);
 }

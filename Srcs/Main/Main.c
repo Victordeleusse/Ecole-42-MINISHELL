@@ -35,10 +35,11 @@ int	main(int argc, char **argv, char **envp)
 	t_parser	*parser_list;
 	// t_parser	*parser_begin;
 	t_exec		*exec_list;
-	t_exec		*exec_begin;
+	// t_exec		*exec_begin;
 	int		is_open_simple = 0;
 	int		is_open_double = 0;
-	int		i;
+	// int		i;
+	int		nb_cmd;
 	(void)envp;
 	(void)argc;
 	(void)argv;
@@ -74,23 +75,22 @@ int	main(int argc, char **argv, char **envp)
 			// 	printf("type : %d | string : %s\n", (int)parser_begin->parser_type, parser_begin->string);			
 			// 	parser_begin = parser_begin->next;
 			// }
-			exec_list = ft_generate_exec_list(envp_list, parser_list);
-			exec_begin = exec_list;
-			while (exec_begin)
-			{
-				i = 0;
-				while (exec_begin->tab_cmd_args[i])
-				{
-					printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
-					printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
-					i++;
-				}
-				printf("is a valid bloc : %d\nINDEX : %d\n\n", exec_begin->is_valid, exec_begin->index);
-				printf("pipe status : first %d second %d\n\n", exec_begin->pipes[0].fds[0], exec_begin->pipes[1].fds[0]);
-				exec_begin = exec_begin->next;
-				printf("\nNEW BLOC\n");
-			}
-			ft_launch_exec(exec_list);
+			exec_list = ft_generate_exec_list(envp_list, parser_list, &nb_cmd);
+			// exec_begin = exec_list;
+			// while (exec_begin)
+			// {
+			// 	i = 0;
+			// 	while (exec_begin->tab_cmd_args[i])
+			// 	{
+			// 		printf("command ou arg : %s\n", exec_begin->tab_cmd_args[i]);
+			// 		printf("infile %s & outfile %s & delimiter %s\n", exec_begin->infile, exec_begin->outfile, exec_begin->delimiter);
+			// 		i++;
+			// 	}
+			// 	printf("is a valid bloc : %d\nINDEX : %d\n\n", exec_begin->is_valid, exec_begin->index);
+			// 	exec_begin = exec_begin->next;
+			// 	printf("\nNEW BLOC\n");
+			// }
+			ft_launch_exec(exec_list, &nb_cmd);
 			// while (exec_begin)
 			// {
 				

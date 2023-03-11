@@ -29,11 +29,11 @@ typedef struct s_exec
 {
 	int				index;
 	int				is_valid;
-	t_pipe			pipes[2];
+	int				previous_valid;
 	pid_t			pid;
-	pid_t			*tab_pid;
 	char			*infile;
 	int				fd_infile;
+	int				fd_here_doc;
 	char			*delimiter;
 	int				is_a_quote_delimiter;
 	char			*outfile;
@@ -46,20 +46,32 @@ typedef struct s_exec
 	struct s_exec	*next;
 }t_exec;
 
+//////////////// Pipe.c ///////////////////
+
+void	ft_init_pipes(t_pipe *pipes);
+void	ft_close(int *fd);
+void	ft_swap_pipes(t_pipe *pipes);
+void	ft_clean_one_pipe(t_pipe *pipe);
+void	ft_dup(t_exec *exec_elem, t_pipe *pipes);
+
+//////////////// Pipex_utils.c ///////////////////
 
 char	*ft_get_env_path(t_env_elem *envp_list);
 int		ft_get_infile(t_exec *exec_elem);
 int		ft_get_outfile(t_exec *exec_elem);
 char	*ft_get_command_for_the_pipe(t_exec *exec_elem);
-
+void	ft_init_pipes(t_pipe *pipes);
+void	ft_make_children(t_exec *exec_elem, t_pipe *pipes);
+void	ft_exec(t_exec *exec_elem, t_pipe *pipes);
 
 //////////////// Generate_exec_list.c ///////////////////
 
 t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list);
-t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list);
+t_exec	*ft_generate_exec_list(t_env_elem *envp_list, t_parser *parser_list, int *nb_cmd);
 
 //////////////// Launch_exec.c ////////////////
 
-void	ft_launch_exec(t_exec *exec_list);
+void	ft_launch_exec(t_exec *exec_list, int *nb_cmd);
+
 
 #endif

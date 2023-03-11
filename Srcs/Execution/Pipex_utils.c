@@ -59,11 +59,14 @@ char	*ft_get_command_for_the_pipe(t_exec *exec_elem)
 
 int	ft_get_infile(t_exec *exec_elem)
 {
-	if (exec_elem->infile && exec_elem->infile[0])
+	if (exec_elem->is_valid && exec_elem->infile && exec_elem->infile[0])
 	{	
 		exec_elem->fd_infile = open(exec_elem->infile, O_RDONLY);
 		if (exec_elem->fd_infile < 0)
 		{
+			exec_elem->is_valid = 0;
+			if (exec_elem->next)
+				exec_elem->next->previous_valid = 0;
 			ft_message_p_err(exec_elem->infile);
 			return (0);
 		}
@@ -77,7 +80,7 @@ int	ft_get_infile(t_exec *exec_elem)
 
 int	ft_get_outfile(t_exec *exec_elem)
 {
-	if (exec_elem->outfile && exec_elem->outfile[0])
+	if (exec_elem->is_valid && exec_elem->outfile && exec_elem->outfile[0])
 	{	
 		if (exec_elem->outfile_type == OUT_TRUNC)
 			exec_elem->fd_outfile = open(exec_elem->outfile, O_CREAT | O_RDWR | O_TRUNC, 0000664);
@@ -85,6 +88,9 @@ int	ft_get_outfile(t_exec *exec_elem)
 			exec_elem->fd_outfile = open(exec_elem->outfile, O_WRONLY | O_CREAT | O_APPEND, 0000664);
 		if (exec_elem->fd_outfile < 0)
 		{
+			exec_elem->is_valid = 0;
+			if (exec_elem->next)
+				exec_elem->next->previous_valid = 0;
 			if (exec_elem->fd_infile >= 0)
 				close (exec_elem->fd_infile);
 			ft_message_p_err(exec_elem->outfile);
@@ -95,5 +101,4 @@ int	ft_get_outfile(t_exec *exec_elem)
 	// else
 		// Comportement sans sortie specifique ... quel fd definir ? 
 }
-
 
