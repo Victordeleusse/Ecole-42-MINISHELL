@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+static int	ft_cleaning_arg(char **tab_args, int *i)
+{	
+	int	len;
+
+	if (tab_args[(*i)][0] == '$')
+	{
+		if (tab_args[(*i) + 1])
+		{
+			len = ft_strlen(tab_args[(*i) + 1]) - 2;
+			tab_args[(*i)] = tab_args[(*i) + 1];
+			ft_memmove(tab_args[(*i)], tab_args[(*i)] + 1, ft_strlen(tab_args[(*i)] - 3));
+			tab_args[(*i)][len - 1] = '\0';
+		}
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_builtin_echo_function(char **tab_args)
 {
 	int	is_n;
@@ -32,7 +50,11 @@ void	ft_builtin_echo_function(char **tab_args)
 	}
 	while(tab_args[i])
 	{
-		write(1, tab_args[i], ft_strlen(tab_args[i]));
+		if (ft_cleaning_arg(tab_args, &i))
+		 	i = i + 1;
+		// write(1, tab_args[i - 1], ft_strlen(tab_args[i]));	
+		// if (tab_args[i + 1])
+		// 	write(1, " ", 1);
 		i++;
 	}
 	if (!is_n)

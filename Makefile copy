@@ -47,7 +47,7 @@ INCLUDES = -I Includes -I Libft_vde-leus
 OBJS = ${patsubst %.c, ${OBJS_PATH}/%.o, ${SRCS}}
 DEPS = $(OBJS:.o=.d)
 
-all: ${NAME}
+all: ${NAME} ./minishell
 
 $(OBJS_PATH)/%.o: $(SRCS_PATH)/%.c
 		mkdir -p ${dir $@}
@@ -69,6 +69,10 @@ fclean:	clean
 
 re:	fclean all
 
+run: ${NAME}
+	@	clear
+	@	-./${NAME}
+
 .PHONY: clean fclean re 
 
 -include $(DEPS)
@@ -84,3 +88,7 @@ re:	fclean all
 ### A GERER
 
 # cat >test1 >test2 >test3   | ecrase test1 et test2 - doit les ouvrir en trunc
+
+### COMMANDE A TESTER
+
+# valgrind --trace-children=yes --track-fds=yes ./minishell 

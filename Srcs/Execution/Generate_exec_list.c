@@ -20,6 +20,7 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 	int			i;
 
 	exec_elem = ft_calloc(sizeof(t_exec), 1);
+	exec_elem->envp_list = envp_list;
 	exec_elem->index = 0;
 	exec_elem->fd_here_doc = -1;
 	exec_elem->delimiter = NULL;
@@ -27,6 +28,7 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 	exec_elem->is_valid = 1;
 	exec_elem->previous_valid = 1;
 	exec_elem->infile = NULL;
+	exec_elem->infile_here_doc = NULL;
 	exec_elem->fd_infile = -1;
 	exec_elem->outfile = NULL;
 	exec_elem->fd_outfile = -1;
@@ -65,6 +67,7 @@ t_exec	*ft_generate_executable(t_env_elem *envp_list, t_parser *parser_list)
 				exec_elem->infile = ft_strdup(parser_begin->file_name);
 			if (parser_begin->parser_type == HERE_DOC)
 			{
+				exec_elem->infile_here_doc = ft_strdup(parser_begin->file_name);
 				exec_elem->fd_here_doc = parser_begin->fd;
 				exec_elem->delimiter = ft_strdup(parser_begin->delimiter);
 				exec_elem->is_a_quote_delimiter = parser_begin->is_a_quote_delimiter;

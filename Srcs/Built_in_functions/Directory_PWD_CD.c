@@ -61,6 +61,7 @@ static void ft_change_directory_no_arg(t_env_elem **envp_list)
 	if (!S_GLOBAL.IS_HOME)
 	{
 		ft_message_err(ERR_CD_NO_HOME);
+		S_GLOBAL.GLOBAL_RETURN = 1;
 		return ;
 	}
 	if (chdir(S_GLOBAL.HOME_PATH) != 0)
@@ -77,8 +78,6 @@ void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args)
 	if (!tab_args[1])
 	{
 		ft_change_directory_no_arg(envp_list);
-		ft_builtin_get_current_directory();
-		fprintf(stderr, "PWD : %s\n", S_GLOBAL.PWD);
 		return ;	
 	}
 	if (tab_args[2])
@@ -86,13 +85,10 @@ void	ft_builtin_change_directory(t_env_elem **envp_list, char **tab_args)
 		ft_message_err(ERR_CD_TOO_MANY_ARGS);
 		return ;
 	}
-
 	if (chdir(tab_args[1]) != 0)
 	{
 		perror(ERR_CD);
 		S_GLOBAL.GLOBAL_RETURN = 1;
 		return ;
 	}
-	ft_builtin_get_current_directory();
-	fprintf(stderr, "PWD : %s\n", S_GLOBAL.PWD);
 }

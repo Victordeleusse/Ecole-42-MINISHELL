@@ -53,6 +53,7 @@
 # define ERR_ENV_TOO_MANY_ARGS	"minishell-TitouVictor$: cd: too many arguments"
 # define ERR_EXIT_TOO_MANY_ARGS	"minishell-TitouVictor$: exit: too many arguments"
 # define ERR_EXIT_NUM_ARG_REQUIRED "numeric argument required"
+# define ERR_PWD "pwd: usage: pwd [-LP]"
 
 struct S_GLOBAL_MINISHELL
 {

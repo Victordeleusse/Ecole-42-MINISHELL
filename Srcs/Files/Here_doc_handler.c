@@ -110,6 +110,7 @@ static int	ft_get_infile_from_heredoc(t_parser *parser_elem, int *recep_fd, char
 {
 	if (*recep_fd >= 0)
 		close(*recep_fd);
+	parser_elem->file_name = ft_strdup(rnd_file_name);
 	parser_elem->fd = open(rnd_file_name, O_RDONLY, 0000664);
 	if (parser_elem->fd < 0)
 	{
@@ -118,7 +119,6 @@ static int	ft_get_infile_from_heredoc(t_parser *parser_elem, int *recep_fd, char
 	}
 	return (1);
 }
-
 
 int	ft_get_here_doc_traitement(t_parser *parser_elem)
 {
@@ -136,6 +136,11 @@ int	ft_get_here_doc_traitement(t_parser *parser_elem)
 	{	
 		free(rnd_file_name);
 		return (0);
+	}
+	if (!parser_elem->is_infile_exec)
+	{
+		close(recep_fd);
+		unlink((char *)rnd_file_name);
 	}
 	free(rnd_file_name);
 	return (1);

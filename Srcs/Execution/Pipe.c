@@ -51,7 +51,9 @@ void	ft_clean_one_pipe(t_pipe *pipe)
 
 void	ft_dup(t_exec *exec_elem, t_pipe *pipes)
 {
-	if (exec_elem->fd_infile > 0)
+	if (exec_elem->fd_here_doc > 0)
+		dup2(exec_elem->fd_here_doc, STDIN_FILENO);
+	else if (exec_elem->fd_infile > 0)
 		dup2(exec_elem->fd_infile, STDIN_FILENO);
 	else if (pipes[0].is_open)
 		dup2(pipes[0].fds[0], STDIN_FILENO);

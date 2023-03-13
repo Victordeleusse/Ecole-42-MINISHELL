@@ -16,6 +16,11 @@ static void	ft_exec_alone(t_exec *exec_elem)
 {
 	if (!ft_get_infile(exec_elem))
 		return ;
+	if (exec_elem->fd_here_doc > 0)
+	{
+		dup2(exec_elem->fd_here_doc, STDIN_FILENO);
+		ft_close(&exec_elem->fd_here_doc);
+	}
 	else
 	{	
 		dup2(exec_elem->fd_infile, STDIN_FILENO);
@@ -28,7 +33,7 @@ static void	ft_exec_alone(t_exec *exec_elem)
 		dup2(exec_elem->fd_outfile, STDOUT_FILENO);
 		ft_close(&exec_elem->fd_outfile);
 	}
-	// dprintf(2, "cmd ==[%s]\n", ft_get_command_for_the_pipe(exec_elem));
+	dprintf(2, "cmd ==[%s]\n\n", ft_get_command_for_the_pipe(exec_elem));
 	execve(ft_get_command_for_the_pipe(exec_elem), exec_elem->tab_cmd_args, exec_elem->env);
 	perror(exec_elem->tab_cmd_args[0]);
 	exit(1);
@@ -37,11 +42,15 @@ static void	ft_exec_alone(t_exec *exec_elem)
 void	ft_exec(t_exec *exec_elem, t_pipe *pipes)
 {
 	ft_dup(exec_elem, pipes);
-	ft_close(&exec_elem->fd_infile);
+	if (exec_elem->infile_here_doc && exec_elem->fd_here_doc)
+		ft_close(&exec_elem->fd_here_doc);
+	else if (exec_elem->fd_infile)
+		ft_close(&exec_elem->fd_infile);
 	ft_close(&exec_elem->fd_outfile);
 	ft_close(&pipes[0].fds[0]);
 	ft_close(&pipes[0].fds[1]);
-	// dprintf(2, "cmd ==[%s]\n", ft_get_command_for_the_pipe(exec_elem));
+	ft_close(&pipes[1].fds[0]);
+	ft_close(&pipes[1].fds[1]);
 	execve(ft_get_command_for_the_pipe(exec_elem), exec_elem->tab_cmd_args, exec_elem->env);
 	perror(exec_elem->tab_cmd_args[0]);
 	exit(1);
@@ -64,12 +73,13 @@ static void	ft_only_one_exec(t_exec *exec_list)
 	t_exec	*exec_begin;
 	
 	exec_begin = exec_list;
-	if (!ft_get_infile(exec_begin))
-		return ;
-	if (!ft_get_outfile(exec_begin))
-		return ;
 	if (!exec_begin->tab_cmd_args[0])
 		return ;
+	if (ft_is_builtin_func(exec_begin))
+	{	
+		dprintf(2, "sortie\n");
+		return ;
+	}
 	// --- JE NE FORK PAS SI 1 CMD BUILTIN ---
 	// if (ft_is_builtin(exec_begin->tab_cmd_args[0]))
 	// {
@@ -94,6 +104,15 @@ static void	ft_only_one_exec(t_exec *exec_list)
 	}
 	if (exec_begin->pid == 0)
 		ft_exec_alone(exec_begin);
+	if (exec_begin->fd_here_doc)
+	{	
+		ft_close(&exec_begin->fd_here_doc);
+		unlink(exec_begin->infile_here_doc);
+	}
+	else if (exec_begin->fd_infile)
+		ft_close(&exec_begin->fd_infile);
+	if (exec_begin->fd_outfile)
+		ft_close(&exec_begin->fd_outfile);
 	while (wait(NULL) != -1)
 		;
 }
@@ -111,12 +130,20 @@ static void	ft_generate_multi_exec(t_exec *exec_list, t_pipe *pipes)
 		{
 			if (exec_elem->next)
 			{
-				pipe(pipes[0].fds);
-				pipes[0].is_open = true;
+				pipe(pipes[1].fds);
+				pipes[1].is_open = true;
 			}
-			ft_swap_pipes(pipes);
 			ft_make_children(exec_elem, pipes);
-			ft_clean_one_pipe(&pipes[0]);
+			ft_clean_one_pipe(&pipes[1]);
+			ft_swap_pipes(pipes);
+			if (exec_elem->delimiter && exec_elem->fd_here_doc)
+			{	
+				ft_close(&exec_elem->fd_here_doc);
+				unlink(exec_elem->infile_here_doc);
+			}
+			else 
+				ft_close(&exec_elem->fd_infile);
+			ft_close(&exec_elem->fd_outfile);
 			exec_elem = exec_elem->next;
 		}
 	}
@@ -136,11 +163,8 @@ void	ft_launch_exec(t_exec *exec_list, int *nb_cmd)
 	ft_init_pipes(pipes);
 	exec_begin = exec_list;
 	if (!exec_begin->next && exec_begin->is_valid)
-	 	ft_only_one_exec(exec_list);
+		ft_only_one_exec(exec_list);
 	else if (exec_begin->next)
 	  	ft_generate_multi_exec(exec_list, pipes);
-	// while (wait(NULL) != -1)
-	// 	;
-	// printf("EXECUTIONS FAITES\n\n");
 }
 

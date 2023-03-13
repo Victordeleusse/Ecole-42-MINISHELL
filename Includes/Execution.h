@@ -32,6 +32,7 @@ typedef struct s_exec
 	int				previous_valid;
 	pid_t			pid;
 	char			*infile;
+	char			*infile_here_doc;
 	int				fd_infile;
 	int				fd_here_doc;
 	char			*delimiter;
@@ -40,6 +41,7 @@ typedef struct s_exec
 	t_outfile_type	outfile_type;
 	int				fd_outfile;
 	char			**tab_cmd_args;
+	t_env_elem		*envp_list;
 	char			**env;
 	char			*env_path;
 	char			**command_paths;
@@ -53,6 +55,10 @@ void	ft_close(int *fd);
 void	ft_swap_pipes(t_pipe *pipes);
 void	ft_clean_one_pipe(t_pipe *pipe);
 void	ft_dup(t_exec *exec_elem, t_pipe *pipes);
+
+//////////////// Builtin_exec.c ///////////////////
+
+int		ft_is_builtin_func(t_exec *exec_elem);
 
 //////////////// Pipex_utils.c ///////////////////
 

@@ -92,6 +92,18 @@ int	ft_get_infile(t_exec *exec_elem)
 			return (0);
 		}
 	}
+	// else if (exec_elem->is_valid && exec_elem->infile_here_doc && exec_elem->infile_here_doc[0])
+	// {	
+	// 	exec_elem->fd_infile = open(exec_elem->infile, O_RDONLY);
+	// 	if (exec_elem->fd_infile < 0)
+	// 	{
+	// 		exec_elem->is_valid = 0;
+	// 		if (exec_elem->next)
+	// 			exec_elem->next->previous_valid = 0;
+	// 		ft_message_file_err(exec_elem->infile, exec_elem->tab_cmd_args[0]);
+	// 		return (0);
+	// 	}
+	// }
 	return (1);
 	// else if (exec_elem->delimiter)
 		// ft_here_doc_treat;
