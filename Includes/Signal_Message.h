@@ -22,5 +22,6 @@ void	ft_signal_ctrl_c(int sig);
 void		ft_message_err(char	*str);
 void		ft_message_p_err(char *str);
 void		ft_message_unexpected_token(char *str, char *token_str);
+void		ft_message_file_err(char *str, char *cmd);
 
 #endif

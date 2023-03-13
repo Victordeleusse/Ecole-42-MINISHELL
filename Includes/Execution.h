@@ -59,6 +59,7 @@ void	ft_dup(t_exec *exec_elem, t_pipe *pipes);
 char	*ft_get_env_path(t_env_elem *envp_list);
 int		ft_get_infile(t_exec *exec_elem);
 int		ft_get_outfile(t_exec *exec_elem);
+char	**ft_get_args_for_the_pipe(t_exec *exec_elem);
 char	*ft_get_command_for_the_pipe(t_exec *exec_elem);
 void	ft_init_pipes(t_pipe *pipes);
 void	ft_make_children(t_exec *exec_elem, t_pipe *pipes);

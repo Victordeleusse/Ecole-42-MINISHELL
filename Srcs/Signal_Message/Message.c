@@ -12,6 +12,14 @@
 
 #include "minishell.h"
 
+void	ft_message_file_err(char *str, char *cmd)
+{
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 2);
+	perror(str);
+	S_GLOBAL.GLOBAL_RETURN = 1;
+}
+
 void	ft_message_p_err(char *str)
 {
 	perror(str);

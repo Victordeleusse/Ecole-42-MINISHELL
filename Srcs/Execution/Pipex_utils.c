@@ -57,6 +57,27 @@ char	*ft_get_command_for_the_pipe(t_exec *exec_elem)
 	return (NULL);
 }
 
+// char	**ft_get_args_for_the_pipe(t_exec *exec_elem)
+// {
+// 	char	*temp;
+// 	int		i;
+
+// 	if (!exec_elem || exec_elem->tab_cmd_args[0] == 0)
+// 		return (NULL);
+// 	if (exec_elem->tab_cmd_args[1] == 0)
+// 		return (NULL);
+// 	i = 1;
+// 	while (exec_elem->tab_cmd_args && exec_elem->tab_cmd_args[i])
+// 	{
+// 		free(exec_elem->tab_cmd_args[i - 1]);
+// 		temp = exec_elem->tab_cmd_args[i];
+// 		exec_elem->tab_cmd_args[i - 1] = temp;
+// 		free(temp); 
+// 		i++;
+// 	}
+// 	return (exec_elem->tab_cmd_args);
+// }
+
 int	ft_get_infile(t_exec *exec_elem)
 {
 	if (exec_elem->is_valid && exec_elem->infile && exec_elem->infile[0])
@@ -67,7 +88,7 @@ int	ft_get_infile(t_exec *exec_elem)
 			exec_elem->is_valid = 0;
 			if (exec_elem->next)
 				exec_elem->next->previous_valid = 0;
-			ft_message_p_err(exec_elem->infile);
+			ft_message_file_err(exec_elem->infile, exec_elem->tab_cmd_args[0]);
 			return (0);
 		}
 	}
@@ -93,7 +114,7 @@ int	ft_get_outfile(t_exec *exec_elem)
 				exec_elem->next->previous_valid = 0;
 			if (exec_elem->fd_infile >= 0)
 				close (exec_elem->fd_infile);
-			ft_message_p_err(exec_elem->outfile);
+			ft_message_file_err(exec_elem->outfile, exec_elem->tab_cmd_args[0]);
 			return (0);
 		}
 	}
