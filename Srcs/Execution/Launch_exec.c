@@ -33,7 +33,7 @@ static void	ft_exec_alone(t_exec *exec_elem)
 		dup2(exec_elem->fd_outfile, STDOUT_FILENO);
 		ft_close(&exec_elem->fd_outfile);
 	}
-	dprintf(2, "cmd ==[%s]\n\n", ft_get_command_for_the_pipe(exec_elem));
+	// dprintf(2, "cmd ==[%s]\n\n", ft_get_command_for_the_pipe(exec_elem));
 	execve(ft_get_command_for_the_pipe(exec_elem), exec_elem->tab_cmd_args, exec_elem->env);
 	perror(exec_elem->tab_cmd_args[0]);
 	exit(1);
@@ -76,10 +76,7 @@ static void	ft_only_one_exec(t_exec *exec_list)
 	if (!exec_begin->tab_cmd_args[0])
 		return ;
 	if (ft_is_builtin_func(exec_begin))
-	{	
-		dprintf(2, "sortie\n");
 		return ;
-	}
 	// --- JE NE FORK PAS SI 1 CMD BUILTIN ---
 	// if (ft_is_builtin(exec_begin->tab_cmd_args[0]))
 	// {

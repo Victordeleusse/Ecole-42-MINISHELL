@@ -12,17 +12,49 @@
 
 #include "minishell.h"
 
+static char	*ft_configure_env_value(char *envp_str)
+{
+	int		i;
+	int		len;
+	char	*new_str;
+
+	len = ft_strlen(envp_str);
+	new_str = ft_calloc(sizeof(char), len + 3);
+	i = 0;
+	while (envp_str[i] && envp_str[i] != '=')
+	{
+		new_str[i] = envp_str[i];
+		i++;
+	}
+	if (envp_str[i] == '=')
+	{
+		new_str[i] = envp_str[i];
+		i++;
+	}
+	new_str[i] = '\"';
+	while (envp_str[i])
+	{
+		new_str[i + 1] = envp_str[i];
+		i++;
+	}
+	new_str[i + 1] = '\"';
+	return (new_str);
+}
+
 // bash$ export -> Affiche l ensemble de mes variables d'environnement avec "export name=value"
 
 static void	ft_export_empty_arg(char **envp_in_tab)
 {
-	int	i;
-
+	int		i;
+	char	*value_modified;
+	
 	i = 0;
 	while(envp_in_tab[i])
 	{
 		write(1, "export ", 7);
-		write(1, envp_in_tab[i], ft_strlen(envp_in_tab[i]));
+		value_modified = ft_configure_env_value(envp_in_tab[i]);
+		write(1, value_modified, ft_strlen(value_modified));
+		free(value_modified);
 		write(1, "\n", 1);
 		i++;
 	}

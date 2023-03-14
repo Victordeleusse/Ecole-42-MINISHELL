@@ -22,8 +22,10 @@ static int	ft_cleaning_arg(char **tab_args, int *i)
 		{
 			len = ft_strlen(tab_args[(*i) + 1]) - 2;
 			tab_args[(*i)] = tab_args[(*i) + 1];
-			ft_memmove(tab_args[(*i)], tab_args[(*i)] + 1, ft_strlen(tab_args[(*i)] - 3));
+			// dprintf(2, "NOUVEL arg: %s -> len : %d\n", tab_args[*i], len);
+			ft_memmove(tab_args[(*i)], tab_args[(*i)] + 1, len - 1);
 			tab_args[(*i)][len - 1] = '\0';
+			// dprintf(2, "MODIF arg: %s\n", tab_args[*i]);
 		}
 		return (1);
 	}
@@ -50,11 +52,16 @@ void	ft_builtin_echo_function(char **tab_args)
 	}
 	while(tab_args[i])
 	{
+		// dprintf(2, "arg : %s\n", tab_args[i]);
 		if (ft_cleaning_arg(tab_args, &i))
+		{
+			write(1, tab_args[i], ft_strlen(tab_args[i]));	
 		 	i = i + 1;
-		// write(1, tab_args[i - 1], ft_strlen(tab_args[i]));	
-		// if (tab_args[i + 1])
-		// 	write(1, " ", 1);
+		}
+		else 
+			write(1, tab_args[i], ft_strlen(tab_args[i]));
+		if (tab_args[i + 1])
+		write(1, " ", 1);
 		i++;
 	}
 	if (!is_n)
